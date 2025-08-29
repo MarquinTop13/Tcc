@@ -26,15 +26,13 @@ function verificar() {
       const texto = e.target.result.toLowerCase();
 
       const comandos = [
-        { palavra: 'del', descricao: 'Remove pastas' },
-        { palavra: 'erase', descricao: 'Apaga arquivos' },
+        { palavra: 'del' || 'remove' || 'delete' || 'erase' || 'rd' || 'rmdir', descricao: 'Remove pastas/arquivos' },
         { palavra: 'move', descricao: 'Move arquivos ou pastas' },
         { palavra: 'cipher', descricao: 'Criptografa arquivos' },
-        { palavra: 'rd', descricao: 'Remove diretórios' },
-        { palavra: 'rmdir', descricao: 'Remove diretórios' },
         { palavra: 'format', descricao: 'Formata o disco' },
         { palavra: 'start cmd', descricao: 'Executa comandos perigosos' },
         { palavra: 'cmd.exe', descricao: 'Executa comandos perigosos' },
+        { palavra : '.exe', descricao: 'Instala/executa comandos perigosos'},
         { palavra: 'powershell', descricao: 'Executa comandos perigosos' },
         { palavra: 'shutdown', descricao: 'Desliga o computador' }
       ];
