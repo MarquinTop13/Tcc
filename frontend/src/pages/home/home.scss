@@ -47,5 +47,39 @@ body {
 
             }
         }
+
+        .cards{
+            .card1{
+                .titlecard{
+                    display: flex;
+                    text-align: end;
+                    align-items: center;
+                    margin-right: 7%;
+                    padding: 5%;
+                    
+
+                    img{
+                        margin: 3%;
+                        width: 30%;
+                    }
+                }
+
+                button{
+                    border-radius: 25px;
+                    width: 50%;
+                }
+
+                background-color: #F3F4F6;
+                display: flex;
+                text-align: center;
+                align-items: center;
+                flex-direction: column;
+                width: 30%;
+                height: 170px;
+                border-radius: 25px;
+                padding-bottom: 8%;
+                
+            }
+        }
     }
 }

@@ -27,6 +27,42 @@ export default function Home() {
                     </div>
                 </section>
             </header>
+
+            <section className="text">
+                <h1>Proteja seu dispositivo com um clique!</h1>
+                <h3>Verifique arquivos e links que causem danos.</h3>
+            </section>
+
+            <section className="cards">
+                <div className='card1'>
+                    <div className="titlecard">
+                    <img src="../../../public/images/arquivo (1) 1.png"/>
+                    <h2>Verificador de arquivos</h2>
+                    </div>
+                    <div className="textcard">
+                    <p>Envie um arquivo e iremos verificar se causa danos!</p>
+                    </div>
+                    <button>Verifique Agora!</button>
+                </div>
+                <div className='card2'>
+                    <img src="" alt="" />
+                    <h2></h2>
+                    <p></p>
+                    <button></button>
+                </div>
+                <div className='card3'>
+                    <img src="" alt="" />
+                    <h2></h2>
+                    <p></p>
+                    <button></button>
+                </div>
+                <div className='card4'>
+                    <img src="../../../public/images/" />
+                    <h2></h2>
+                    <p></p>
+                    <button></button>
+                </div>
+            </section>
         </main>
     )
 }
