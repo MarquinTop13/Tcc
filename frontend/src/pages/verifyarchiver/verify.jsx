@@ -74,7 +74,7 @@ export default function Verify() {
           <div className="part1">
             <h2>Verificador de Arquivo .BAT</h2>
             <input type="file" id="arquivo" accept=".bat" />
-            <button onclick="verificar()">Verificar</button>
+            <button onClick={verificar}>Verificar</button>
           </div>
 
           <div className="part2">

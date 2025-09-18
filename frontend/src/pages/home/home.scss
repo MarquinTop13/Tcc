@@ -1,16 +1,10 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
 body {
     background-image: url('../../../public/images/BackgroundWhite.png');
 
     .MainHome {
         .HeaderMain {
             background: linear-gradient(to bottom, #6892C1 0%, #37516E 100%);
-            backdrop-filter: blur(100%); 
+            backdrop-filter: blur(100%);
             -webkit-backdrop-filter: blur(100%); // suporte para Safari
             width: 100%;
 
@@ -48,25 +42,42 @@ body {
             }
         }
 
-        .cards{
-            .card1{
-                .titlecard{
+        .cards {
+            .card1 {
+                position: relative; 
+                
+                &:hover {
+                    top: -10px;
+                }
+
+
+                .titlecard {
                     display: flex;
                     text-align: end;
                     align-items: center;
                     margin-right: 7%;
-                    padding: 5%;
-                    
+                    padding: 3%;
 
-                    img{
+                    img {
                         margin: 3%;
                         width: 30%;
                     }
                 }
 
-                button{
-                    border-radius: 25px;
+                .textcard {
                     width: 50%;
+                    color: #333333;
+                }
+
+                button {
+                    border-radius: 5px;
+                    margin-top: 27%;
+                    background-color: #333366;
+                    border: 3px solid #000000;
+                    color: #FFFFFF;
+                    font-size: 20px;
+                    padding: 10px;
+                    cursor: pointer;
                 }
 
                 background-color: #F3F4F6;
@@ -74,12 +85,17 @@ body {
                 text-align: center;
                 align-items: center;
                 flex-direction: column;
-                width: 30%;
-                height: 170px;
-                border-radius: 25px;
-                padding-bottom: 8%;
-                
+                width: 23%;
+                margin: 25px;
+                height: 230px;
+                border-radius: 5px;
+                box-shadow: -10px 5px 10px #000000d7;
+                transition-duration: 350ms;
+
+            
             }
+
+
         }
     }
 }

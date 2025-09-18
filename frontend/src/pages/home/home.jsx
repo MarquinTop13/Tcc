@@ -1,4 +1,7 @@
+import '../../scss/global.scss'
+import '../../scss/fonts.scss'
 import './home.scss'
+import { Link } from "react-router"
 
 export default function Home() {
     return (
@@ -24,6 +27,7 @@ export default function Home() {
                     <div className="column4">
                         <h3>Registrar-se</h3>
                         <h3 className='h32'>Login</h3>
+                        
                     </div>
                 </section>
             </header>
@@ -36,13 +40,16 @@ export default function Home() {
             <section className="cards">
                 <div className='card1'>
                     <div className="titlecard">
-                    <img src="../../../public/images/arquivo (1) 1.png"/>
-                    <h2>Verificador de arquivos</h2>
+                        <img src="../../../public/images/arquivo (1) 1.png" />
+                        <h2>Verificador de arquivos</h2>
                     </div>
                     <div className="textcard">
-                    <p>Envie um arquivo e iremos verificar se causa danos!</p>
+                        <p>Envie um arquivo e iremos verificar se causa danos!</p>
                     </div>
-                    <button>Verifique Agora!</button>
+                    <Link to={"/VerifyArchiver"}>
+                        <button>Verifique Agora!</button>
+                    </Link>
+
                 </div>
                 <div className='card2'>
                     <img src="" alt="" />
