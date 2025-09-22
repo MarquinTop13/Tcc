@@ -5,13 +5,18 @@ body {
         .HeaderMain {
             background: linear-gradient(to bottom, #6892C1 0%, #37516E 100%);
             backdrop-filter: blur(100%);
-            -webkit-backdrop-filter: blur(100%); // suporte para Safari
             width: 100%;
+
 
             .opcoes {
                 display: flex;
                 text-align: center;
                 align-items: center;
+                justify-content: center;
+                width: 49%;
+                margin-left: 47%;
+                gap: 30px;
+
 
                 .column1 {
                     display: flex;
@@ -32,22 +37,42 @@ body {
                 .column3,
                 .column4 {
                     display: flex;
+                    flex-wrap: wrap;
                     flex-direction: column;
                     align-items: center;
-                    width: 10%;
+                    width: 17%;
                     color: #1E293B;
                 }
 
 
             }
         }
+        .text{
+            padding: 2%;
+            color: #008B15;
+        }
 
         .cards {
             .card1 {
-                position: relative; 
+                background-color: #F3F4F6;
+                display: flex;
+                text-align: center;
+                align-items: center;
+                flex-direction: column;
+                box-shadow: -3px 3px 2px #000000d7; 
+                width: 20%;
+                margin: 3%;
+                height: 230px;
+                border-radius: 5px;
                 
+                position: relative; 
+                transition:  450ms;
+                border: 1px solid #00000086;
+
                 &:hover {
-                    top: -10px;
+                    transform: translateY(-10px);
+                    box-shadow: -10px 8px 10px #000000d7; 
+                         
                 }
 
 
@@ -65,37 +90,26 @@ body {
                 }
 
                 .textcard {
-                    width: 50%;
+                    width: 70%;
                     color: #333333;
                 }
 
                 button {
                     border-radius: 5px;
-                    margin-top: 27%;
+                    margin-top: 50%;
                     background-color: #333366;
                     border: 3px solid #000000;
                     color: #FFFFFF;
                     font-size: 20px;
                     padding: 10px;
                     cursor: pointer;
-                }
+                    transition: 350ms;
 
-                background-color: #F3F4F6;
-                display: flex;
-                text-align: center;
-                align-items: center;
-                flex-direction: column;
-                width: 23%;
-                margin: 25px;
-                height: 230px;
-                border-radius: 5px;
-                box-shadow: -10px 5px 10px #000000d7;
-                transition-duration: 350ms;
-
-            
+                    &:hover{
+                        background-color: #262650;
+                    }
+                }           
             }
-
-
         }
     }
 }
