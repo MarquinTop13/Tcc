@@ -87,6 +87,25 @@ body {
                     }
                 }
 
+                .titlecard2{
+                    display: flex;
+                    text-align: end;
+                    align-items: end;
+                    margin-right: 7%;
+                    padding: 3%;
+
+                    img {
+                        margin: 3%;
+                        width: 30%;
+                    }
+
+                    h2{
+                        margin-left: 50px;
+                    }
+                }
+                
+
+
                 .textcard {
                     width: 70%;
                     color: #333333;

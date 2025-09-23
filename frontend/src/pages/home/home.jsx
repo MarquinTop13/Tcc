@@ -52,9 +52,9 @@ export default function Home() {
 
                 </div>
                 <div className='card2'>
-                <div className="titlecard">
+                <div className="titlecard2">
                         <img src="../../../public/images/links 1.png" />
-                        <h2>Verifique Links</h2>
+                        <h2>Envie seu link</h2>
                     </div>
                     <div className="textcard">
                         <p>Envie um link e iremos verificar se causa danos!</p>
