@@ -52,23 +52,18 @@ export default function Home() {
 
                 </div>
                 <div className='card2'>
-                    <img src="" alt="" />
-                    <h2></h2>
-                    <p></p>
-                    <button></button>
+                <div className="titlecard">
+                        <img src="../../../public/images/links 1.png" />
+                        <h2>Verifique Links</h2>
+                    </div>
+                    <div className="textcard">
+                        <p>Envie um link e iremos verificar se causa danos!</p>
+                    </div>
+                    <Link to={"/VerifyArchiver"}>
+                        <button>Envie o link aqui</button>
+                    </Link>
                 </div>
-                <div className='card3'>
-                    <img src="" alt="" />
-                    <h2></h2>
-                    <p></p>
-                    <button></button>
-                </div>
-                <div className='card4'>
-                    <img src="../../../public/images/" />
-                    <h2></h2>
-                    <p></p>
-                    <button></button>
-                </div>
+           
             </section>
         </main>
     )

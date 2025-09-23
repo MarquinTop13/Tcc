@@ -43,8 +43,6 @@ body {
                     width: 17%;
                     color: #1E293B;
                 }
-
-
             }
         }
         .text{
@@ -53,7 +51,8 @@ body {
         }
 
         .cards {
-            .card1 {
+            display: flex;
+            .card1, .card2 {
                 background-color: #F3F4F6;
                 display: flex;
                 text-align: center;
@@ -63,8 +62,7 @@ body {
                 width: 20%;
                 margin: 3%;
                 height: 230px;
-                border-radius: 5px;
-                
+                border-radius: 5px;   
                 position: relative; 
                 transition:  450ms;
                 border: 1px solid #00000086;
