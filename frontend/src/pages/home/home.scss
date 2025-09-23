@@ -13,7 +13,7 @@ body {
                 text-align: center;
                 align-items: center;
                 justify-content: center;
-                width: 49%;
+                width: 50%;
                 margin-left: 47%;
                 gap: 30px;
 
@@ -40,7 +40,7 @@ body {
                     flex-wrap: wrap;
                     flex-direction: column;
                     align-items: center;
-                    width: 17%;
+                    width: 20%;
                     color: #1E293B;
                 }
             }
@@ -52,7 +52,8 @@ body {
 
         .cards {
             display: flex;
-            .card1, .card2 {
+
+            .card1, .card2, .card3, .card4 {
                 background-color: #F3F4F6;
                 display: flex;
                 text-align: center;
@@ -62,7 +63,8 @@ body {
                 width: 20%;
                 margin: 3%;
                 height: 230px;
-                border-radius: 5px;   
+                padding: 1%;
+                border-radius: 3px;   
                 position: relative; 
                 transition:  450ms;
                 border: 1px solid #00000086;
@@ -74,8 +76,9 @@ body {
                 }
 
 
-                .titlecard {
+                .titlecard, .titlecard2,  .titlecard3, .titlecard4 {
                     display: flex;
+                    font-size: 0.8rem;
                     text-align: end;
                     align-items: center;
                     margin-right: 7%;
@@ -87,37 +90,20 @@ body {
                     }
                 }
 
-                .titlecard2{
-                    display: flex;
-                    text-align: end;
-                    align-items: end;
-                    margin-right: 7%;
-                    padding: 3%;
-
-                    img {
-                        margin: 3%;
-                        width: 30%;
-                    }
-
-                    h2{
-                        margin-left: 50px;
-                    }
-                }
-                
-
-
-                .textcard {
+                .textcard, .textcard2, .textcard3, .textocard4 {
                     width: 70%;
                     color: #333333;
+                    margin-top: 10%;
                 }
 
                 button {
                     border-radius: 5px;
-                    margin-top: 50%;
+                    margin-top: 20%;
                     background-color: #333366;
                     border: 3px solid #000000;
                     color: #FFFFFF;
                     font-size: 20px;
+                    display: inline-block;
                     padding: 10px;
                     cursor: pointer;
                     transition: 350ms;
@@ -125,7 +111,9 @@ body {
                     &:hover{
                         background-color: #262650;
                     }
-                }           
+                }
+                
+                
             }
         }
     }

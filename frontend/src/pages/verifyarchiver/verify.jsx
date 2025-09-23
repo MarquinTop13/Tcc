@@ -1,3 +1,5 @@
+import '../../scss/global.scss'
+import '../../scss/fonts.scss'
 import "./verify.scss"
 
 export default function Verify() {
@@ -13,16 +15,14 @@ export default function Verify() {
       return;
     }
 
-    // Remove visibilidade antes da nova mensagem
+
     resultado.classList.remove('mostrar');
     resultado.textContent = '⏳ Aguarde, estamos verificando...';
 
-    // Mostra a mensagem com transição de 500ms
     setTimeout(() => {
       resultado.classList.add('mostrar');
-    }, 10); // pequeno delay para ativar a transição
+    }, 10); 
 
-    // Após 3 segundos, faz a verificação
     setTimeout(() => {
       const reader = new FileReader();
 
@@ -67,9 +67,33 @@ export default function Verify() {
 
 
   return (
-    <main>
-      <header></header>
-      <section>
+    <main className="MainVerifyArchiver">
+      <header className='HeaderVerifyArchiver'>
+                <img src="" alt="" />
+
+                <section className="opcoes">
+                    <div className="column1">
+                        <img src="../../../public/images/arrows.png" />
+                        <h3>Modo Escuro</h3>
+                    </div>
+
+                    <div className="column2">
+                        <h3>Suporte</h3>
+                    </div>
+
+                    <div className="column3">
+                        <h3>Atualizações</h3>
+                        <h3 className='h32'>Serviços</h3>
+                    </div>
+
+                    <div className="column4">
+                        <h3>Registrar-se</h3>
+                        <h3 className='h32'>Login</h3>
+                        
+                    </div>
+                </section>
+            </header>
+      <section className="card">
         <div className="area">
           <div className="part1">
             <h2>Verificador de Arquivo .BAT</h2>
@@ -79,7 +103,7 @@ export default function Verify() {
 
           <div className="part2">
             <h3>Resultado:</h3>
-            <pre class="resultado" id="resultado">Nenhum arquivo analisado ainda.</pre>
+            <pre className="resultado" id="resultado">Nenhum arquivo analisado ainda.</pre>
           </div>
         </div>
       </section>

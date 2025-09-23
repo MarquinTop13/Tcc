@@ -51,16 +51,43 @@ export default function Home() {
                     </Link>
 
                 </div>
+
                 <div className='card2'>
                 <div className="titlecard2">
                         <img src="../../../public/images/links 1.png" />
-                        <h2>Envie seu link</h2>
+                        <h2>Verificador de link</h2>
                     </div>
-                    <div className="textcard">
+                    <div className="textcard2">
                         <p>Envie um link e iremos verificar se causa danos!</p>
                     </div>
                     <Link to={"/VerifyArchiver"}>
                         <button>Envie o link aqui</button>
+                    </Link>
+                </div>
+
+                <div className='card3'>
+                <div className="titlecard3">
+                        <img src="../../../public/images/passo-a-passo 1.png" />
+                        <h2>Instruções para se previnir</h2>
+                    </div>
+                    <div className="textcard3">
+                        <p>Ensinaremos um passo a passo de como se manter seguro</p>
+                    </div>
+                    <Link to={"/VerifyArchiver"}>
+                        <button>Veja!</button>
+                    </Link>
+                </div>
+
+                <div className='card4'>
+                <div className="titlecard4">
+                        <img src="../../../public/images/passo-a-passo 1.png" />
+                        <h2>Gerador de senhas</h2>
+                    </div>
+                    <div className="textcard3">
+                        <p>Gerar senhas com muita segurança</p>
+                    </div>
+                    <Link to={"/VerifyArchiver"}>
+                        <button>Gere sua senha!</button>
                     </Link>
                 </div>
            
