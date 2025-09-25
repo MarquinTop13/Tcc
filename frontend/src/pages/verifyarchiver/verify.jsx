@@ -1,6 +1,7 @@
-import '../../scss/global.scss'
-import '../../scss/fonts.scss'
-import "./verify.scss"
+import {Link} from 'react-router';
+import '../../scss/global.scss';
+import '../../scss/fonts.scss';
+import "./verify.scss";
 
 export default function Verify() {
 
@@ -78,33 +79,25 @@ export default function Verify() {
                     </div>
 
                     <div className="column2">
-                        <h3>Suporte</h3>
+                        <h3><Link className='link' to={'/'}>Voltar</Link></h3>
                     </div>
 
-                    <div className="column3">
-                        <h3>Atualizações</h3>
-                        <h3 className='h32'>Serviços</h3>
-                    </div>
-
-                    <div className="column4">
-                        <h3>Registrar-se</h3>
-                        <h3 className='h32'>Login</h3>
-                        
-                    </div>
+               
                 </section>
             </header>
-      <section className="card">
-        <div className="area">
+      <section className="page">
+        <div className="card">
           <div className="part1">
-            <h2>Verificador de Arquivo .BAT</h2>
-            <input type="file" id="arquivo" accept=".bat" />
-            <button onClick={verificar}>Verificar</button>
+            <h2>Verificador de arquivos</h2>
+            <input type="file" id="arquivo" />
+
           </div>
 
           <div className="part2">
             <h3>Resultado:</h3>
-            <pre className="resultado" id="resultado">Nenhum arquivo analisado ainda.</pre>
+            <pre className="resultado" id="resultado"></pre>
           </div>
+          <button onClick={verificar}>Verificar</button>
         </div>
       </section>
     </main>

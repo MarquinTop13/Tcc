@@ -40,7 +40,7 @@ export default function Home() {
             <section className="cards">
                 <div className='card1'>
                     <div className="titlecard">
-                        <img src="../../../public/images/arquivo (1) 1.png" />
+                        <img src="images/iconarchive.png" />
                         <h2>Verificador de arquivos</h2>
                     </div>
                     <div className="textcard">
@@ -54,7 +54,7 @@ export default function Home() {
 
                 <div className='card2'>
                 <div className="titlecard2">
-                        <img src="../../../public/images/links 1.png" />
+                        <img src="images/link.png" />
                         <h2>Verificador de link</h2>
                     </div>
                     <div className="textcard2">
@@ -67,7 +67,7 @@ export default function Home() {
 
                 <div className='card3'>
                 <div className="titlecard3">
-                        <img src="../../../public/images/passo-a-passo 1.png" />
+                        <img src="images/passo-a-passo.png" />
                         <h2>Instruções para se previnir</h2>
                     </div>
                     <div className="textcard3">
@@ -80,7 +80,7 @@ export default function Home() {
 
                 <div className='card4'>
                 <div className="titlecard4">
-                        <img src="../../../public/images/passo-a-passo 1.png" />
+                        <img src="/images/machine.png" />
                         <h2>Gerador de senhas</h2>
                     </div>
                     <div className="textcard3">

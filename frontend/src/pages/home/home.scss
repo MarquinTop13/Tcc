@@ -3,7 +3,7 @@ body {
 
     .MainHome {
         .HeaderMain {
-            background: linear-gradient(to bottom, #6892C1 0%, #37516E 100%);
+            background: linear-gradient(to bottom, #6892C1 20%, #37516E 100%);
             backdrop-filter: blur(100%);
             width: 100%;
 
@@ -14,7 +14,7 @@ body {
                 align-items: center;
                 justify-content: center;
                 width: 50%;
-                margin-left: 47%;
+                margin-left: 50%;
                 gap: 30px;
 
 
@@ -46,15 +46,16 @@ body {
             }
         }
         .text{
-            padding: 2%;
+            padding: 3%;
             color: #008B15;
         }
 
         .cards {
             display: flex;
+            
 
             .card1, .card2, .card3, .card4 {
-                background-color: #F3F4F6;
+                background-color: #ced4dac1;
                 display: flex;
                 text-align: center;
                 align-items: center;

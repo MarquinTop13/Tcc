@@ -4,16 +4,14 @@
         backdrop-filter: blur(100%);
         width: 100%;
 
-
         .opcoes {
             display: flex;
             text-align: center;
             align-items: center;
             justify-content: center;
-            width: 50%;
-            margin-left: 47%;
-            gap: 30px;
-
+            width: 20%;
+            margin-left: 80%;
+            gap: 100px;
 
             .column1 {
                 display: flex;
@@ -29,35 +27,85 @@
                 align-items: center;
                 width: 10%;
                 color: #1E293B;
-            }
 
-            .column3,
-            .column4 {
-                display: flex;
-                flex-wrap: wrap;
-                flex-direction: column;
-                align-items: center;
-                width: 20%;
-                color: #1E293B;
+                h3 {
+                    font-size: 25px;
+
+                    .link {
+                        color: #1E293B;
+                        text-decoration: none;
+                    }
+
+                    &:hover{
+                        text-decoration: underline;
+                    }
+
+                }
             }
         }
-
-
     }
 
-    .card {
-        .area {
-            background-color: #c3c3c3c9;
+    .page {
+        height: 80vh;
+
+        .card {
+            background-color: #ced4dac1;
+            border: 2px solid #000000b6;
+            box-shadow: -3px 3px 2px #000000d7; 
             color: #333333;
+            width: 800px;
+            height: 384px;
             position: relative;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, 100%);
-            width: 50%;
-            align-items: center;
-            justify-content: center;
-            display: flex;
+            transform: translate(-50%, -50%);
             flex-direction: column;
+            text-align: center;
+            transition: 250ms;
+
+            &:hover {
+                transition: 450ms;
+                top: 49%;
+                box-shadow: -10px 8px 10px #000000d7;
+            }
+
+            .part1{
+                padding-top: 20px;
+                h2{
+                    font-size: 40px;
+                }
+
+                input{
+                    padding-top: 20px;
+                }
+            }
+
+            .part2{
+                padding-top: 50px;
+                h3{
+                    font-size: 35px;
+                }
+            }
+
+            button{
+                position: fixed;
+                top: 92%;
+                left: 31%;
+                height: 62px;
+                width: 341px;
+                background-color: #333366;
+                border: 2px solid #000000;
+                color: #FFFFFF;
+                font-size: 30px;
+                transition: 250ms;
+
+                
+
+                &:hover{
+                    transition: 500ms;
+                    background-color: #262650;
+                }
+            }
         }
     }
 }
