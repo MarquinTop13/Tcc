@@ -1,9 +1,7 @@
-import express from 'express';
-import safeBrowsingController from './controller/safeBrowsingController.js';
+import LinkRotas from './controller/LinkController.js';
+import LoginRotas from './controller/LoginController.js'
 
-const router = express.Router();
-
-router.post('/check-url', safeBrowsingController.checkUrl);
-router.post('/check-multiple-urls', safeBrowsingController.checkMultipleUrls);
-
-export default router;
+export function Rotas(app) {
+    app.use(LoginRotas);
+    app.use('/api', LinkRotas);
+}

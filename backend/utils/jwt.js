@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-const KEY = 'borapracima'
+const KEY = 'Potato10!'
 
 
 export function generateToken(userInfo) {
