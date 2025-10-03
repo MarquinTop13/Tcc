@@ -1,4 +1,5 @@
-import {Link} from 'react-router';
+import { Link } from 'react-router';
+import Cabecalho2 from '../../components/header2.jsx';
 import '../../scss/global.scss';
 import '../../scss/fonts.scss';
 import "./verify.scss";
@@ -22,7 +23,7 @@ export default function Verify() {
 
     setTimeout(() => {
       resultado.classList.add('mostrar');
-    }, 10); 
+    }, 10);
 
     setTimeout(() => {
       const reader = new FileReader();
@@ -69,22 +70,7 @@ export default function Verify() {
 
   return (
     <main className="MainVerifyArchiver">
-      <header className='HeaderVerifyArchiver'>
-                <img src="" alt="" />
-
-                <section className="opcoes">
-                    <div className="column1">
-                        <img src="../../../public/images/arrows.png" />
-                        <h3>Modo Escuro</h3>
-                    </div>
-
-                    <div className="column2">
-                        <h3><Link className='link' to={'/'}>Voltar</Link></h3>
-                    </div>
-
-               
-                </section>
-            </header>
+      <Cabecalho2 />
       <section className="page">
         <div className="card">
           <div className="part1">

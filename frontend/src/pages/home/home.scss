@@ -1,50 +1,11 @@
 body {
     background-image: url('../../../public/images/BackgroundWhite.png');
+    background-size: 'cover';
+    height: '300px'; 
+    width: '100%';
 
     .MainHome {
-        .HeaderMain {
-            background: linear-gradient(to bottom, #6892C1 20%, #37516E 100%);
-            backdrop-filter: blur(100%);
-            width: 100%;
-
-
-            .opcoes {
-                display: flex;
-                text-align: center;
-                align-items: center;
-                justify-content: center;
-                width: 50%;
-                margin-left: 50%;
-                gap: 30px;
-
-
-                .column1 {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    width: 10%;
-                    color: #1E293B;
-                }
-
-                .column2 {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    width: 10%;
-                    color: #1E293B;
-                }
-
-                .column3,
-                .column4 {
-                    display: flex;
-                    flex-wrap: wrap;
-                    flex-direction: column;
-                    align-items: center;
-                    width: 20%;
-                    color: #1E293B;
-                }
-            }
-        }
+       
         .text{
             padding: 3%;
             color: #008B15;

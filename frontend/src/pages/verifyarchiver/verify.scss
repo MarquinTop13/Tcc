@@ -1,49 +1,5 @@
 .MainVerifyArchiver {
-    .HeaderVerifyArchiver {
-        background: linear-gradient(to bottom, #6892C1 0%, #37516E 100%);
-        backdrop-filter: blur(100%);
-        width: 100%;
-
-        .opcoes {
-            display: flex;
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-            width: 20%;
-            margin-left: 80%;
-            gap: 100px;
-
-            .column1 {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 10%;
-                color: #1E293B;
-            }
-
-            .column2 {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 10%;
-                color: #1E293B;
-
-                h3 {
-                    font-size: 25px;
-
-                    .link {
-                        color: #1E293B;
-                        text-decoration: none;
-                    }
-
-                    &:hover{
-                        text-decoration: underline;
-                    }
-
-                }
-            }
-        }
-    }
+    
 
     .page {
         height: 80vh;
@@ -70,13 +26,17 @@
             }
 
             .part1{
-                padding-top: 20px;
+                padding-top: 5%;
                 h2{
                     font-size: 40px;
                 }
 
                 input{
                     padding-top: 20px;
+
+                    &:hover{
+                        cursor: pointer;
+                    }
                 }
             }
 
