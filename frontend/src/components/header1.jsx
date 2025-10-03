@@ -1,12 +1,31 @@
 import "./header.scss"
+import React, { useState, useEffect } from "react"
 import BackgroundBlack from "/images/BackgroundBlack.png"
 import BackgroundWhite from "/images/BackgroundWhite.png"
+
+
 export default function Cabecalho() {
-    function DarkTheme(){
-        let headerColor = document.getElementById("opcoes");
-        headerColor = "blue"
+    const [darkTheme, setDarkTheme] = useState(false);
+
+    function alterTheme() {
+        if (darkTheme === false) {
+            setDarkTheme(true)
+        }
+        else {
+            setDarkTheme(false)
+        }
     }
-    
+
+    useEffect(() => {
+        if (darkTheme) {
+            document.body.style.backgroundImage = `url(${BackgroundBlack})`
+            document.body.style.color = "white"
+        }
+        else {
+            document.body.style.backgroundImage = `url(${BackgroundWhite})`
+            document.body.style.color = "black"
+        }
+    })
 
     return (
         <header>
@@ -14,7 +33,7 @@ export default function Cabecalho() {
             <section className="opcoes">
                 <div className="column1">
                     <img src="../../../public/images/arrows.png" />
-                    <button ><h3 id="Text">Modo Escuro</h3></button>
+                    <h3 onClick={alterTheme}>Modo Escuro</h3>
 
                 </div>
 

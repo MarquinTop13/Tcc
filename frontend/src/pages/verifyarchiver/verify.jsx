@@ -3,8 +3,21 @@ import Cabecalho2 from '../../components/header2.jsx';
 import '../../scss/global.scss';
 import '../../scss/fonts.scss';
 import "./verify.scss";
+import { useEffect, useState } from 'react';
 
 export default function Verify() {
+
+  const [darkTheme, setDarkTheme] = useState(false)
+
+  function ChangeTheme() {
+    if (darkTheme === false) {
+      setDarkTheme(true)
+    }
+
+    else {
+      setDarkTheme(false)
+    }
+  }
 
   function verificar() {
     const input = document.getElementById('arquivo');

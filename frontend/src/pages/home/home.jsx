@@ -3,8 +3,24 @@ import '../../scss/fonts.scss'
 import './home.scss'
 import Cabecalho from "../../components/header1.jsx"
 import { Link } from "react-router"
+import { useState } from 'react'
 
 export default function Home() {
+
+    const [darkTheme, setDarkTheme] = useState(false)
+
+    function ChangeTheme(){
+        if(darkTheme === false){
+            setDarkTheme(true)
+        }
+
+        else{
+            setDarkTheme(false)
+        }
+    }
+
+    
+
     return (
         <main className='MainHome'>
             <Cabecalho />

@@ -1,7 +1,12 @@
+*{
+    transition: 150ms;
+}
+
 header {
     background: linear-gradient(to bottom, #6892C1 20%, #37516E 100%);
     backdrop-filter: blur(100%);
     width: 100%;
+    
 
 
     .opcoes {
