@@ -1,29 +1,16 @@
-import * as LoginRepository from '../repository/LoginRepository.js'
-import { Router } from "express";
-import {generateToken} from '../utils/jwt.js';
-import {getAuthentication} from '../utils/jwt.js'
+import consultarCredenciais from '../Repository/loginRepository.js';
+import generateToken from '../utils/jwt.js';
+import { Router } from 'express';
+
 const endpoints = Router();
 
-endpoints.post('/InserirLogin', async (req,resp) => {
-    const dados = req.body;
-    const id = await LoginRepository.InserirLogin(dados);
-    resp.send({NewId: id});
-})
+endpoints.post("/login", async (req, res) => {
+  const { nome, email, senha } = req.body;
+  const credenciais = await consultarCredenciais(nome, email, senha);
 
-endpoints.get('/Login', async (req,resp) => {
-    const email = req.body.email;
-    const password = req.body.password;
+  if (!credenciais) return res.status(401).json({ erro: "Credenciais inválidas." });
 
-    const dados = await LoginRepository.Logar(email,password);
-
-    if(!dados){
-        resp.status(401).send("Achei N")
-    }
-
-    else{
-        let token = generateToken(dados);
-        resp.send({token: token});
-    }
-})
+  res.json({ token: generateToken(credenciais) });
+});
 
 export default endpoints;
