@@ -1,4 +1,4 @@
-import * as Repository from "../Repository/cadastroRepository.js";
+import * as Repository from "../repository/cadastroRepository.js";
 import { Router } from "express";
 
 const endpoint = Router();

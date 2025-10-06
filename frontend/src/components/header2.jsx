@@ -1,45 +1,42 @@
 import "./header.scss"
 import { Link } from 'react-router';
-import React,{ useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BackgroundBlack from "/images/BackgroundBlack.png"
 import BackgroundWhite from "/images/BackgroundWhite.png"
+import arrowsWhite from "/images/arrowsWhite.png"
+import arrows from "/images/arrows.png"
 
-export default function Cabecalho2() {
-    const[darkTheme, SetDarktheme] = useState(false)
-
-    function changeTheme(){
-        if(darkTheme === false){
-            SetDarktheme(true)
-        }
-        else{
-            SetDarktheme(false)
-        }
-    }
+export default function Cabecalho({ darkTheme, onChangeTheme }) {
 
     useEffect(() => {
-        if(darkTheme){
-            document.body.style.backgroundImage = `url(${BackgroundBlack})`
-            document.body.style.color = "white"
-        }
+        const header = document.getElementById("header");
+        const h3s = header.querySelectorAll("h3");
 
-        else{
-            document.body.style.backgroundImage = `url(${BackgroundWhite})`
-            document.body.style.color = "black"
+        if (darkTheme) {
+            document.body.style.backgroundImage = `url(${BackgroundBlack})`;
+            document.body.style.color = "white";
+            header.style.background = "#112A43";
+            h3s.forEach((h3) => (h3.style.color = "#FFFFFF"));
+        } else {
+            document.body.style.backgroundImage = `url(${BackgroundWhite})`;
+            document.body.style.color = "black";
+            header.style.background = "#6892C1";
+            h3s.forEach((h3) => (h3.style.color = "#1E293B"));
         }
-    })
+    }, [darkTheme]);
 
     return (
-        <header>
+        <header id="header">
             <img src="" alt="" />
 
             <section className="opcoes">
                 <div className="column1">
-                    <img src="../../../public/images/arrows.png" />
-                    <h3 onClick={changeTheme}>Modo Escuro</h3>
+                    <img src={darkTheme ? arrowsWhite : arrows} />
+                    <h3 id="h3" onClick={onChangeTheme}>Modo Escuro</h3>
                 </div>
 
                 <div className="column2">
-                    <h3><Link className='link' to={'/'}>Voltar</Link></h3>
+                    <h3 id="h3"><Link id="h3" className='link' to={'/'}>Voltar</Link></h3>
                 </div>
 
 

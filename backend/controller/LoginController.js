@@ -1,7 +1,7 @@
 import * as LoginRepository from '../repository/LoginRepository.js'
 import { Router } from "express";
-import {generateToken} from '../utils/jwt.js';
-import {getAuthentication} from '../utils/jwt.js'
+import generateToken from '../utils/jwt.js';
+import getAuthentication from '../utils/jwt.js'
 const endpoints = Router();
 
 endpoints.post('/InserirLogin', async (req,resp) => {

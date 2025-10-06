@@ -10,13 +10,7 @@ export default function Verify() {
   const [darkTheme, setDarkTheme] = useState(false)
 
   function ChangeTheme() {
-    if (darkTheme === false) {
-      setDarkTheme(true)
-    }
-
-    else {
-      setDarkTheme(false)
-    }
+    setDarkTheme(prev => !prev)
   }
 
   function verificar() {
@@ -83,7 +77,7 @@ export default function Verify() {
 
   return (
     <main className="MainVerifyArchiver">
-      <Cabecalho2 />
+      <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
       <section className="page">
         <div className="card">
           <div className="part1">

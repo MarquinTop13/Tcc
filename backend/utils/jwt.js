@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken'
 
-const KEY = 'Potato10!'
+const KEY = 'borapracima'
 
 
-export function generateToken(userInfo) {
+export default function generateToken(userInfo) {
   if (!userInfo.role)
     userInfo.role = 'user';
 
@@ -53,3 +53,4 @@ export function getAuthentication(checkRole, throw401 = true) {
     }
   }
 }
+

@@ -9,22 +9,13 @@ export default function Home() {
 
     const [darkTheme, setDarkTheme] = useState(false)
 
-    function ChangeTheme(){
-        if(darkTheme === false){
-            setDarkTheme(true)
-        }
-
-        else{
-            setDarkTheme(false)
-        }
+    function ChangeTheme() {
+        setDarkTheme(prev => !prev)
     }
 
-    
-
     return (
-        <main className='MainHome'>
-            <Cabecalho />
-            
+        <main className={`MainHome ${darkTheme ? "dark" : "light"}`}>
+            <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
 
             <section className="text">
                 <h1>Proteja seu dispositivo com um clique!</h1>
@@ -34,7 +25,7 @@ export default function Home() {
             <section className="cards">
                 <div className='card1'>
                     <div className="titlecard">
-                        <img src="images/iconarchive.png" />
+                        <img src="/images/iconarchive.png" />
                         <h2>Verificador de arquivos</h2>
                     </div>
                     <div className="textcard">
@@ -43,12 +34,11 @@ export default function Home() {
                     <Link to={"/VerifyArchiver"}>
                         <button>Verifique Agora!</button>
                     </Link>
-
                 </div>
 
                 <div className='card2'>
-                <div className="titlecard2">
-                        <img src="images/link.png" />
+                    <div className="titlecard2">
+                        <img src="/images/link.png" />
                         <h2>Verificador de link</h2>
                     </div>
                     <div className="textcard2">
@@ -60,8 +50,8 @@ export default function Home() {
                 </div>
 
                 <div className='card3'>
-                <div className="titlecard3">
-                        <img src="images/passo-a-passo.png" />
+                    <div className="titlecard3">
+                        <img src="/images/passo-a-passo.png" />
                         <h2>Instruções para se previnir</h2>
                     </div>
                     <div className="textcard3">
@@ -73,7 +63,7 @@ export default function Home() {
                 </div>
 
                 <div className='card4'>
-                <div className="titlecard4">
+                    <div className="titlecard4">
                         <img src="/images/machine.png" />
                         <h2>Gerador de senhas</h2>
                     </div>
@@ -84,7 +74,6 @@ export default function Home() {
                         <button>Gere sua senha!</button>
                     </Link>
                 </div>
-           
             </section>
         </main>
     )

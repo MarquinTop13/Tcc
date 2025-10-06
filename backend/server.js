@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { Rotas } from './rotas.js';
+import { AddRotas } from './router.js';
 
 // Carrega variáveis de ambiente PRIMEIRO
 dotenv.config();
@@ -17,7 +17,7 @@ app.use(express.json());
 console.log('🔑 API Key carregada:', process.env.GOOGLE_SAFE_BROWSING_API_KEY ? 'Sim' : 'Não');
 
 // Configura todas as rotas
-Rotas(app);
+AddRotas(app);
 
 // Rota raiz alternativa
 app.get('/', (req, res) => {
