@@ -1,17 +1,7 @@
-body{
-  background: url('../public/claro.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 98vw;
-  height: 70.1vw;
-  margin: 0px;
-  padding: 0px;
-}
-
 .cabecalho-login{
   height: 10vw; 
   text-align: end;
-  width: 95vw;
+  width: 100vw;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -54,11 +44,12 @@ section {
 
     .login-fundo {
       text-align: start;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       
       h1 {
         margin-left: 1rem;
         color: #000000;
+        margin-bottom: 0.2rem;
       }
       h2 {
         font-size: 1rem;
@@ -73,37 +64,39 @@ display: flex;
 flex-direction: column;
 align-items: flex-end;
 
-input {
-  background-color: #868E96 ;
-  width: 100%;
-  max-width: 500px;
-  height: 4.7vw;
-  margin-bottom: 0.9rem;
-  padding: 0 12px;
-  border: 1px solid black;
-  border-radius: 8px;
-  font-size: 1.3rem;
-}
+  input {
+    background-color: #868E96 ;
+    width: 100%;
+    max-width: 500px;
+    height: 5vw;
+    padding: 0 12px;
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 1.3rem;
+  }
+  .um{
+    margin-bottom: 1rem;
+  }
 }
 .conteiner-link-botao{
-  width: 100%;
 
   .link-login {
-    margin-right: 8rem;
+    margin-right: 4rem;
     font-size: 2rem;
     text-decoration: none;
     color: #00356e;
   }
   .botao{
     background-color: #333366;
-    margin-right: 8rem;
+    margin-right: 7rem;
     margin-top: 0.1rem;
     font-size: 1.3rem;
     color: #fff;
     border: solid black 0.5px;
     border-radius: 12px;
-    width: 14vw;
-    height: 4.3vw;
+    width: 12vw;
+    height: 4.1vw;
+    cursor: pointer;
   }
 }
 

@@ -1,7 +1,7 @@
 .cabecalho-cadastro{
   height: 10vw; 
   text-align: end;
-  width: 95vw;
+  width: 100vw;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -63,12 +63,18 @@
               border-radius: 8px;
               font-size: 1.3rem;
             }
+            input:-webkit-autofill {
+              -webkit-box-shadow: 0 0 0 30px #868E96 inset !important;
+              -webkit-text-fill-color: #000000 !important;
+              caret-color: #fff !important;
+              transition: background-color 5000s ease-in-out 0s;
+            }
         }
     }
 }
 .conteiner-link-botao-cas{
     justify-content: space-between;
-    margin-left: 5.7rem;
+    margin-left: 4.7rem;
     width: 90%;
   
     .fundo-botao{
@@ -89,8 +95,9 @@
         color: #fff;
         border: solid black 0.5px;
         border-radius: 12px;
-        width: 14vw;
-        height: 4.3vw;
+        width: 12vw;
+        height: 4vw;
+        cursor: pointer;
         }
     }    
   }

@@ -1,4 +1,4 @@
-import conection from "./conection.js";
+import { conexao } from './conections.js';
 import md5 from 'md5';
 
 export default async function consultarCredenciais(nome, email, senha) {

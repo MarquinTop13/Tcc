@@ -3,6 +3,7 @@ import Home from "./pages/home/home"
 import Cas from "./pages/cadastro/cadastro"
 import Verify from "./pages/verifyarchiver/verify"
 import VerifyLinks from "./pages/verifylinks/verifylinks"
+import Login from "./pages/login/App.jsx"
 
 
 export default function Rotas(){
@@ -12,7 +13,8 @@ export default function Rotas(){
                 <Route path="/" element={<Home />} />
                 <Route path="/VerifyArchiver" element={<Verify />} />
                 <Route path="/VerifyLinks" element={<VerifyLinks />} />
-                <Route path="/Cadastro" element={<Cas />} />
+                <Route path="/Login" element={<Login />} />
+                <Route path="/Cadastro" element={<Cas />}/>
             </Routes>
         </BrowserRouter>
     )

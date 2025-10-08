@@ -1,9 +1,16 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { useState } from 'react'
 import axios from 'axios'
 import './App.scss'
+import Cabecalho from '../../components/header1'
 
 function Login() {
+  const [darkTheme, setDarkTheme] = useState(false)
+
+  function ChangeTheme() {
+      setDarkTheme(prev => !prev)
+  }
+  
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
@@ -28,19 +35,8 @@ function Login() {
   }
 
   return (
-    <>
-    <main>
-      <header className='cabecalho-login'>
-        <div className='div-logo'>
-          <img src="" height="" />
-        </div>
-        <nav className='nav-login'>
-          <button>Modo escuro</button>
-          <Link>Suporte</Link>
-          <Link>Atualizações <br />e Serviços</Link>
-          <Link>Login</Link>
-        </nav>
-      </header>
+    <main className={`MainHome ${darkTheme ? "dark" : "ligth"}`}>
+      <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme}/>
       <section>
         <div className="fundo-secundario">
           <div className="login-fundo">
@@ -48,21 +44,21 @@ function Login() {
             <h2>Seja Bem-vindo de volta</h2>
           </div>
           <div className="conteiner-login">
-            <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)}/>
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+            <input className='um' type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)}/>
+            <input className='um' type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
             <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)}/>
           </div>
         </div>
       </section>
       <section className='conteiner-link-botao'>
         <div>
-          <Link to="/registro" className="link-login">Criar Conta!</Link>
+          <Link to="/Cadastro" className="link-login">Criar Conta!</Link>
           <button className='botao' onClick={Enviarlogin}>Entrar</button>
         </div>
       </section>
     </main>
-    </>
+
   )
 }
 
-export default Login
+export default Login;

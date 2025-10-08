@@ -45,8 +45,7 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
                 </div>
 
                 <div className="column4">
-                    <h3 id="h3" ><Link id="h3" className="link" to={"/Cadastro"}>Registrar-Se</Link></h3>
-                    <h3 id="h3" className='h32'>Login</h3>
+                    <h3 id="h3" ><Link id="h3" className="link" to={"/Login"}>Login</Link></h3>
                 </div>
             </section>
         </header>

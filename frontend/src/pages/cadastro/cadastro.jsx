@@ -2,8 +2,15 @@ import { Link, useNavigate } from 'react-router'
 import { useState } from 'react'
 import axios from 'axios'
 import './cadastro.scss'
+import Cabecalho from '../../components/header1'
 
 function Cas() {
+  const [darkTheme, setDarkTheme] = useState(false)
+
+  function ChangeTheme() {
+      setDarkTheme(prev => !prev)
+  }
+
   const [form, setForm] = useState({
     nome: "",
     email: "",
@@ -51,19 +58,8 @@ function Cas() {
   }
 
   return (
-    <>
-    <main>
-      <header className='cabecalho-cadastro'>
-        <div className='div-logo-cas'>
-          <img src="" height="" />
-        </div>
-        <nav className='nav-login-cas'>
-          <button>Modo escuro</button>
-          <Link>Suporte</Link>
-          <Link>Atualizações <br />e Serviços</Link>
-          <Link>Login</Link>
-        </nav>
-      </header>
+    <main className={`MainHome ${darkTheme ? "dark" : "ligth"}`}>
+      <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme}/>
       <section className='fundo'>
         <div className="fundo-secundario-cadastro">
           <div className="cadastro-fundo">
@@ -86,7 +82,6 @@ function Cas() {
             </div>
       </section>
     </main>
-    </>
   )
 }
 export default Cas;
