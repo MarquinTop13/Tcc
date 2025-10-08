@@ -1,4 +1,4 @@
-import "./header.scss"
+import "./index.scss"
 import { Link } from 'react-router';
 import React, { useEffect, useState } from 'react';
 import BackgroundBlack from "/images/BackgroundBlack.png"
@@ -27,17 +27,17 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
 
     return (
         <header id="header">
-            <img src="" alt="" />
+            <img className="logo" src="/images/Logo-removebg-preview.png" />
 
             <section className="opcoes">
-                <div className="column1">
+                <nav className="column1">
                     <img src={darkTheme ? arrowsWhite : arrows} />
                     <h3 id="h3" onClick={onChangeTheme}>Modo Escuro</h3>
-                </div>
+                </nav>
 
-                <div className="column2">
+                <nav className="column2">
                     <h3 id="h3"><Link id="h3" className='link' to={'/'}>Voltar</Link></h3>
-                </div>
+                </nav>
 
 
             </section>

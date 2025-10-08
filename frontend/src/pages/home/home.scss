@@ -16,7 +16,7 @@ body {
             display: flex;
             
 
-            .card1, .card2, .card3, .card4 {
+            #card1, #card2, #card3, #card4 {
                 background-color: #ced4dac1;
                 display: flex;
                 text-align: center;
@@ -53,7 +53,7 @@ body {
                     }
                 }
 
-                .textcard, .textcard2, .textcard3, .textocard4 {
+                #textcard, #textcard2, #textcard3, #textocard4 {
                     width: 70%;
                     color: #333333;
                     margin-top: 10%;

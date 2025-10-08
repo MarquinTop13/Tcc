@@ -11,7 +11,7 @@ export default function VerifyLinks() {
 
                 <section className="opcoes">
                     <div className="column1">
-                        <img src="../../../public/images/arrows.png" />
+                        <img src="/images/arrows.png" />
                         <h3>Modo Escuro</h3>
                     </div>
 

@@ -3,10 +3,18 @@
 }
 
 header {
+    display: flex;
     background: linear-gradient(to bottom, #6892C1 20%, #37516E 100%);
     backdrop-filter: blur(100%);
     width: 100%;
     
+
+    .logo{
+        width: 10%;
+        height: 10%;
+        padding: 15px;
+        margin: 0.5rem;
+    }
 
 
     .opcoes {
@@ -17,6 +25,17 @@ header {
         width: 50%;
         margin-left: 50%;
         gap: 30px;
+
+        h3, #h3{
+            .link {
+                    color: #1E293B;
+                    text-decoration: none;
+                }
+
+                &:hover {
+                    text-decoration: underline;
+                }
+        }
 
 
         .column1 {
@@ -34,19 +53,8 @@ header {
             width: 10%;
             color: #1E293B;
 
-
             h3, #h3 {
                 font-size: 25px;
-
-                .link {
-                    color: #1E293B;
-                    text-decoration: none;
-                }
-
-                &:hover {
-                    text-decoration: underline;
-                }
-
             }
         }
 

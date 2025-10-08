@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import Cabecalho2 from '../../components/header2.jsx';
+import Cabecalho2 from '../../components/HeaderPages';
 import '../../scss/global.scss';
 import '../../scss/fonts.scss';
 import "./verify.scss";

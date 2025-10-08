@@ -1,9 +1,9 @@
 import '../../scss/global.scss'
 import '../../scss/fonts.scss'
 import './home.scss'
-import Cabecalho from "../../components/header1.jsx"
+import Cabecalho from "../../components/headerHome"
 import { Link } from "react-router"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
 
@@ -12,6 +12,29 @@ export default function Home() {
     function ChangeTheme() {
         setDarkTheme(prev => !prev)
     }
+
+    useEffect(() => {
+        if(darkTheme){
+            document.getElementById('textcard').style.color = "#D1D5DB";
+            document.getElementById('textcard2').style.color = "#D1D5DB";
+            document.getElementById('textcard3').style.color = "#D1D5DB";
+            document.getElementById('textcard4').style.color = "#D1D5DB";
+            document.getElementById('card1').style.backgroundColor = "#112A43";
+            document.getElementById('card2').style.backgroundColor = "#112A43";
+            document.getElementById('card3').style.backgroundColor = "#112A43";
+            document.getElementById('card4').style.backgroundColor = "#112A43";
+        }
+        else{
+            document.getElementById('textcard').style.color = "#333333";
+            document.getElementById('textcard2').style.color = "#333333";
+            document.getElementById('textcard3').style.color = "#333333";
+            document.getElementById('textcard4').style.color = "#333333";
+            document.getElementById('card1').style.backgroundColor = "#ced4dac1";
+            document.getElementById('card2').style.backgroundColor = "#ced4dac1";
+            document.getElementById('card3').style.backgroundColor = "#ced4dac1";
+            document.getElementById('card4').style.backgroundColor = "#ced4dac1";
+        }   
+    })
 
     return (
         <main className={`MainHome ${darkTheme ? "dark" : "light"}`}>
@@ -23,12 +46,12 @@ export default function Home() {
             </section>
 
             <section className="cards">
-                <div className='card1'>
+                <div id='card1'>
                     <div className="titlecard">
                         <img src="/images/iconarchive.png" />
                         <h2>Verificador de arquivos</h2>
                     </div>
-                    <div className="textcard">
+                    <div id="textcard">
                         <p>Envie um arquivo e iremos verificar se causa danos!</p>
                     </div>
                     <Link to={"/VerifyArchiver"}>
@@ -36,12 +59,12 @@ export default function Home() {
                     </Link>
                 </div>
 
-                <div className='card2'>
+                <div id='card2'>
                     <div className="titlecard2">
                         <img src="/images/link.png" />
                         <h2>Verificador de link</h2>
                     </div>
-                    <div className="textcard2">
+                    <div id="textcard2">
                         <p>Envie um link e iremos verificar se causa danos!</p>
                     </div>
                     <Link to={"/VerifyArchiver"}>
@@ -49,12 +72,12 @@ export default function Home() {
                     </Link>
                 </div>
 
-                <div className='card3'>
+                <div id='card3'>
                     <div className="titlecard3">
                         <img src="/images/passo-a-passo.png" />
                         <h2>Instruções para se previnir</h2>
                     </div>
-                    <div className="textcard3">
+                    <div id="textcard3">
                         <p>Ensinaremos um passo a passo de como se manter seguro</p>
                     </div>
                     <Link to={"/VerifyArchiver"}>
@@ -62,12 +85,12 @@ export default function Home() {
                     </Link>
                 </div>
 
-                <div className='card4'>
+                <div id='card4'>
                     <div className="titlecard4">
                         <img src="/images/machine.png" />
                         <h2>Gerador de senhas</h2>
                     </div>
-                    <div className="textcard3">
+                    <div id="textcard4">
                         <p>Gerar senhas com muita segurança</p>
                     </div>
                     <Link to={"/VerifyArchiver"}>

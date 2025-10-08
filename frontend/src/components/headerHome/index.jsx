@@ -1,4 +1,4 @@
-import "./header.scss"
+import "./index.scss"
 import React, { useEffect } from "react"
 import { Link } from "react-router"
 import BackgroundBlack from "/images/BackgroundBlack.png"
@@ -27,28 +27,28 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
 
     return (
         <header id="header">
-            <section className="opcoes">
-                <div className="column1">
+            <nav className="opcoes">
+                <ul className="column1">
                     <img id="img" src={darkTheme ? arrowsWhite : arrows} />
                     <h3 id="h3" onClick={onChangeTheme}>
                         {darkTheme ? "Modo Claro" : "Modo Escuro"}
                     </h3>
-                </div>
+                </ul>
 
-                <div className="column2">
+                <ul className="column2">
                     <h3 id="h3">Suporte</h3>
-                </div>
+                </ul>
 
-                <div className="column3">
+                <ul className="column3">
                     <h3 id="h3">Atualizações</h3>
                     <h3 id="h3" className='h32'>Serviços</h3>
-                </div>
+                </ul>
 
-                <div className="column4">
+                <ul className="column4">
                     <h3 id="h3" ><Link id="h3" className="link" to={"/Cadastro"}>Registrar-Se</Link></h3>
                     <h3 id="h3" className='h32'>Login</h3>
-                </div>
-            </section>
+                </ul>
+            </nav>
         </header>
     )
 }
