@@ -1,20 +1,41 @@
-import { Link, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import { useState } from 'react'
 import axios from 'axios'
 import './cadastro.scss'
+import Cabecalho from '../../components/header1'
 
 function Cas() {
+
+  const [darkTheme, setDarkTheme] = useState(false)
+
+  function ChangeTheme() {
+      setDarkTheme(prev => !prev)
+  }
+
   const [form, setForm] = useState({
     nome: "",
     email: "",
     senha: "",
     palavra: "",
-    confirmarSenha: ""
+    confirmarSenha: "",
+    idade: ""
   })
 
   function validarEmail(email){
-    const validar = /^[^\s@]+@gmail+\.com$/ || /^[^\s@]+@outlook+\.com$/;
-    return validar.test(email);
+    const Regex = [
+      /^[^\s@]+@gmail\.com$/,
+      /^[^\s@]+@outlook\.com$/,
+      /^[^\s@]+@yahoo\.com$/,
+      /^[^\s@]+@hotmail\.com$/,
+      /^[^\s@]+@icloud\.com$/,
+      /^[^\s@]+@protonmail\.com$/,
+      /^[^\s@]+@live\.com$/,
+      /^[^\s@]+@zoho\.com$/,
+      /^[^\s@]+@gmx\.com$/,
+      /^[^\s@]+@yandex\.com$/,
+      /^[^\s@]+@aol\.com$/
+    ];
+    return Regex.some(regex => regex.test(email));
   }
 
   const navigate = useNavigate()
@@ -40,7 +61,7 @@ function Cas() {
     try {
       await axios.post("http://localhost:5010/registro", form)
       alert("Usuário cadastrado com sucesso!")
-      navigate("/")
+      navigate("/Login")
     } catch (err) {
       if (err.response) {
         alert(err.response.data.error || "Erro no cadastro")
@@ -51,19 +72,8 @@ function Cas() {
   }
 
   return (
-    <>
-    <main>
-      <header className='cabecalho-cadastro'>
-        <div className='div-logo-cas'>
-          <img src="" height="" />
-        </div>
-        <nav className='nav-login-cas'>
-          <button>Modo escuro</button>
-          <Link>Suporte</Link>
-          <Link>Atualizações <br />e Serviços</Link>
-          <Link>Login</Link>
-        </nav>
-      </header>
+    <main className={`MainHome ${darkTheme ? "dark" : "ligth"}`}>
+      <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme}/>
       <section className='fundo'>
         <div className="fundo-secundario-cadastro">
           <div className="cadastro-fundo">
@@ -75,7 +85,10 @@ function Cas() {
             <input type="email" name='email' placeholder="Email" value={form.email} onChange={F}/>
             <input type="password" name='senha' placeholder="Senha" value={form.senha} onChange={F}/>
             <input type="password" name='confirmarSenha' placeholder="Confirmar Senha" value={form.confirmarSenha} onChange={F}/>
-            <input type="text" name='palavra' placeholder="Palavra de Segurança" value={form.palavra} onChange={F}/>
+          <div className='separados'>  
+            <input type="text" className='separado' name='palavra' placeholder="Palavra de Segurança" value={form.palavra} onChange={F}/>
+            <input type="date" className='data' name='idade' value={form.idade} onChange={F}/>
+          </div>
           </div>
         </div>
       </section>
@@ -86,7 +99,6 @@ function Cas() {
             </div>
       </section>
     </main>
-    </>
   )
 }
 export default Cas;
