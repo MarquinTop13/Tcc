@@ -2,10 +2,10 @@ import { Link, useNavigate } from 'react-router'
 import { useState } from 'react'
 import axios from 'axios'
 import './App.scss'
-import Cabecalho from '../../components/header1'
+import Cabecalho from '../../components/HeaderPages'
 
 function Login() {
-  const [darkTheme, setDarkTheme] = useState(false)
+  const [darkTheme, setDarkTheme] = useState(true)
 
   function ChangeTheme() {
       setDarkTheme(prev => !prev)

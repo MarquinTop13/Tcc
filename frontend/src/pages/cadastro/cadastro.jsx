@@ -2,11 +2,11 @@ import { useNavigate } from 'react-router'
 import { useState } from 'react'
 import axios from 'axios'
 import './cadastro.scss'
-import Cabecalho from '../../components/header1'
+import Cabecalho from '../../components/HeaderPages'
 
 function Cas() {
 
-  const [darkTheme, setDarkTheme] = useState(false)
+  const [darkTheme, setDarkTheme] = useState(true)
 
   function ChangeTheme() {
       setDarkTheme(prev => !prev)

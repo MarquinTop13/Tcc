@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 export default function Verify() {
 
-  const [darkTheme, setDarkTheme] = useState(false)
+  const [darkTheme, setDarkTheme] = useState(true)
 
   function ChangeTheme() {
     setDarkTheme(prev => !prev)

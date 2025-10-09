@@ -2,7 +2,7 @@
     transition: 150ms;
 }
 
-header {
+#header-home {
     display: flex;
     background: linear-gradient(to bottom, #6892C1 20%, #37516E 100%);
     backdrop-filter: blur(100%);
@@ -26,16 +26,18 @@ header {
         margin-left: 50%;
         gap: 30px;
 
-        h3, #h3{
-            .link {
+
+            #link {
                     color: #1E293B;
                     text-decoration: none;
-                }
 
-                &:hover {
+                    &:hover {
                     text-decoration: underline;
                 }
-        }
+                }
+
+                
+        
 
 
         .column1 {
