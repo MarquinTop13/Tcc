@@ -18,7 +18,7 @@ function Login() {
 
   async function Enviarlogin() {
     try {
-      const res = await axios.post('http://localhost:5000/login', {
+      const res = await axios.post('http://localhost:5010/Login', {
         nome,
         email,
         senha
@@ -37,7 +37,7 @@ function Login() {
   return (
     <main className={`MainHome ${darkTheme ? "dark" : "ligth"}`}>
       <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme}/>
-      <section>
+      <section  className='conteiner-App'>
         <div className="fundo-secundario">
           <div className="login-fundo">
             <h1>Entrar</h1>

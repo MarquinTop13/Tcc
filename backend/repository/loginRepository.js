@@ -1,8 +1,8 @@
 import { conexao } from './conections.js';
-import md5 from 'md5';
+import MD5 from 'md5';
 
 export default async function consultarCredenciais(nome, email, senha) {
-  const senhaMD5 = md5(senha);
+  const senhaMD5 = MD5(senha);
   const comando = `
       select nome,
              email
@@ -12,7 +12,7 @@ export default async function consultarCredenciais(nome, email, senha) {
          and senha = ?
     `;
 
-  const [res] = await conection.query(comando, [nome, email, senhaMD5]);
+  const [res] = await conexao.query(comando, [nome, email, senhaMD5]);
   if (res.length > 0) {
     return res[0];
   } else {

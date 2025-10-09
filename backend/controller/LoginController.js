@@ -1,4 +1,4 @@
-import * as LoginRepository from '../repository/LoginRepository.js'
+import consultarCredenciais from '../repository/loginRepository.js'
 import { Router } from "express";
 import generateToken from '../utils/jwt.js';
 import getAuthentication from '../utils/jwt.js'
@@ -10,14 +10,13 @@ endpoints.post('/InserirLogin', async (req,resp) => {
     resp.send({NewId: id});
 })
 
-endpoints.get('/Login', async (req,resp) => {
-    const email = req.body.email;
-    const password = req.body.password;
+endpoints.post('/Login', async (req,resp) => {
+    const { nome, email, senha } = req.body;
 
-    const dados = await LoginRepository.Logar(email,password);
+    const dados = await consultarCredenciais(nome, email, senha);
 
     if(!dados){
-        resp.status(401).send("Achei N")
+        resp.status(401).send("não encontrado")
     }
 
     else{

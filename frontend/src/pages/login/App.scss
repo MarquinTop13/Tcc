@@ -30,7 +30,7 @@
     height: 4vh;
   }
 }
-section {
+.conteiner-App {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -79,6 +79,7 @@ align-items: flex-end;
   }
 }
 .conteiner-link-botao{
+  text-align: right;
 
   .link-login {
     margin-right: 4rem;
