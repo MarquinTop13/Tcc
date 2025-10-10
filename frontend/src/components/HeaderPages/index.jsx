@@ -1,10 +1,10 @@
 import "./index.scss"
 import { Link } from 'react-router';
 import React, { useEffect, useState } from 'react';
-import BackgroundBlack from "/images/BackgroundBlack.png"
-import BackgroundWhite from "/images/BackgroundWhite.png"
-import arrowsWhite from "/images/arrowsWhite.png"
-import arrows from "/images/arrows.png"
+import BackgroundBlack from "/images/Black/BackgroundBlack.png"
+import BackgroundWhite from "/images/White/BackgroundWhite.png"
+import arrowsWhite from "/images/White/arrowsWhite.png"
+import arrows from "/images/Black/arrows.png"
 
 export default function Cabecalho({ darkTheme, onChangeTheme }) {
 
