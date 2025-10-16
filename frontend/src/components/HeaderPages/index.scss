@@ -1,16 +1,14 @@
-*{
-    transition: 150ms;
-}
-
-header {
+.header-pages {
+    --text-color: #1E293B;
     display: flex;
-    color: #1E293B;
-    backdrop-filter: blur(100%);
     width: 100%;
     
+    &.dark{
+        --text-color: #e2e3de;
+    }
 
     .logo{
-        width: 5.5%;
+        width: 7%;
         margin: 0.5rem;
     }
 
@@ -44,13 +42,10 @@ header {
             flex-direction: column;
             align-items: center;
             width: 10%;
-            color: #1E293B;
-
             h3, #h3 {
                 font-size: 25px;
 
                 .link {
-                    color: #1E293B;
                     text-decoration: none;
                 }
 

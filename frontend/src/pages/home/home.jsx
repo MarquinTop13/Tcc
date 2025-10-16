@@ -9,6 +9,8 @@ import LinkBlackMode from "/images/Black/link.png"
 import PassToPassWhite from '/images/White/passo_a_passo_white1.png'
 import PassToPassBlack from '/images/Black/passo-a-passo.png'
 import ArchiveIcon from "/images/iconarchive.png"
+import MachineBlack from "/images/Black/machineBlack.png"
+import Machine from "/images/White/machine.png"
 
 
 import { Link } from "react-router"
@@ -68,7 +70,7 @@ export default function Home() {
 
                     {
                         id: 4,
-                        icon: "/images/machine.png",
+                        icon: darkTheme ? MachineBlack : Machine,
                         title: "Gerador de senhas",
                         text: "Um simples gerador de senha com alta segurança",
                         link: "/", //Alguem faz ai tambem

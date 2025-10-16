@@ -1,10 +1,12 @@
 body {
     background-size: cover;
-    height: 300px; 
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; 
     width: 100%;
     
     .MainHome {
-        --text-color: #008B15;
+        --text-color: #002b97cc;
         --card-bg: #ced4dabb;
         --card-border: #000000c7;
         --card-shadow: -3px 3px 2px #000000d7;
