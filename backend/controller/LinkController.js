@@ -3,15 +3,24 @@ import axios from "axios"
 const endpoints = Router();
 
 
+
 endpoints.get('/', (req, res) => {
   res.json({ 
-    message: 'API Safe Browsing funcionando!',
-    endpoints: {
-      '/api/check-url': 'POST - Verificar uma URL',
-      '/api/health': 'GET - Status da API'
-    }
+    message: 'Bem-vindo à API Safe Browsing!',
+    documentation: 'Acesse /api/info para ver os endpoints disponíveis',
+
   });
 });
+
+endpoints.get('/info', (req,res) => {
+  res.json({
+      endpoints: {
+      '/api/check-url': 'POST - Verificar uma URL',
+      '/api/health': 'GET - Status da API',
+      '/api/check-multiple': 'POST - Verificar Várias URL'
+    }
+  })
+})
 
 
 endpoints.get('/health', (req, res) => { 

@@ -20,12 +20,7 @@ console.log('🔑 API Key carregada:', process.env.GOOGLE_SAFE_BROWSING_API_KEY 
 AddRotas(app);
 
 // Rota raiz alternativa
-app.get('/', (req, res) => {
-  res.json({ 
-    message: 'Bem-vindo à API Safe Browsing!',
-    documentation: 'Acesse /api para ver os endpoints disponíveis'
-  });
-});
+
 
 // Middleware de erro global
 app.use((error, req, res, next) => {

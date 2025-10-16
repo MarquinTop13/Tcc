@@ -1,128 +1,71 @@
 body {
-    
-    
     background-size: cover;
     height: 300px; 
     width: 100%;
+    
+    .MainHome {
+        --text-color: #008B15;
+        --card-bg: #ced4dabb;
+        --card-border: #000000c7;
+        --card-shadow: -3px 3px 2px #000000d7;
+        --card-hover-shadow: -10px 8px 10px #000000d7;
+        --title-color: #000000;
+        --paragraph-color: #333333;
+        --button-bg: #333366;
+        --button-hover: #262650;
+        --button-border: #000000;
 
-    .MainHome.light {
-       
-        .text{
+        &.dark {
+            --text-color: #00CA1E;
+            --card-bg: #28374e98;
+            --card-border: #1E1E1E;
+            --card-shadow: -3px 3px 2px #000000d7;
+            --card-hover-shadow: -10px 8px 10px #000000d7;
+            --title-color: #FFFFFF;
+            --paragraph-color: #D1D5DB;
+            --button-bg: #0040FF;
+            --button-hover: #262650;
+            --button-border: #000000;
+        }
+
+        .text {
             padding: 3%;
-            color: #008B15;
+            color: var(--text-color);
         }
 
         .cards {
             display: flex;
-            
+            flex-wrap: wrap;
+            justify-content: space-around;
 
             .card-1, .card-2, .card-3, .card-4 {
-                background-color: #ced4dac1;
+                background-color: var(--card-bg);
                 display: flex;
                 text-align: center;
                 align-items: center;
                 flex-direction: column;
-                box-shadow: -3px 3px 2px #000000d7; 
+                box-shadow: var(--card-shadow);
                 width: 20%;
-                margin: 3%;
                 height: 230px;
                 padding: 1%;
-                border-radius: 3px;   
-                position: relative; 
-                transition:  450ms;
-                border: 1px solid #00000086;
+                border-radius: 3px;
+                position: relative;
+                transition: 450ms;
+                border: 2px solid var(--card-border);
 
                 &:hover {
                     transform: translateY(-10px);
-                    box-shadow: -10px 8px 10px #000000d7; 
-                         
+                    box-shadow: var(--card-hover-shadow);
                 }
 
-
-                .titlecard-1, .titlecard-2,  .titlecard-3, .titlecard-4 {
+                .titlecard-1, .titlecard-2, .titlecard-3, .titlecard-4 {
                     display: flex;
                     font-size: 0.8rem;
                     text-align: end;
                     align-items: center;
                     margin-right: 7%;
                     padding: 3%;
-
-                    img {
-                        margin: 3%;
-                        width: 30%;
-                    }
-                }
-
-               p {
-                    width: 70%;
-                    color: #333333;
-                    margin-top: 10%;
-                }
-
-                button {
-                    border-radius: 5px;
-                    margin-top: 20%;
-                    background-color: #333366;
-                    border: 3px solid #000000;
-                    color: #FFFFFF;
-                    font-size: 20px;
-                    display: inline-block;
-                    padding: 10px;
-                    cursor: pointer;
-                    transition: 350ms;
-
-                    &:hover{
-                        background-color: #262650;
-                    }
-                }
-                
-                
-            }
-        }
-    }
-
-    .MainHome.dark {
-       
-        .text{
-            padding: 3%;
-            color: #00CA1E;
-        }
-
-        .cards {
-            display: flex;
-            
-
-            .card-1, .card-2, .card-3, .card-4 {
-                background-color: #28374E;
-                display: flex;
-                text-align: center;
-                align-items: center;
-                flex-direction: column;
-                box-shadow: -3px 3px 2px #000000d7; 
-                width: 20%;
-                margin: 3%;
-                height: 240px;
-                padding: 1%;
-                border-radius: 3px;   
-                position: relative; 
-                transition:  450ms;
-                border: 1px solid #1E1E1E;
-
-                &:hover {
-                    transform: translateY(-10px);
-                    box-shadow: -10px 8px 10px #000000d7; 
-                         
-                }
-
-
-                .titlecard-1, .titlecard-2,  .titlecard-3, .titlecard-4 {
-                    display: flex;
-                    font-size: 0.8rem;
-                    text-align: end;
-                    align-items: center;
-                    margin-right: 7%;
-                    padding: 3%;
-                    color: #FFFFFF;
+                    color: var(--title-color);
 
                     img {
                         margin: 3%;
@@ -132,28 +75,36 @@ body {
 
                 p {
                     width: 70%;
-                    color: #D1D5DB;
-                    margin-top: 10%;
+                    color: var(--paragraph-color);
+                    margin-top: 5%;
+                    flex-grow: 1;
                 }
 
-                button {
-                    border-radius: 5px;
-                    background-color: #0040FF;
-                    border: 3px solid #000000;
-                    color: #FFFFFF;
-                    font-size: 20px;
-                    position: relative;
-                    top: 20px;
-                    padding: 10px;
-                    cursor: pointer;
-                    transition: 350ms;
+                .button-container {
+                    position: absolute;
+                    bottom: -25px;
+                    left: 0;
+                    right: 0;
+                    display: flex;
+                    justify-content: center;
+                    
+                    button {
+                        border-radius: 5px;
+                        background-color: var(--button-bg);
+                        border: 3px solid var(--button-border);
+                        color: #FFFFFF;
+                        font-size: 20px;
+                        padding: 10px 20px;
+                        cursor: pointer;
+                        transition: 350ms;
+                        width: auto;
+                        min-width: 150px;
 
-                    &:hover{
-                        background-color: #262650;
+                        &:hover {
+                            background-color: var(--button-hover);
+                        }
                     }
                 }
-                
-                
             }
         }
     }

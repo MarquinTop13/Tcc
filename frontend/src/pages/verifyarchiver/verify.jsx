@@ -43,10 +43,8 @@ export default function Verify() {
           { palavra: 'move', descricao: 'Move arquivos ou pastas' },
           { palavra: 'cipher', descricao: 'Criptografa arquivos' },
           { palavra: 'format', descricao: 'Formata o disco' },
-          { palavra: 'start cmd', descricao: 'Executa comandos perigosos' },
-          { palavra: 'cmd.exe', descricao: 'Executa comandos perigosos' },
+          { palavra: 'start cmd' || 'cmd.exe' || 'powershell', descricao: 'Executa comandos perigosos via terminal' },
           { palavra: '.exe', descricao: 'Instala/executa comandos perigosos' },
-          { palavra: 'powershell', descricao: 'Executa comandos perigosos' },
           { palavra: 'shutdown', descricao: 'Desliga o computador' }
         ];
 

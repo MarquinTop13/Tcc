@@ -3,8 +3,8 @@ import { Link } from 'react-router';
 import React, { useEffect, useState } from 'react';
 import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
-import arrowsWhite from "/images/White/arrowsWhite.png"
-import arrows from "/images/Black/arrows.png"
+import brightness from "/images/Black/brightness.png"
+import brightnessWhite from "/images/White/brightnessWhite.png"
 
 export default function Cabecalho({ darkTheme, onChangeTheme }) {
 
@@ -31,7 +31,7 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
 
             <section className="opcoes">
                 <nav className="column1">
-                    <img src={darkTheme ? arrowsWhite : arrows} />
+                    <img src={darkTheme ? brightnessWhite : brightness} />
                     <h3 id="h3" onClick={onChangeTheme}>Modo Escuro</h3>
                 </nav>
 

@@ -1,8 +1,9 @@
 import "./index.scss"
 import React, { useEffect } from "react"
 import { Link } from "react-router"
-import arrowsWhite from "/images/White/arrowsWhite.png"
-import arrows from "/images/Black/arrows.png"
+import Logo from "/images/Logo-removebg-preview.png"
+import brightness from "/images/Black/brightness.png"
+import brightnessWhite from "/images/White/brightnessWhite.png"
 
 export default function Cabecalho({ darkTheme, onChangeTheme }) {
 
@@ -15,7 +16,7 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
             header.style.background = "#112A43";
             h3s.forEach((h3) => (h3.style.color = "#FFFFFF"));
         } else {
-            header.style.background = "#6892C1";
+            header.style.background = "#6892c198";
             document.getElementById('link').style.color = '#1E293B'
             h3s.forEach((h3) => (h3.style.color = "#1E293B"));
         }
@@ -23,11 +24,12 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
 
     return (
         <header id="header-home">
+        <img src={Logo} className="logo"/>
             <section className="opcoes">
                 
-                <div className="column1">
-                    <img id="img" src={darkTheme ? arrowsWhite : arrows} />
-                    <h3 id="h3" onClick={onChangeTheme}>
+                <div onClick={onChangeTheme} className="column1">
+                    <img id="img" src={darkTheme ? brightnessWhite : brightness} />
+                    <h3 id="h3">
                         {darkTheme ? "Modo Claro" : "Modo Escuro"}
                     </h3>
                 </div>

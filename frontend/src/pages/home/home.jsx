@@ -4,8 +4,6 @@ import './home.scss'
 import Cabecalho from "../../components/headerHome"
 import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
-import IconWhiteMode from "/images/White/arrowsWhite.png"
-import IconBlackMode from "/images/Black/arrows.png"
 import LinkWhiteMode from "/images/White/links_white1.png"
 import LinkBlackMode from "/images/Black/link.png"
 import PassToPassWhite from '/images/White/passo_a_passo_white1.png'
@@ -83,9 +81,11 @@ export default function Home() {
                             <h2>{card.title}</h2>
                         </div>
                         <p>{card.text}</p>
-                        <Link to={card.link}>
-                            <button>{card.button}</button>
-                        </Link>
+                        <div className="button-container">
+                            <Link to={card.link}>
+                                <button>{card.button}</button>
+                            </Link>
+                        </div>
                     </div>
                 ))}
             </section>
