@@ -1,38 +1,29 @@
-.cabecalho-cadastro{
-  height: 10vw; 
-  text-align: end;
-  width: 100vw;
+.div-logo-cas{
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0 2rem;
-
-  .div-logo-cas{
-    display: flex;
-  }
-  .nav-login-cas{
-    display: flex;
-    gap: 30px;
-    margin-right: 5rem;
-  }
-  .nav-login-cas a{
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-  }
-  .nav-login-cas button{
-    background-color: #000000;
-    color: #fff;
-    border-radius: 5px;
-    margin-right: 15px;
-    height: 4vh;
-  }
+}
+.nav-login-cas{
+  display: flex;
+  gap: 30px;
+  margin-right: 5rem;
+}
+.nav-login-cas a{
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.nav-login-cas button{
+  background-color: #000000;
+  color: #fff;
+  border-radius: 5px;
+  margin-right: 15px;
+  height: 4vh;
 }
 
+
 .fundo {
-    margin: 4rem 4rem 0rem 4rem;
+    margin: 1rem 4rem 0rem 3rem;
     display: flex;
     justify-content: flex-start;
 
@@ -52,6 +43,7 @@
             }
         }
         .conteiner-cadastro {
+
             input {
               background-color: #868E96;
               width: 100%;
@@ -81,9 +73,9 @@
     }
 }
 .conteiner-link-botao-cas{
-    justify-content: space-between;
-    margin-left: 4.7rem;
-    width: 90%;
+  text-align: center;
+  margin-left: 7%;
+  width: 60%;
   
     .fundo-botao{
         display: flex;
