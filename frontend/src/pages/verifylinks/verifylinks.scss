@@ -2,7 +2,7 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh !important; 
+    height: 100vh !important;
     width: 100%;
 
     .MainVerifyLinks {
@@ -18,8 +18,9 @@ body {
         --TextButton: #FFFFFF;
         --Text: #333333;
 
-        &.dark{
+        &.dark {
             --CardBg: #28374e98;
+            --InputBackground: #2C2C2E;
             --BorderCard: #1E1E1E;
             --ShadowCard: -2px 3px 2px #00000094;
             --HoverCard: -1px 10px 10px #000000ea;
@@ -33,8 +34,9 @@ body {
 
         .page-Links {
             height: 75vh;
+
             .card-Links {
-                
+
                 background-color: var(--CardBg);
                 border: 2px solid var(--BorderCard);
                 box-shadow: var(--ShadowCard);
@@ -63,11 +65,23 @@ body {
                     }
 
                     input {
-                        padding-top: 20px;
+                        position: relative;
+                        top: 10px;
+                        width: 300px;
+                        padding: 5px;
+                        background-color: var(--InputBackground);
+                        padding-left: 15px;
+                        border: 1px solid var(--BorderCard);
 
                         &:hover {
                             cursor: pointer;
                         }
+                    }
+
+                    input:-webkit-autofill {
+                        -webkit-box-shadow: var(--InputBackground)  !important;
+                        -webkit-text-fill-color: var(--Text) !important;
+                        transition: background-color 5000s ease-in-out 0s;
                     }
                 }
 
