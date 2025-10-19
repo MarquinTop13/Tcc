@@ -1,0 +1,103 @@
+body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh !important; 
+    width: 100%;
+
+    .MainVerifyLinks {
+        height: 100vh;
+        width: 100%;
+        --CardBg: #ced4dac1;
+        --BorderCard: #000000b6;
+        --ShadowCard: -2px 3px 2px #00000094;
+        --HoverCard: -1px 10px 10px #000000ea;
+        --ButtonBg: #333366;
+        --ButtonHover: #262650;
+        --BorderButton: #000000;
+        --TextButton: #FFFFFF;
+        --Text: #333333;
+
+        &.dark{
+            --CardBg: #28374e98;
+            --BorderCard: #1E1E1E;
+            --ShadowCard: -2px 3px 2px #00000094;
+            --HoverCard: -1px 10px 10px #000000ea;
+            --ButtonBg: #0040FF;
+            --ButtonHover: #262650;
+            --BorderButton: #000000;
+            --TextButton: #FFFFFF;
+            --Text: #D1D5DB;
+        }
+
+
+        .page-Links {
+            height: 75vh;
+            .card-Links {
+                
+                background-color: var(--CardBg);
+                border: 2px solid var(--BorderCard);
+                box-shadow: var(--ShadowCard);
+                color: var(--Text);
+                width: 650px;
+                height: 284px;
+                position: relative;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                flex-direction: column;
+                text-align: center;
+                transition: 250ms;
+
+                &:hover {
+                    transition: 450ms;
+                    top: 49%;
+                    box-shadow: var(--HoverCard);
+                }
+
+                .part1-Links {
+                    padding-top: 5%;
+
+                    h2 {
+                        font-size: 40px;
+                    }
+
+                    input {
+                        padding-top: 20px;
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .part2-Links {
+                    padding-top: 50px;
+
+                    h3 {
+                        font-size: 35px;
+                    }
+                }
+
+                button {
+                    position: relative;
+                    top: 18%;
+                    height: 50px;
+                    width: 200px;
+                    background-color: var(--ButtonBg);
+                    border: 2px solid var(--BorderButton);
+                    color: var(--TextButton);
+                    font-size: 30px;
+                    transition: 250ms;
+
+
+
+                    &:hover {
+                        transition: 500ms;
+                        background-color: var(--ButtonHover);
+                    }
+                }
+            }
+        }
+    }
+}

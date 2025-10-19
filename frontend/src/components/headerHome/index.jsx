@@ -7,12 +7,12 @@ import brightnessWhite from "/images/White/brightnessWhite.png";
 
 export default function Cabecalho({ darkTheme, onChangeTheme }) {
     const [img90Dg, setImg90Dg] = useState(false)
-    function MoverImg(){
-        if(img90Dg === false){
-            document.getElementById('imgsun').style.transform = 'rotate(120deg)';
+    function MoverImg() {
+        if (img90Dg === false) {
+            document.getElementById('imgsun').style.transform = 'rotate(220deg)';
             setImg90Dg(true);
         }
-        else{
+        else {
             document.getElementById('imgsun').style.transform = 'rotate(-25deg)';
             setImg90Dg(false)
         }
@@ -23,11 +23,10 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
             <img src={Logo} className="logo" alt="Logo" />
 
             <section className="opcoes">
-            <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
+                <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
                     <img
                         id="imgsun"
                         src={darkTheme ? brightnessWhite : brightness}
-                        alt="Trocar tema"
                     />
                     <h3>{darkTheme ? "Modo Claro" : "Modo Escuro"}</h3>
                 </div>

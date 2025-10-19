@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import axios from 'axios';
 import dotenv from 'dotenv';
 import { AddRotas } from './router.js';
 
@@ -19,7 +20,6 @@ console.log('🔑 API Key carregada:', process.env.GOOGLE_SAFE_BROWSING_API_KEY 
 // Configura todas as rotas
 AddRotas(app);
 
-// Rota raiz alternativa
 
 
 // Middleware de erro global
@@ -32,7 +32,7 @@ app.use((error, req, res, next) => {
 });
 
 
-
+//Iniciando o server
 app.listen(PORT, () => {
   console.log(` Servidor rodando na porta ${PORT}`);
 });

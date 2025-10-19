@@ -1,52 +1,42 @@
 import "./index.scss"
 import { Link } from 'react-router';
 import React, { useEffect, useState } from 'react';
-import Logo from "/images/Logo-removebg-preview.png";
+import Logo from "/images/logod.png";
 import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import brightness from "/images/Black/brightness.png"
 import brightnessWhite from "/images/White/brightnessWhite.png"
 
-export default function Cabecalho({ darkTheme, onChangeTheme }) {
+export default function Cabecalho2({ darkTheme, onChangeTheme }) {
 
-    useEffect(() => {
-        const header = document.getElementById("header");
-        const h3s = header.querySelectorAll("h3");
-
-        if (darkTheme) {
-            document.body.style.backgroundImage = `url(${BackgroundBlack})`;
-            document.body.style.color = "white";
-            document.getElementById('link').style.color = '#FFFFFF'
-            header.style.background = "#112A43";
-            h3s.forEach((h3) => (h3.style.color = "#FFFFFF"));
-            
-            
-            
-
-        } 
-            
-         else {
-            document.body.style.backgroundImage = `url(${BackgroundWhite})`;
-            header.style.background = "#6892c198";
-            document.getElementById('link').style.color = '#1E293B'
-            document.body.style.color = "black";
-            document.getElementById('link').style.color = '#1E293B'
+    const [img90Dg, setImg90Dg] = useState(false)
+    function MoverImg() {
+        if (img90Dg === false) {
+            document.getElementById('imgsun').style.transform = 'rotate(220deg)';
+            setImg90Dg(true);
         }
-    }, [darkTheme]);
+        else {
+            document.getElementById('imgsun').style.transform = 'rotate(-25deg)';
+            setImg90Dg(false)
+        }
+    }
 
     return (
-        <header id="header" className={`header-pages ${darkTheme ? "dark": "light"}`}>
+        <header id="header" className={`header-pages ${darkTheme ? "dark" : "light"}`}>
             <img className="logo" src={Logo} />
 
             <section className="opcoes">
-                <nav className="column1">
-                    <img src={darkTheme ? brightnessWhite : brightness} />
-                    <h3 id="h3" onClick={onChangeTheme}>Modo Escuro</h3>
-                </nav>
+                <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
+                    <img
+                        id="imgsun"
+                        src={darkTheme ? brightnessWhite : brightness}
+                    />
+                    <h3>{darkTheme ? "Modo Claro" : "Modo Escuro"}</h3>
+                </div>
 
-                <nav className="column2">
+                <div className="column2">
                     <h3 id="h3"><Link id="link" className='link' to={'/'}>Voltar</Link></h3>
-                </nav>
+                </div>
 
 
             </section>

@@ -1,40 +1,61 @@
 import '../../scss/global.scss'
 import '../../scss/fonts.scss'
 import './verifylinks.scss'
-import { Link } from "react-router"
+import apiLink from '../../axios'
+import Cabecalho2 from '../../components/HeaderPages'
+import BackgroundBlack from "/images/Black/BackgroundBlack.png"
+import BackgroundWhite from "/images/White/BackgroundWhite.png"
+import { useState, useEffect } from 'react'
+
 
 export default function VerifyLinks() {
+    const [darkTheme, setDarkTheme] = useState(true)
+    const [link, SetLink] = useState('');
+    const [resultado, SetResultado] = useState('');
+
+        async function VerificarLinks(){
+            try{
+                const Verificando = await apiLink.post('/check-url',{
+                    "url": link
+                }); 
+                const dados = Verificando.data;
+                SetResultado(`Seguro? ${dados.isSafe}`)
+            }
+            
+            catch(error){
+                console.log(`error: ${error}`)
+            }
+
+        }
+    
+        //Modo simples para um if, else em react
+        function ChangeTheme() {
+            setDarkTheme(nomeAleatorio => !nomeAleatorio)
+        }
+    
+    
+        useEffect(() => {
+            document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
+        }, [darkTheme]);
     return (
-        <main className="MainVerifyArchiver">
-            <header className='HeaderVerifyArchiver'>
-                <img src="" alt="" />
-
-                <section className="opcoes">
-                    <div className="column1">
-                        <img src="/images/arrows.png" />
-                        <h3>Modo Escuro</h3>
-                    </div>
-
-                    <div className="column2">
-                        <h3><Link className='link' to={'/'}>Voltar</Link></h3>
-                    </div>
-
-
-                </section>
-            </header>
-            <section className="page">
-                <div className="card">
-                    <div className="part1">
+        <main className={`MainVerifyLinks ${darkTheme ? "dark" : "light"}`}>
+            
+            <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
+            <section className="page-Links">
+                <div className="card-Links">
+                    <div className="part1-Links">
                         <h2>Verificador de arquivos</h2>
-                        <input type="file" id="arquivo" />
+                        <input value={link} onChange={(e) => SetLink(e.target.value)} type="text" id="link" />
 
                     </div>
 
-                    <div className="part2">
+                    <div className="part2-Links">
                         <h3>Resultado:</h3>
-                        <pre className="resultado" id="resultado"></pre>
+                        <pre className="resultado" id="resultado">
+                            {resultado}
+                        </pre>
                     </div>
-                    <button onClick={verificar}>Verificar</button>
+                    <button onClick={VerificarLinks}>Verificar</button>
                 </div>
             </section>
         </main>

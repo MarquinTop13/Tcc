@@ -2,15 +2,15 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh; 
+    height: 100vh;
     width: 100%;
-    
+
     .MainHome {
         --text-color: #002b97cc;
         --card-bg: #ced4dabb;
         --card-border: #000000c7;
-        --card-shadow: -3px 3px 2px #000000d7;
-        --card-hover-shadow: -10px 8px 10px #000000d7;
+        --card-shadow: -2px 3px 2px #00000094;
+        --card-hover-shadow: -1px 10px 10px #000000ea;
         --title-color: #000000;
         --paragraph-color: #333333;
         --button-bg: #333366;
@@ -21,8 +21,8 @@ body {
             --text-color: #00CA1E;
             --card-bg: #28374e98;
             --card-border: #1E1E1E;
-            --card-shadow: -3px 3px 2px #000000d7;
-            --card-hover-shadow: -10px 8px 10px #000000d7;
+            --card-shadow: -2px 3px 2px #00000094;
+            --card-hover-shadow: -1px 10px 10px #000000ea;
             --title-color: #FFFFFF;
             --paragraph-color: #D1D5DB;
             --button-bg: #0040FF;
@@ -40,7 +40,10 @@ body {
             flex-wrap: wrap;
             justify-content: space-around;
 
-            .card-1, .card-2, .card-3, .card-4 {
+            .card-1,
+            .card-2,
+            .card-3,
+            .card-4 {
                 background-color: var(--card-bg);
                 display: flex;
                 text-align: center;
@@ -60,7 +63,10 @@ body {
                     box-shadow: var(--card-hover-shadow);
                 }
 
-                .titlecard-1, .titlecard-2, .titlecard-3, .titlecard-4 {
+                .titlecard-1,
+                .titlecard-2,
+                .titlecard-3,
+                .titlecard-4 {
                     display: flex;
                     font-size: 0.8rem;
                     text-align: end;
@@ -89,7 +95,7 @@ body {
                     right: 0;
                     display: flex;
                     justify-content: center;
-                    
+
                     button {
                         border-radius: 5px;
                         background-color: var(--button-bg);
