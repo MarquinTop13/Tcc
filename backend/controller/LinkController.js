@@ -3,32 +3,102 @@ import axios from "axios"
 const endpoints = Router();
 
 
+// Analise de URL offline
+function minhaAnaliseManual(url) {
+  const resultado = {
+    pontosRisco: 0,
+    alertas: [],
+    MuySuspeito: false
+  };
 
+  // Caso se o link for um IP 
+  if (url.includes('192.168.') || url.includes('10.') || url.includes('172.')) {
+    resultado.pontosRisco += 25;
+    resultado.alertas.push('Site feito localmente');
+  }
+
+  // Sites que tentam se aplicar com o original
+  const sitesFalsos = ['g00gle', 'facebok', 'micr0soft', 'paypa1', 'amaz0n', 'g0v', 'index'];
+  if (sitesFalsos.some(site => url.toLowerCase().includes(site))) {
+    resultado.pontosRisco += 30;
+    resultado.alertas.push('Imita sites famosos');
+  }
+
+  // Sites com downloads perigosos
+  const extensoesPerigosas = ['.exe', '.bat', '.msi', '.jar', '.scr'];
+  if (extensoesPerigosas.some(extensao => url.toLowerCase().includes(extensao))) {
+    resultado.pontosRisco += 35;
+    resultado.alertas.push('Download de arquivos perigosos');
+  }
+
+  // Urls com palavras de capturação de dados
+  const palavrasSuspeitas = ['login', 'senha', 'password', 'conta', 'banking'];
+  if (palavrasSuspeitas.some(palavra => url.toLowerCase().includes(palavra))) {
+    resultado.pontosRisco += 10;
+    resultado.alertas.push('Pode roubar dados');
+  }
+
+  
+  resultado.MuySuspeito = resultado.pontosRisco > 20;
+
+  return resultado;
+}
+
+
+
+//Endpoints Informativos
 endpoints.get('/', (req, res) => {
   res.json({ 
     message: 'Bem-vindo à API Safe Browsing!',
-    documentation: 'Acesse /api/info para ver os endpoints disponíveis',
-
+    documentation: 'Acesse /api/info para ver os endpoints'
   });
 });
 
-endpoints.get('/info', (req,res) => {
+endpoints.get('/info', (req, res) => {
   res.json({
-      endpoints: {
+    endpoints: {
       '/api/check-url': 'POST - Verificar uma URL',
       '/api/health': 'GET - Status da API',
-      '/api/check-multiple': 'POST - Verificar Várias URL'
+      '/api/quick-check': 'POST - Verificação Rápida'
     }
-  })
-})
-
+  });
+});
 
 endpoints.get('/health', (req, res) => { 
   res.json({ 
     status: 'online', 
-    timestamp: new Date().toISOString(),
-    service: 'Google Safe Browsing API'
+    timestamp: new Date().toISOString()
   });
+});
+
+
+endpoints.post('/quick-check', async (req, res) => {
+  try {
+    const { url } = req.body;
+
+    if (!url) {
+      return res.status(400).json({ error: 'URL é obrigatória' });
+    }
+
+    
+    const minhaAnalise = minhaAnaliseManual(url);
+
+    
+    res.json({
+      url: url,
+      segura: !minhaAnalise.MuySuspeito,
+      pontosRisco: minhaAnalise.pontosRisco,
+      alertas: minhaAnalise.alertas,
+      nivelRisco: minhaAnalise.pontosRisco > 40 ? 'ALTO' : 
+                 minhaAnalise.pontosRisco >= 20 ? 'MÉDIO' : 'BAIXO',
+    });
+
+  } catch (error) {
+    res.status(500).json({ 
+      error: 'Erro na verificação',
+      message: error.message 
+    });
+  }
 });
 
 
@@ -36,6 +106,7 @@ endpoints.post('/check-url', async (req, res) => {
   try {
     const { url } = req.body;
 
+    // Validações básicas
     if (!url) {
       return res.status(400).json({ 
         error: 'URL é obrigatória',
@@ -43,53 +114,65 @@ endpoints.post('/check-url', async (req, res) => {
       });
     }
 
-    const API_KEY = process.env.GOOGLE_SAFE_BROWSING_API_KEY;
-    const API_URL = 'https://safebrowsing.googleapis.com/v4/threatMatches:find';
-
-    if (!API_KEY) {
-      return res.status(500).json({
-        error: 'Configuração do servidor incompleta',
-        message: 'API Key não configurada'
+    // Verifica se URL é válida
+    try {
+      new URL(url);
+    } catch (error) {
+      return res.status(400).json({
+        error: 'URL inválida',
+        message: 'Use formato: https://exemplo.com'
       });
     }
 
-    const payload = {
-      client: {
-        clientId: "safe-browsing-api",
-        clientVersion: "1.0.0"
-      },
-      threatInfo: {
-        threatTypes: ["MALWARE", "SOCIAL_ENGINEERING", "UNWANTED_SOFTWARE"],
-        platformTypes: ["ANY_PLATFORM"],
-        threatEntryTypes: ["URL"],
-        threatEntries: [{ url }]
-      }
-    };
+    const API_KEY = process.env.GOOGLE_SAFE_BROWSING_API_KEY;
+    if (!API_KEY) {
+      return res.status(500).json({
+        error: 'API Key do Google está com erros'
+      });
+    }
 
-    const response = await axios.post(
-      `${API_URL}?key=${API_KEY}`,
-      payload,
-      { 
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 10000
-      }
-    );
+    const [resultadoGoogle, minhaAnalise] = await Promise.all([
+      // Verificação do Google
+      verificarComGoogle(url, API_KEY),
+      
+      // Verificação Manual (Caso a do google tenha caido)
+      Promise.resolve(minhaAnaliseManual(url))
+    ]);
 
-    const result = {
+    // COMBINA OS RESULTADOS
+    const urlSegura = resultadoGoogle.seguro && !minhaAnalise.MuySuspeito;
+
+    // RESPOSTA FINAL
+    res.json({
       url: url,
-      isSafe: !response.data.matches || response.data.matches.length === 0,
+      segura: urlSegura,
       timestamp: new Date().toISOString(),
-      threats: response.data.matches || []
-    };
+      
+      // Detalhes das análises
+      detalhes: {
+        google: {
+          segura: resultadoGoogle.seguro,
+          ameacas: resultadoGoogle.ameacas
+        },
+        minhaAnalise: {
+          pontosRisco: minhaAnalise.pontosRisco,
+          alertas: minhaAnalise.alertas,
+          MuySuspeito: minhaAnalise.MuySuspeito
+        }
+      },
 
-    res.json(result);
+      // Recomendação final
+      recomendacao: urlSegura ? 
+        '✅ URL segura - pode acessar' : 
+        '🚨 PERIGO - Evite este site!'
+    });
 
   } catch (error) {
     console.error('Erro na verificação:', error);
     
     if (error.response) {
       res.status(error.response.status).json({
-        error: 'Erro na API do Google',
+        error: 'Erro no serviço do Google',
         details: error.response.data
       });
     } else {
@@ -101,43 +184,23 @@ endpoints.post('/check-url', async (req, res) => {
   }
 });
 
-
-endpoints.post('/check-multiple', async (req, res) => { 
+async function verificarComGoogle(url, apiKey) {
   try {
-    const { urls } = req.body;
-
-    if (!urls || !Array.isArray(urls)) {
-      return res.status(400).json({ 
-        error: 'Lista de URLs é obrigatória',
-        example: { "urls": ["https://example.com", "https://google.com"] }
-      });
-    }
-
-    const API_KEY = process.env.GOOGLE_SAFE_BROWSING_API_KEY;
-    const API_URL = 'https://safebrowsing.googleapis.com/v4/threatMatches:find';
-
-    if (!API_KEY) {
-      return res.status(500).json({
-        error: 'Configuração do servidor incompleta',
-        message: 'API Key não configurada'
-      });
-    }
-
     const payload = {
       client: {
-        clientId: "safe-browsing-api",
+        clientId: "meu-tcc",
         clientVersion: "1.0.0"
       },
       threatInfo: {
         threatTypes: ["MALWARE", "SOCIAL_ENGINEERING", "UNWANTED_SOFTWARE"],
         platformTypes: ["ANY_PLATFORM"],
         threatEntryTypes: ["URL"],
-        threatEntries: urls.map(url => ({ url }))
+        threatEntries: [{ url }]
       }
     };
 
     const response = await axios.post(
-      `${API_URL}?key=${API_KEY}`,
+      `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`,
       payload,
       { 
         headers: { 'Content-Type': 'application/json' },
@@ -145,31 +208,19 @@ endpoints.post('/check-multiple', async (req, res) => {
       }
     );
 
-    const results = urls.map(url => {
-      const threat = response.data.matches?.find(match => match.threat.url === url);
-      return {
-        url,
-        isSafe: !threat,
-        threatType: threat?.threatType,
-        platformType: threat?.platformType
-      };
-    });
-
-    res.json({
-      timestamp: new Date().toISOString(),
-      totalUrls: urls.length,
-      safeUrls: results.filter(r => r.isSafe).length,
-      dangerousUrls: results.filter(r => !r.isSafe).length,
-      results
-    });
+    return {
+      seguro: !response.data.matches || response.data.matches.length === 0,
+      ameacas: response.data.matches || []
+    };
 
   } catch (error) {
-    console.error('Erro na verificação múltipla:', error);
-    res.status(500).json({ 
-      error: 'Erro interno do servidor',
-      message: error.message 
-    });
+    console.log('Google indisponível:', error.message);
+    return {
+      seguro: true,
+      ameacas: [],
+      erro: 'Google indisponível'
+    };
   }
-});
+}
 
 export default endpoints;

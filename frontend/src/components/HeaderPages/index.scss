@@ -20,8 +20,8 @@
     }
 
     .logo {
-        width: 6%;
-        margin: 0.5rem;
+        width: 4.5%;
+        margin: 0.6rem;
     }
 
 
@@ -36,12 +36,12 @@
 
 
         .column1 {
-        cursor: pointer;
-        width: auto;
+            cursor: pointer;
+            width: auto;
   
         img {
           width: 30%;
-          margin: 10px 0;
+          margin: 5px 0;
           transition: transform 0.75s ease-in-out;
         }
   
@@ -59,7 +59,7 @@
 
             h3,
             #h3 {
-                font-size: 25px;
+                font-size: 23px;
                 color: var(--link-color);
                 .link {
                     text-decoration: none;
