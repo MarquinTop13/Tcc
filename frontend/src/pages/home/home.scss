@@ -4,6 +4,8 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
     width: 100%;
+    // Cursor com tamanho definido (32x32 pixels)
+    cursor: url('/images/cursor/Cursor.png') 32 32, auto;
 
     .MainHome {
         --text-color: #002b97cc;
@@ -16,6 +18,8 @@ body {
         --button-bg: #333366;
         --button-hover: #262650;
         --button-border: #000000;
+        --cursor-default: url('/images/cursor/Cursor.png') 16 16, auto;
+        --cursor-pointer: url('/images/cursor/Pointer.png') 16 16, pointer;
 
         &.dark {
             --text-color: #00CA1E;
@@ -44,6 +48,7 @@ body {
             .card-2,
             .card-3,
             .card-4 {
+                cursor: var(--cursor-default);
                 background-color: var(--card-bg);
                 display: flex;
                 text-align: center;
@@ -55,10 +60,11 @@ body {
                 padding: 1%;
                 border-radius: 3px;
                 position: relative;
-                transition: 270ms;
+                transition: all 270ms ease;
                 border: 2px solid var(--card-border);
 
                 &:hover {
+                    cursor: var(--cursor-pointer);
                     transform: translateY(-10px);
                     box-shadow: var(--card-hover-shadow);
                 }
@@ -103,13 +109,18 @@ body {
                         color: #FFFFFF;
                         font-size: 20px;
                         padding: 10px 20px;
-                        cursor: pointer;
-                        transition: 350ms;
+                        cursor: url('/images/cursor/Pointer.png') 16 16, pointer;
+                        transition: all 350ms ease;
                         width: auto;
                         min-width: 150px;
 
                         &:hover {
                             background-color: var(--button-hover);
+                            transform: scale(1.05);
+                        }
+
+                        &:active {
+                            transform: scale(0.95);
                         }
                     }
                 }
