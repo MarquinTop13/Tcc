@@ -72,7 +72,7 @@ function Cas() {
   }
 
   return (
-    <main className={`MainHome ${darkTheme ? "dark" : "ligth"}`}>
+    <main className={`MainHome ${darkTheme ? "dark" : "light"}`}>
       <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme}/>
       <section className='fundo'>
         <div className="fundo-secundario-cadastro">

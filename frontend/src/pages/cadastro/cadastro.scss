@@ -1,27 +1,3 @@
-.div-logo-cas{
-  display: flex;
-}
-.nav-login-cas{
-  display: flex;
-  gap: 30px;
-  margin-right: 5rem;
-}
-.nav-login-cas a{
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-}
-.nav-login-cas button{
-  background-color: #000000;
-  color: #fff;
-  border-radius: 5px;
-  margin-right: 15px;
-  height: 4vh;
-}
-
-
 .fundo {
     margin: 1rem 4rem 0rem 3rem;
     display: flex;
@@ -55,6 +31,9 @@
               border-radius: 8px;
               font-size: 1.3rem;
             }
+            & ::placeholder{
+              color: #242424;
+            }
             .separados{
               display: flex;
               gap: 10px;
@@ -74,7 +53,7 @@
 }
 .conteiner-link-botao-cas{
   text-align: center;
-  margin-left: 7%;
+  margin-left: 5%;
   width: 60%;
   
     .fundo-botao{

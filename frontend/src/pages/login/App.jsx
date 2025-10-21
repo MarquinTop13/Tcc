@@ -1,15 +1,22 @@
-import { Link, useNavigate } from 'react-router'
-import { useState } from 'react'
-import axios from 'axios'
-import './App.scss'
-import Cabecalho from '../../components/HeaderPages'
+import BackgroundBlack from "/images/Black/BackgroundBlack.png";
+import BackgroundWhite from "/images/White/BackgroundWhite.png";
+import Cabecalho from '../../components/HeaderPages';
+import { Link, useNavigate } from 'react-router';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import './App.scss';
 
 function Login() {
   const [darkTheme, setDarkTheme] = useState(true)
 
-  function ChangeTheme() {
-      setDarkTheme(prev => !prev)
-  }
+    //Modo simples para um if, else em react
+    function ChangeTheme() {
+        setDarkTheme(nomeAleatorio => !nomeAleatorio)
+    }
+    
+    useEffect(() => {
+        document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
+    }, [darkTheme]);
   
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
@@ -35,7 +42,7 @@ function Login() {
   }
 
   return (
-    <main className={`MainHome ${darkTheme ? "dark" : "ligth"}`}>
+    <main className={`MainLogin ${darkTheme ? "dark" : "light"}`}>
       <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme}/>
       <section  className='conteiner-App'>
         <div className="fundo-secundario">
@@ -57,8 +64,6 @@ function Login() {
         </div>
       </section>
     </main>
-
   )
 }
-
 export default Login;

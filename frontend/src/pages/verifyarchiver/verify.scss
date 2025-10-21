@@ -4,6 +4,7 @@ body {
     background-repeat: no-repeat;
     height: 100vh !important; 
     width: 100%;
+    cursor: url('/images/cursor/Cursor.png') 16 16, auto;
 
     .MainVerifyArchiver {
         height: 100vh;
@@ -16,6 +17,8 @@ body {
         --ButtonHover: #262650;
         --BorderButton: #000000;
         --TextButton: #FFFFFF;
+        --cursor-default: url('/images/cursor/Cursor.png') 16 16, auto;
+        --cursor-pointer: url('/images/cursor/Pointer.png') 16 16, pointer;
         --Text: #333333;
 
         &.dark{
@@ -64,9 +67,10 @@ body {
 
                     input {
                         padding-top: 20px;
+                        cursor: var(--cursor-pointer);
 
                         &:hover {
-                            cursor: pointer;
+                            cursor: var(--cursor-pointer);
                         }
                     }
                 }

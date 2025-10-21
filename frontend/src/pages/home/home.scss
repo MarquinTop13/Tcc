@@ -4,8 +4,7 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
     width: 100%;
-    // Cursor com tamanho definido (32x32 pixels)
-    cursor: url('/images/cursor/Cursor.png') 32 32, auto;
+    cursor: url('/images/cursor/Cursor.png') 16 16, auto;
 
     .MainHome {
         --text-color: #002b97cc;
