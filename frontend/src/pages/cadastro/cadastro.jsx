@@ -1,16 +1,23 @@
+import Cabecalho from '../../components/HeaderPages'
 import { useNavigate } from 'react-router'
-import { useState } from 'react'
+import { Link } from 'react-router';
+import { useState, useEffect } from 'react'
+import BackgroundBlack from "/images/Black/BackgroundBlack.png";
+import BackgroundWhite from "/images/White/BackgroundWhite.png";
 import axios from 'axios'
 import './cadastro.scss'
-import Cabecalho from '../../components/HeaderPages'
 
 function Cas() {
-
   const [darkTheme, setDarkTheme] = useState(true)
-
-  function ChangeTheme() {
-      setDarkTheme(prev => !prev)
-  }
+  
+    //Modo simples para um if, else em react
+    function ChangeTheme() {
+      setDarkTheme(nomeAleatorio => !nomeAleatorio)
+    }
+  
+    useEffect(() => {
+      document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
+    }, [darkTheme]);
 
   const [form, setForm] = useState({
     nome: "",
@@ -21,7 +28,7 @@ function Cas() {
     idade: ""
   })
 
-  function validarEmail(email){
+  function validarEmail(email) {
     const Regex = [
       /^[^\s@]+@gmail\.com$/,
       /^[^\s@]+@outlook\.com$/,
@@ -46,7 +53,7 @@ function Cas() {
 
   const FF = async () => {
 
-    if(!validarEmail(form.email)){
+    if (!validarEmail(form.email)) {
       alert('o email precisa ser válido!');
       return;
     }
@@ -54,7 +61,7 @@ function Cas() {
       alert("A senha deve ter pelo menos 8 caracteres.");
       return;
     }
-    if(form.senha !== form.confirmarSenha){
+    if (form.senha !== form.confirmarSenha) {
       alert('as senhas não são iguais!');
       return;
     }
@@ -72,8 +79,8 @@ function Cas() {
   }
 
   return (
-    <main className={`MainHome ${darkTheme ? "dark" : "light"}`}>
-      <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme}/>
+    <main className={`MainCadastro ${darkTheme ? "dark" : "light"}`}>
+      <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
       <section className='fundo'>
         <div className="fundo-secundario-cadastro">
           <div className="cadastro-fundo">
@@ -81,22 +88,22 @@ function Cas() {
             <h2>Crie sua Conta! Para melhorar sua experiência</h2>
           </div>
           <div className="conteiner-cadastro">
-            <input type="text" name='nome' placeholder="Nome" value={form.nome} onChange={F}/>
-            <input type="email" name='email' placeholder="Email" value={form.email} onChange={F}/>
-            <input type="password" name='senha' placeholder="Senha" value={form.senha} onChange={F}/>
-            <input type="password" name='confirmarSenha' placeholder="Confirmar Senha" value={form.confirmarSenha} onChange={F}/>
-          <div className='separados'>  
-            <input type="text" className='separado' name='palavra' placeholder="Palavra de Segurança" value={form.palavra} onChange={F}/>
-            <input type="date" className='data' name='idade' value={form.idade} onChange={F}/>
-          </div>
+            <input type="text" name='nome' placeholder="Nome" value={form.nome} onChange={F} />
+            <input type="email" name='email' placeholder="Email" value={form.email} onChange={F} />
+            <input type="password" name='senha' placeholder="Senha" value={form.senha} onChange={F} />
+            <input type="password" name='confirmarSenha' placeholder="Confirmar Senha" value={form.confirmarSenha} onChange={F} />
+            <div className='separados'>
+              <input type="text" className='separado' name='palavra' placeholder="Palavra de Segurança" value={form.palavra} onChange={F} />
+              <input type="date" className='data' name='idade' value={form.idade} onChange={F} />
+            </div>
           </div>
         </div>
       </section>
       <section className='conteiner-link-botao-cas'>
-            <div className='fundo-botao'>
-              <p className='texto'>Pronto! Agora que tem uma conta <br/> faça o login!</p>
-              <button className='botao' onClick={FF}>Cadastrar</button>
-            </div>
+        <div className='fundo-botao'>
+          <p className='texto'>Pronto! Agora que tem uma conta <br /> faça o <Link className='Link' to={'/Login'}>Login</Link>!</p>
+          <button className='botao' onClick={FF}>Cadastrar</button>
+        </div>
       </section>
     </main>
   )

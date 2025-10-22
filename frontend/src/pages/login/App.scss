@@ -1,87 +1,101 @@
-.MainLogin{
-  --text-Login: #000000;
-  --text-placeholder: #242424;
+.MainLogin {
+  --text-Login: #333333;
+  --text-input: #333333b7;
+  --input-bg: #868E96;
+  --input-border: #2C2C2E;
   --fundo-botao: #333366;
-  --text-link: #00356e;
+  --text-link: #1F2937;
   --fundo-input: #868E96;
   --text-botao: #fff;
 
-  & .dark{
-    --text-Login: #e4e4e4;
-    --text-link: #1a67b9;
+  &.dark {
+    --text-Login: #FFFFFF;
+    --text-input: #ffffff85;
+    --input-bg: #1E1E1E;
+    --input-border: #2C2C2E;
+    --fundo-botao: #0040FF;
+    --text-link: #fff;
+    --fundo-input: #868E96;
+    --text-botao: #fff;
   }
 
   .conteiner-App {
-    color: var(--text-link);
+    color: var(--text-botao);
     display: flex;
     justify-content: flex-end;
     align-items: center;
-  
+
     .fundo-secundario {
       margin-top: 2rem;
       padding: 2rem;
       width: 100%;
       max-width: 500px;
       margin-right: 4rem;
-  
+
       .login-fundo {
         text-align: start;
         color: var(--text-Login);
         margin-bottom: 1rem;
-        
+
         h1 {
           margin-left: 1rem;
-          
           margin-bottom: 0.2rem;
         }
+
         h2 {
           font-size: 1rem;
           color: var(--text-Login);
         }
-    }
+      }
     }
   }
-  
+
   .conteiner-login {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
     input {
-      background-color: var(--fundo-input);
+      background-color: var(--input-bg);
+      color: var(--text-input);
       width: 110%;
       max-width: 500px;
       height: 3.7rem;
       padding: 0 12px;
-      border: 1px solid black;
+      border: 1px solid var(--input-border);
       border-radius: 8px;
       font-size: 1.3rem;
     }
-    & ::placeholder{
+
+    & ::placeholder {
       color: var(--text-placeholder);
     }
-    .um{
+
+    .um {
       margin-bottom: 1rem;
-      color: var(--text-Login);
+      color: var(--text-input);
     }
   }
-  .conteiner-link-botao{
+
+  .conteiner-link-botao {
     text-align: center;
     margin-left: auto;
-    width: 53%;color: var(--text-link);
-  
+    width: 53%;
+    color: var(--text-botao);
+
     .link-login {
       margin-right: 11%;
       font-size: 2rem;
       text-decoration: none;
       color: var(--text-link);
     }
-    .botao{
+
+    .botao {
       background-color: var(--fundo-botao);
       margin-top: 0.1rem;
       font-size: 1.3rem;
       color: var(--text-botao);
-      border: solid var(--text-Login) 0.5px;
+      border: solid var(--input-border) 0.5px;
       border-radius: 12px;
       width: 12vw;
       height: 4.1vw;
@@ -89,8 +103,9 @@
       transition: all 270ms ease;
       cursor: pointer;
     }
-    & :hover{
-      transform: translateY(-10px);
+
+    & :hover {
+      transform: translateY(-2px);
     }
   }
 }

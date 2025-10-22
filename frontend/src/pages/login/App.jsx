@@ -1,6 +1,6 @@
 import BackgroundBlack from "/images/Black/BackgroundBlack.png";
 import BackgroundWhite from "/images/White/BackgroundWhite.png";
-import Cabecalho from '../../components/HeaderPages';
+import Cabecalho2 from '../../components/HeaderPages';
 import { Link, useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -9,15 +9,15 @@ import './App.scss';
 function Login() {
   const [darkTheme, setDarkTheme] = useState(true)
 
-    //Modo simples para um if, else em react
-    function ChangeTheme() {
-        setDarkTheme(nomeAleatorio => !nomeAleatorio)
-    }
-    
-    useEffect(() => {
-        document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
-    }, [darkTheme]);
-  
+  //Modo simples para um if, else em react
+  function ChangeTheme() {
+    setDarkTheme(nomeAleatorio => !nomeAleatorio)
+  }
+
+  useEffect(() => {
+    document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
+  }, [darkTheme]);
+
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
@@ -43,17 +43,17 @@ function Login() {
 
   return (
     <main className={`MainLogin ${darkTheme ? "dark" : "light"}`}>
-      <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme}/>
-      <section  className='conteiner-App'>
+      <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
+      <section className='conteiner-App'>
         <div className="fundo-secundario">
           <div className="login-fundo">
             <h1>Entrar</h1>
             <h2>Seja Bem-vindo de volta</h2>
           </div>
           <div className="conteiner-login">
-            <input className='um' type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)}/>
-            <input className='um' type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-            <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)}/>
+            <input className='um' type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} />
+            <input className='um' type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
           </div>
         </div>
       </section>
