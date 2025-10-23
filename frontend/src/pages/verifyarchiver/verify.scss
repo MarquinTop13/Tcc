@@ -43,10 +43,10 @@ body {
                 box-shadow: var(--ShadowCard);
                 color: var(--Text);
                 width: 650px;
-                height: 284px;
+                height: 320px;
                 position: relative;
                 left: 50%;
-                top: 50%;
+                top: 70%;
                 transform: translate(-50%, -50%);
                 flex-direction: column;
                 text-align: center;
@@ -54,7 +54,7 @@ body {
 
                 &:hover {
                     transition: 450ms;
-                    top: 49%;
+                    top: 68%;
                     box-shadow: var(--HoverCard);
                 }
 
@@ -76,16 +76,17 @@ body {
                 }
 
                 .part2-archiver {
-                    padding-top: 50px;
+                    padding-top: 40px;
 
                     h3 {
                         font-size: 35px;
                     }
                 }
 
-                button {
-                    position: relative;
-                    top: 18%;
+                .button-verifyArchiver {
+                    position: fixed;
+                    top: 90%;
+                    left: 33%;
                     height: 50px;
                     width: 200px;
                     background-color: var(--ButtonBg);

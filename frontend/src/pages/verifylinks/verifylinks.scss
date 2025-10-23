@@ -56,7 +56,7 @@ body {
         }
 
         .page-Links {
-            height: 100vh;
+            height: 90vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -70,23 +70,22 @@ body {
                 color: var(--Text);
                 width: 100%;
                 max-width: 650px;
-                min-height: auto;
+                height: 500px;
                 display: flex;
                 flex-direction: column;
                 text-align: center;
                 transition: all 0.3s ease;
                 padding: 20px;
                 position: relative;
+                overflow: auto;
 
                 &:hover {
-                    transform: translateY(-5px);
                     box-shadow: var(--HoverCard);
                 }
 
                 .part1-Links {
-                    
                     h2 {
-                        font-size: 2rem;
+                        font-size: clamp(1.5rem, 4vw, 2rem);
                         margin: 0 0 20px 0;
                         color: var(--Text);
                     }
@@ -101,10 +100,8 @@ body {
                         color: var(--Text);
                         font-size: 1rem;
                         box-sizing: border-box;
-
-                        &:hover {
-                            cursor: pointer;
-                        }
+                        margin: 0 auto;
+                        display: block;
                     }
 
                     input:-webkit-autofill {
@@ -115,54 +112,53 @@ body {
                 }
 
                 .part2-Links {
-                    
                     display: flex;
-                    flex-direction: row;
-                    justify-content: space-around;
-                    justify-content:center;
+                    flex-direction: column;
+                    align-items: center;
                     margin: 20px 0;
-                    gap: 10px;
+                    gap: 20px;
+                    flex: 1;
 
-                    .info{
-                        width: 600px;
-                        margin-top: 3%;
+                    .info {
+                        width: 100%;
+                        margin-top: 0;
 
                         h3 {
-                        font-size: 1.5rem;
-                        margin: 0 0 15px 0;
-                        color: var(--Text);
-                    }
-
-                    .resultado {
-                        padding: 5px;
-                        margin: 0 auto 15px auto;
-                        border-radius: 8px;
-                        width: 100%;
-                        max-width: 250px;
-                        min-height: 50px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        font-weight: bold;
-                        font-size: 0.8rem;
-                        border: 2px solid transparent;
-                        box-sizing: border-box;
-
-                        &.seguro {
-                            background: var(--SeguroBg);
-                            color: var(--SeguroText);
-                            border-color: var(--SeguroBorder);
+                            font-size: clamp(1.2rem, 3vw, 1.5rem);
+                            margin: 0 0 15px 0;
+                            color: var(--Text);
                         }
-                        
-                        &.perigoso {
-                            background: var(--PerigosoBg);
-                            color: var(--PerigosoText);
-                            border-color: var(--PerigosoBorder);
+
+                        .resultado {
+                            padding: 12px;
+                            margin: 0 auto 15px auto;
+                            border-radius: 8px;
+                            width: 100%;
+                            max-width: 400px;
+                            min-height: 60px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-weight: bold;
+                            font-size: clamp(0.8rem, 2.5vw, 1rem);
+                            border: 2px solid transparent;
+                            box-sizing: border-box;
+                            word-break: break-word;
+                            text-align: center;
+
+                            &.seguro {
+                                background: var(--SeguroBg);
+                                color: var(--SeguroText);
+                                border-color: var(--SeguroBorder);
+                            }
+                            
+                            &.perigoso {
+                                background: var(--PerigosoBg);
+                                color: var(--PerigosoText);
+                                border-color: var(--PerigosoBorder);
+                            }
                         }
                     }
-                    }
-
-                    
 
                     .detalhes-analise {
                         margin: 10px auto;
@@ -178,7 +174,7 @@ body {
                         h4 {
                             margin: 0 0 15px 0;
                             text-align: center;
-                            font-size: 1.2rem;
+                            font-size: clamp(1rem, 3vw, 1.2rem);
                             color: var(--Text);
                         }
                         
@@ -193,13 +189,14 @@ body {
                                 display: block;
                                 margin-bottom: 8px;
                                 color: var(--Text);
-                                font-size: 1rem;
+                                font-size: clamp(0.9rem, 2.5vw, 1rem);
                             }
                             
                             span {
                                 display: block;
                                 margin-bottom: 8px;
                                 color: var(--Text);
+                                font-size: clamp(0.85rem, 2.5vw, 0.95rem);
                             }
                             
                             .texto-seguro {
@@ -218,27 +215,22 @@ body {
                                 background: var(--AlertaBg);
                                 color: var(--AlertaText);
                                 border-left: 4px solid var(--AlertaBorder);
-                                font-size: 0.9rem;
+                                font-size: clamp(0.8rem, 2.5vw, 0.9rem);
                                 border-radius: 4px;
                                 display: flex;
                                 align-items: center;
-                                
-                                &::before {
-                                  
-                                    margin-right: 8px;
-                                }
                             }
                         }
                     }
                 }
 
-                button {
+                .button-verifyLinks {
                     height: 50px;
                     width: 200px;
                     background-color: var(--ButtonBg);
                     border: 2px solid var(--BorderButton);
                     color: var(--TextButton);
-                    font-size: 1.2rem;
+                    font-size: clamp(1rem, 3vw, 1.2rem);
                     font-weight: bold;
                     border-radius: 5px;
                     cursor: pointer;
@@ -248,7 +240,6 @@ body {
 
                     &:hover:not(:disabled) {
                         background-color: var(--ButtonHover);
-                        transform: translateY(-2px);
                     }
 
                     &:disabled {
@@ -262,40 +253,56 @@ body {
     }
 }
 
-// Responsividade para mobile
+// Responsividade para tablet
 @media (max-width: 768px) {
     body {
         .MainVerifyLinks {
             .page-Links {
-                padding: 10px;
+                padding: 15px;
+                height: auto;
+                min-height: 100vh;
+                align-items: flex-start;
+                padding-top: 80px;
                 
                 .card-Links {
-                    padding: 15px;
-                    min-height: 300px;
+                    padding: 20px 15px;
+                    min-height: auto;
+                    height: auto;
+                    max-width: 500px;
                     
                     .part1-Links {
                         h2 {
-                            font-size: 1.5rem;
+                            font-size: 1.6rem;
+                            margin-bottom: 15px;
                         }
                         
                         input {
                             max-width: 100%;
-                            font-size: 0.9rem;
+                            font-size: 0.95rem;
+                            padding: 10px 12px;
                         }
                     }
                     
                     .part2-Links {
-                        h3 {
-                            font-size: 1.3rem;
-                        }
+                        gap: 15px;
+                        margin: 15px 0;
                         
-                        .resultado {
-                            font-size: 1rem;
-                            padding: 12px;
+                        .info {
+                            h3 {
+                                font-size: 1.3rem;
+                            }
+                            
+                            .resultado {
+                                font-size: 0.9rem;
+                                padding: 10px;
+                                min-height: 50px;
+                                max-width: 350px;
+                            }
                         }
                         
                         .detalhes-analise {
                             padding: 12px;
+                            max-width: 100%;
                             
                             h4 {
                                 font-size: 1.1rem;
@@ -305,7 +312,7 @@ body {
                                 padding: 10px;
                                 
                                 strong {
-                                    font-size: 0.9rem;
+                                    font-size: 0.95rem;
                                 }
                                 
                                 .alerta {
@@ -316,9 +323,11 @@ body {
                         }
                     }
                     
-                    button {
+                    .button-verifyLinks {
                         width: 180px;
+                        height: 45px;
                         font-size: 1.1rem;
+                        margin-top: 15px;
                     }
                 }
             }
@@ -326,11 +335,100 @@ body {
     }
 }
 
+// Responsividade para mobile
 @media (max-width: 480px) {
     body {
         .MainVerifyLinks {
             .page-Links {
+                padding: 10px;
+                padding-top: 70px;
+                
                 .card-Links {
+                    padding: 15px 10px;
+                    
+                    .part1-Links {
+                        h2 {
+                            font-size: 1.4rem;
+                            margin-bottom: 12px;
+                        }
+                        
+                        input {
+                            font-size: 0.9rem;
+                            padding: 8px 10px;
+                        }
+                    }
+                    
+                    .part2-Links {
+                        gap: 12px;
+                        margin: 12px 0;
+                        
+                        .info {
+                            h3 {
+                                font-size: 1.2rem;
+                                margin-bottom: 10px;
+                            }
+                            
+                            .resultado {
+                                font-size: 0.85rem;
+                                padding: 8px;
+                                min-height: 45px;
+                                max-width: 300px;
+                            }
+                        }
+                        
+                        .detalhes-analise {
+                            padding: 10px;
+                            
+                            h4 {
+                                font-size: 1rem;
+                                margin-bottom: 10px;
+                            }
+                            
+                            .analise-item {
+                                padding: 8px;
+                                margin: 8px 0;
+                                
+                                strong {
+                                    font-size: 0.9rem;
+                                    margin-bottom: 6px;
+                                }
+                                
+                                span {
+                                    font-size: 0.85rem;
+                                    margin-bottom: 6px;
+                                }
+                                
+                                .alerta {
+                                    font-size: 0.8rem;
+                                    padding: 5px 6px;
+                                }
+                            }
+                        }
+                    }
+                    
+                    .button-verifyLinks {
+                        width: 160px;
+                        height: 42px;
+                        font-size: 1rem;
+                        margin-top: 12px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Para telas muito pequenas (iPhone SE etc)
+@media (max-width: 320px) {
+    body {
+        .MainVerifyLinks {
+            .page-Links {
+                padding: 5px;
+                padding-top: 60px;
+                
+                .card-Links {
+                    padding: 12px 8px;
+                    
                     .part1-Links {
                         h2 {
                             font-size: 1.3rem;
@@ -338,18 +436,17 @@ body {
                     }
                     
                     .part2-Links {
-                        h3 {
-                            font-size: 1.1rem;
-                        }
-                        
-                        .resultado {
-                            font-size: 0.9rem;
+                        .info {
+                            .resultado {
+                                max-width: 280px;
+                                font-size: 0.8rem;
+                            }
                         }
                     }
                     
-                    button {
-                        width: 160px;
-                        font-size: 1rem;
+                    .button-verifyLinks {
+                        width: 140px;
+                        height: 40px;
                     }
                 }
             }

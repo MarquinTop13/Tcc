@@ -11,7 +11,7 @@
   --cursor-pointer: url('/images/cursor/Pointer.png') 16 16, pointer;
 
   display: flex;
-  align-items: center;
+  justify-content: center;
   justify-content: space-between;
   width: 100%;
   background: var(--header-bg);
@@ -30,7 +30,7 @@
     margin: 0.6rem;
   }
 
-  .opcoes {
+  .opcoes { 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,7 +54,7 @@
     .column2,
     .column3,
     .column4 {
-        cursor: var(--cursor-pointer);
+      cursor: var(--cursor-pointer);
 
       display: flex;
       flex-direction: column;
@@ -64,6 +64,7 @@
 
     .column1 {
       width: auto;
+      padding-left: 250px;
 
       img {
         width: 30%;
@@ -104,6 +105,52 @@
       .link {
         font-size: 18px;
         color: var(--link-color);
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header-home {
+    .Logo {
+      width: 18.5%;
+      margin: 0.6rem;
+    }
+
+    .opcoes .cell {
+
+      .link {
+        font-size: 12px !important;
+      }
+
+      .column1,
+      .column2 {
+        cursor: var(--cursor-pointer);
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .column1 {
+        width: auto;
+
+        img {
+          margin: 10px 0;
+          transition: transform 0.75s ease-in-out;
+        }
+
+        h3 {
+          font-size: 18px;
+          color: var(--text-color);
+        }
+      }
+
+      .column2 {
+        img{
+          width: 50px;
+        }
       }
     }
   }

@@ -1,14 +1,14 @@
-import { Link } from 'react-router';
-import Cabecalho2 from '../../components/HeaderPages';
 import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
+import Cabecalho2 from '../../components/HeaderPages';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import '../../scss/global.scss';
 import '../../scss/fonts.scss';
 import "./verify.scss";
-import { useEffect, useState } from 'react';
 
 export default function Verify() {
-
+  //Modo escuro
   const [darkTheme, setDarkTheme] = useState(true);
 
   function ChangeTheme() {
@@ -19,6 +19,19 @@ export default function Verify() {
     document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`;
   }, [darkTheme]);
 
+  //Verificação dos arquivos:
+  const extensoesSuportadas = ['bat','sh','ps1','vbs','cmd', 'txt'];
+
+  function getExtension(filename) {
+    if (!filename || filename.indexOf('.') === -1) return '';
+    return filename.split('.').pop().toLowerCase();
+  }
+
+  function isScriptExtension(ext) {
+    return extensoesSuportadas.includes(ext);
+  }
+
+
   function verificar() {
     const arquivo = document.getElementById('arquivo').files[0];
     const resultado = document.getElementById('resultado');
@@ -27,6 +40,16 @@ export default function Verify() {
       alert('Nenhum arquivo selecionado.');
       return;
     }
+
+    const extensao = getExtension(arquivo.name);
+
+    if(!isScriptExtension(extensao)){
+      resultado.textContent = `❌ Tipo de arquivo não suportado: .${extensao}\nSuportados: ${extensoesSuportadas.join(', ')}`;
+      resultado.classList.add('mostrar');
+      return;
+
+    }
+    
 
     mostrarCarregamento(resultado);
 
@@ -76,7 +99,7 @@ export default function Verify() {
         resultado.textContent = '✅ Nenhum comando perigoso detectado.';
       } else {
         const comandosList = encontrados.map(c => c.descricao).join('\n');
-        resultado.textContent = `⚠️ Detectamos comandos perigosos:\n\n${comandosList}`;
+        resultado.textContent = `⚠️ Detectamos comandos perigosos:\n${comandosList}`;
       }
 
       resultado.classList.add('mostrar');
@@ -99,7 +122,7 @@ export default function Verify() {
             <h3>Resultado:</h3>
             <pre className="resultado" id="resultado"></pre>
           </div>
-          <button onClick={verificar}>Verificar</button>
+          <button className="button-verifyArchiver" onClick={verificar}>Verificar</button>
         </div>
       </section>
     </main>

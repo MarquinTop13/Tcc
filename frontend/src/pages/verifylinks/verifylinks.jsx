@@ -75,7 +75,7 @@ export default function VerifyLinks() {
 
     return (
         <main className={`MainVerifyLinks ${darkTheme ? "dark" : "light"}`}>
-            <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
+            <Cabecalho2 className="Cabecalho2" darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
             
             <section className="page-Links">
                 <div className="card-Links">
@@ -125,7 +125,7 @@ export default function VerifyLinks() {
                         )}
                     </div>
 
-                    <button onClick={VerificarLinks} disabled={carregando}>
+                    <button className='button-verifyLinks' onClick={VerificarLinks} disabled={carregando}>
                         {carregando ? 'Verificando...' : 'Verificar'}
                     </button>
                 </div>

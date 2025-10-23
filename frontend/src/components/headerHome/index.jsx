@@ -1,12 +1,15 @@
 import "./index.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import Logo from "/images/logod.png";
 import brightness from "/images/Black/brightness.png";
 import brightnessWhite from "/images/White/brightnessWhite.png";
+import menuWhite from "/images/White/menuWhite.png";
+import menuBlack from "/images/Black/menuBlack.png";
 
 export default function Cabecalho({ darkTheme, onChangeTheme }) {
-    const [img90Dg, setImg90Dg] = useState(false)
+    //Sol Giratorio
+    const [img90Dg, setImg90Dg] = useState(false);
     function MoverImg() {
         if (img90Dg === false) {
             document.getElementById('imgsun').style.transform = 'rotate(220deg)';
@@ -18,11 +21,18 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
         }
     }
 
+    //Pegar resolução:
+    const [resolution, setResolution] = useState(window.innerWidth < 768);
+
     return (
         <header className={`header-home ${darkTheme ? "dark" : "light"}`}>
             <img src={Logo} className="logo" alt="Logo" />
 
-            <section className="opcoes">
+            
+
+            {/*Caso for um mobile, aparecerá um menu hamburguer*/}
+            {resolution && <section className="opcoes cell">
+
                 <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
                     <img
                         id="imgsun"
@@ -30,6 +40,16 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
                     />
                     <h3>{darkTheme ? "Modo Claro" : "Modo Escuro"}</h3>
                 </div>
+
+                <div className="column2">
+                    <img src={darkTheme ? menuWhite : menuBlack} />
+                </div>
+
+            </section>}
+
+            {/*Caso for um pc, irá funcionar normalmente*/}
+            {!resolution && <section className="opcoes">
+
                 <div className="column2">
                     <h3>Suporte</h3>
                 </div>
@@ -44,7 +64,17 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
                         Login
                     </Link>
                 </div>
-            </section>
+
+                <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
+                    <img
+                        id="imgsun"
+                        src={darkTheme ? brightnessWhite : brightness}
+                    />
+                    <h3>{darkTheme ? "Modo Claro" : "Modo Escuro"}</h3>
+                </div>
+
+            </section>}
+            
         </header>
     );
 }

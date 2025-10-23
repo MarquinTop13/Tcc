@@ -1,4 +1,4 @@
-*{
+* {
     transition: 150ms;
 }
 
@@ -80,6 +80,40 @@
                     text-decoration: underline;
                 }
             }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .header-pages {
+        .logo {
+            width: 15.5%;
+            margin: 0.6rem;
+        }
+
+        .opcoes {
+            gap: 15px;
+            width: auto;
+            margin-left: -40%;
+            font-size: 0.6rem;
+
+            .column1 {
+                width: auto;
+
+                img {
+                    width: 20%;
+                }
+
+            }
+
+            .column2 {
+
+                h3,
+                #h3 {
+                    font-size: 1.2rem;
+                }
+            }
+
         }
     }
 }
