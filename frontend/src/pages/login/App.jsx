@@ -1,6 +1,7 @@
 import BackgroundBlack from "/images/Black/BackgroundBlack.png";
 import BackgroundWhite from "/images/White/BackgroundWhite.png";
 import Cabecalho2 from '../../components/HeaderPages';
+import Err from "../../components/err/erro";
 import { Link, useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -18,6 +19,7 @@ function Login() {
     document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
   }, [darkTheme]);
 
+  const [err, setErr]  = useState(false);
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
@@ -37,6 +39,7 @@ function Login() {
         alert('Nome, Email ou senha inválidos.')
       } else {
         alert('Erro ao conectar com o servidor.')
+        setErr(true)
       }
     }
   }
@@ -56,6 +59,9 @@ function Login() {
             <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
           </div>
         </div>
+
+        {err && <Err />}
+
       </section>
       <section className='conteiner-link-botao'>
         <div>
