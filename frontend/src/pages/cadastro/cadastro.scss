@@ -45,7 +45,6 @@
 
         h2 {
           font-size: 1rem;
-          margin-left: 45px;
           color: var(--text-cadastro);
         }
       }
@@ -64,7 +63,7 @@
       color: var(--text-input);
       width: 110%;
       max-width: 500px;
-      height: 3.7rem;
+      height: 3.5rem;
       padding: 0 12px;
       border: 1px solid var(--input-border);
       border-radius: 8px;
@@ -72,7 +71,7 @@
       margin-bottom: 1rem;
     }
     & :hover {
-      transform: translateY(-2px);
+      transform: translateY(-2.5px);
     }
 
     & ::placeholder {

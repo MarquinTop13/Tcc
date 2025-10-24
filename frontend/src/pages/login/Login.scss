@@ -1,4 +1,9 @@
 .MainLogin {
+  background-color: var(--cor-geral-fundo);
+  height: 100vh;
+  min-height: 100vh;
+
+  --cor-geral-fundo: #767676a4;
   --text-input: #181717b7;
   --input-border: #2C2C2E;
   --fundo-input: #868E96;
@@ -9,6 +14,7 @@
   --text-botao: #fff;
 
   &.dark {
+    --cor-geral-fundo: #;
     --text-input: #ffffff85;
     --input-border: #2C2C2E;
     --fundo-botao: #37376b;

@@ -3,7 +3,7 @@ import Home from "./pages/home/home"
 import Cas from "./pages/cadastro/cadastro"
 import Verify from "./pages/verifyarchiver/verify"
 import VerifyLinks from "./pages/verifylinks/verifylinks"
-import Login from "./pages/login/App.jsx"
+import Login from "./pages/login/Login.jsx"
 import Err from "./components/err/erro/index.jsx"
 
 export default function Rotas(){

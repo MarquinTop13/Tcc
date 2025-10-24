@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router';
 import Modal from "../../components/err/erro";
 import { useState, useEffect } from 'react';
 import apiLink from "../../axios";
-import './App.scss';
+import './Login.scss';
 
 function Login() {
   const [darkTheme, setDarkTheme] = useState(true)
@@ -36,7 +36,7 @@ function Login() {
       navigate('/')
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        alert('Nome, Email ou senha inválidos.')
+        setShowModal(true);
       } else {
         alert('Erro ao conectar com o servidor.')
         setShowModal(true)
@@ -59,11 +59,7 @@ function Login() {
             <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
           </div>
         </div>
-        <button
-        onClick={()=> setShowModal(true)}>
-          abrir modal
-        </button>
-        <Modal isOpen={showModal} />
+        <Modal isOpen={showModal} setModalOpen={() => setShowModal(!showModal)}></Modal>
       </section>
       <section className='conteiner-link-botao'>
         <div>
