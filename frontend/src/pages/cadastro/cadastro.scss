@@ -1,6 +1,6 @@
 .MainCadastro {
   --text-cadastro: #333333;
-  --text-input: #333333b7;
+  --text-input: #181717b7;
   --input-bg: #868E96;
   --input-border: #2C2C2E;
   --fundo-botao: #333366;
@@ -13,7 +13,7 @@
     --text-input: #ffffff85;
     --input-bg: #1E1E1E;
     --input-border: #2C2C2E;
-    --fundo-botao: #0040FF;
+    --fundo-botao: #37376b;
     --text-link: #fff;
     --fundo-input: #868E96;
     --text-botao: #fff;
@@ -56,6 +56,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    position: relative;
+    transition: all 270ms ease;
 
     input {
       background-color: var(--input-bg);
@@ -68,6 +70,9 @@
       border-radius: 8px;
       font-size: 1.3rem;
       margin-bottom: 1rem;
+    }
+    & :hover {
+      transform: translateY(-2px);
     }
 
     & ::placeholder {

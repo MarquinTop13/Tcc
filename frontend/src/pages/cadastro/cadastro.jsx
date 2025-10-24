@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 import { useState, useEffect } from 'react'
 import BackgroundBlack from "/images/Black/BackgroundBlack.png";
 import BackgroundWhite from "/images/White/BackgroundWhite.png";
-import axios from 'axios'
-import './cadastro.scss'
+import apiLink from '../../axios';
+import './cadastro.scss';
 
 function Cas() {
   const [darkTheme, setDarkTheme] = useState(true)
@@ -66,7 +66,7 @@ function Cas() {
       return;
     }
     try {
-      await axios.post("http://localhost:5010/registro", form)
+      await apiLink.post("/registro", form)
       alert("Usuário cadastrado com sucesso!")
       navigate("/Login")
     } catch (err) {

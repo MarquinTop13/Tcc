@@ -1,10 +1,10 @@
 import BackgroundBlack from "/images/Black/BackgroundBlack.png";
 import BackgroundWhite from "/images/White/BackgroundWhite.png";
 import Cabecalho2 from '../../components/HeaderPages';
-import Err from "../../components/err/erro";
 import { Link, useNavigate } from 'react-router';
+import Modal from "../../components/err/erro";
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import apiLink from "../../axios";
 import './App.scss';
 
 function Login() {
@@ -19,7 +19,7 @@ function Login() {
     document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
   }, [darkTheme]);
 
-  const [err, setErr]  = useState(false);
+  const [showModal, setShowModal]  = useState(false);
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
@@ -27,7 +27,7 @@ function Login() {
 
   async function Enviarlogin() {
     try {
-      const res = await axios.post('http://localhost:5010/Login', {
+      const res = await apiLink.post('/Login', {
         nome,
         email,
         senha
@@ -39,7 +39,7 @@ function Login() {
         alert('Nome, Email ou senha inválidos.')
       } else {
         alert('Erro ao conectar com o servidor.')
-        setErr(true)
+        setShowModal(true)
       }
     }
   }
@@ -59,9 +59,11 @@ function Login() {
             <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
           </div>
         </div>
-
-        {err && <Err />}
-
+        <button
+        onClick={()=> setShowModal(true)}>
+          abrir modal
+        </button>
+        <Modal isOpen={showModal} />
       </section>
       <section className='conteiner-link-botao'>
         <div>

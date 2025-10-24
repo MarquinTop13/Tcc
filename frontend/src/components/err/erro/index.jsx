@@ -2,7 +2,8 @@ import imgE from "/images/icone_erro.png";
 import imgM from "/images/mascoteG404.png";
 import "./erro.scss";
 
-export default function Err(){
+export default function Err({ isOpen, onClose }){
+    if(!isOpen) return null;
 
     return(
       <main className="MainErr">

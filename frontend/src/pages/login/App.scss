@@ -1,22 +1,22 @@
 .MainLogin {
-  --text-Login: #333333;
-  --text-input: #333333b7;
-  --input-bg: #868E96;
+  --text-input: #181717b7;
   --input-border: #2C2C2E;
-  --fundo-botao: #333366;
-  --text-link: #1F2937;
   --fundo-input: #868E96;
+  --fundo-botao: #333366;
+  --text-Login: #333333;
+  --text-link: #1F2937;
+  --input-bg: #868E96;
   --text-botao: #fff;
 
   &.dark {
-    --text-Login: #FFFFFF;
     --text-input: #ffffff85;
-    --input-bg: #1E1E1E;
     --input-border: #2C2C2E;
-    --fundo-botao: #0040FF;
-    --text-link: #fff;
+    --fundo-botao: #37376b;
     --fundo-input: #868E96;
+    --text-Login: #FFFFFF;
+    --input-bg: #1E1E1E;
     --text-botao: #fff;
+    --text-link: #a1aebe;
   }
 
   .conteiner-App {
@@ -54,6 +54,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    position: relative;
+    transition: all 270ms ease;
 
     input {
       background-color: var(--input-bg);
@@ -65,6 +67,9 @@
       border: 1px solid var(--input-border);
       border-radius: 8px;
       font-size: 1.3rem;
+    }
+    & :hover {
+      transform: translateY(-2px);
     }
 
     & ::placeholder {
@@ -78,20 +83,22 @@
   }
 
   .conteiner-link-botao {
+    color: var(--text-botao);
     text-align: center;
     margin-left: auto;
     width: 53%;
-    color: var(--text-botao);
-
+    
     .link-login {
       margin-right: 11%;
       font-size: 2rem;
       text-decoration: none;
       color: var(--text-link);
     }
-
+    
     .botao {
       background-color: var(--fundo-botao);
+      position: relative;
+      transition: all 270ms ease;
       margin-top: 0.1rem;
       font-size: 1.3rem;
       color: var(--text-botao);
@@ -99,11 +106,8 @@
       border-radius: 12px;
       width: 12vw;
       height: 4.1vw;
-      position: relative;
-      transition: all 270ms ease;
       cursor: pointer;
     }
-
     & :hover {
       transform: translateY(-2px);
     }
