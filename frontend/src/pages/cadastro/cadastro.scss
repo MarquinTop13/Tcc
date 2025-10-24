@@ -27,7 +27,6 @@
     align-items: center;
 
     .fundo-secundario-cadastro {
-      margin-top: 2rem;
       padding: 2rem;
       width: 100%;
       max-width: 500px;
@@ -45,6 +44,7 @@
 
         h2 {
           font-size: 1rem;
+          padding-left: 35px;
           color: var(--text-cadastro);
         }
       }
@@ -102,7 +102,7 @@
 
   .conteiner-link-botao-cas {
     margin-left: 7%;
-    width: 53%;
+    width: 500px;
     color: var(--text-botao);
 
     .fundo-botao {
@@ -113,7 +113,7 @@
 
       .texto {
         margin-top: 0.1rem;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: var(--text-link);
 
         .Link{
@@ -133,10 +133,9 @@
         position: relative;
         transition: all 270ms ease;
         cursor: pointer;
-      }
-
-      & :hover {
+        & :hover {
         transform: translateY(-2px);
+      }
       }
     }
   }

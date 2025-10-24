@@ -8,27 +8,33 @@ import LinkWhiteMode from "/images/White/links_white1.png"
 import LinkBlackMode from "/images/Black/link.png"
 import PassToPassWhite from '/images/White/passo_a_passo_white1.png'
 import PassToPassBlack from '/images/Black/passo-a-passo.png'
-import ArchiveIcon from "/images/iconarchive.png"
+import ArchiveIcon from "/images/icons/iconarchive.png"
 import MachineBlack from "/images/Black/machineBlack.png"
 import Machine from "/images/White/machine.png"
-
 
 import { Link } from "react-router"
 import { useEffect, useState } from 'react'
 
 export default function Home() {
 
-    const [darkTheme, setDarkTheme] = useState(true)
-
-    //Modo simples para um if, else em react
+    const [darkTheme, setDarkTheme] = useState(() => {
+        const themeSaved = localStorage.getItem("TemaEscuro");
+        return themeSaved ? themeSaved === 'true' : false;
+    })
+    //Mudar tema escuro para claro
     function ChangeTheme() {
-        setDarkTheme(nomeAleatorio => !nomeAleatorio)
+        setDarkTheme(prevTheme => !prevTheme)
     }
 
-
+    //Background mudando de acordo com o tema escolhido
     useEffect(() => {
         document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
     }, [darkTheme]);
+
+    //Setar o modo escuro no localStorage
+    useEffect(() => {
+        localStorage.setItem('TemaEscuro', darkTheme.toString())
+    }, [darkTheme])
 
     return (
         <main className={`MainHome ${darkTheme ? "dark" : "light"}`}>

@@ -8,18 +8,23 @@ import apiLink from "../../axios";
 import './Login.scss';
 
 function Login() {
-  const [darkTheme, setDarkTheme] = useState(true)
+  // Apenas LER o localStorage que já foi salvo anteriormente
+  const [darkTheme, setDarkTheme] = useState(() => {
+    const themeSaved = localStorage.getItem("TemaEscuro");
+    return themeSaved ? themeSaved === 'true' : false;
+  })
 
-  //Modo simples para um if, else em react
+  // Mudar tema escuro para claro
   function ChangeTheme() {
-    setDarkTheme(nomeAleatorio => !nomeAleatorio)
+    setDarkTheme(prevTheme => !prevTheme)
   }
 
+  // Apenas aplicar o background - NÃO salvar no localStorage aqui
   useEffect(() => {
     document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
   }, [darkTheme]);
 
-  const [showModal, setShowModal]  = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
@@ -59,13 +64,12 @@ function Login() {
             <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
           </div>
         </div>
-        <Modal isOpen={showModal} setModalOpen={() => setShowModal(!showModal)}></Modal>
-      </section>
-      <section className='conteiner-link-botao'>
-        <div>
+
+        <section className='conteiner-link-botao'>
           <Link to="/Cadastro" className="link-login">Criar Conta!</Link>
           <button className='botao' onClick={Enviarlogin}>Entrar</button>
-        </div>
+        </section>
+        <Modal isOpen={showModal} setModalOpen={() => setShowModal(!showModal)}></Modal>
       </section>
     </main>
   )

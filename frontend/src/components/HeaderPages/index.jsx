@@ -1,7 +1,7 @@
 import "./index.scss"
 import { Link } from 'react-router';
 import React, { useEffect, useState } from 'react';
-import Logo from "/images/logod.png";
+import Logo from "/images/icons/logod.png";
 import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import brightness from "/images/Black/brightness.png"

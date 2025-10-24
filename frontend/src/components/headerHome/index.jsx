@@ -1,7 +1,7 @@
 import "./index.scss";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import Logo from "/images/logod.png";
+import Logo from "/images/icons/logod.png";
 import brightness from "/images/Black/brightness.png";
 import brightnessWhite from "/images/White/brightnessWhite.png";
 import menuWhite from "/images/White/menuWhite.png";
@@ -23,6 +23,24 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
 
     //Pegar resolução:
     const [resolution, setResolution] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setResolution(window.innerWidth < 768);
+        };
+
+        // Adiciona o event listener
+        window.addEventListener('resize', handleResize);
+
+        // Atualiza a resolução inicial
+        handleResize();
+
+        // Cleanup function
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
 
     return (
         <header className={`header-home ${darkTheme ? "dark" : "light"}`}>
@@ -74,7 +92,6 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
                 </div>
 
             </section>}
-            
         </header>
     );
 }
