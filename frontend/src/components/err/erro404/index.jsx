@@ -1,7 +1,7 @@
 import imgE from "/images/icons/icone_erro.png";
 import imgM from "/images/icons/mascoteG404.png";
 import Cabo from "/images/icons/cabos.png";
-import "./erro.scss";
+import "./erro404.scss";
 
 export default function Err({ isOpen, setModalOpen, children }) {
   if (!isOpen) return null;

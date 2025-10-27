@@ -20,8 +20,8 @@ endpoints.post('/Login', async (req,resp) => {
     }
 
     else{
-        let token = generateToken(dados);
-        resp.send({token: token});
+        const token = generateToken({ id: dados.id_login, role: 'user' });
+        resp.json({ token });
     }
 })
 

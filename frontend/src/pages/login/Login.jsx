@@ -2,7 +2,7 @@ import BackgroundBlack from "/images/Black/BackgroundBlack.png";
 import BackgroundWhite from "/images/White/BackgroundWhite.png";
 import Cabecalho2 from '../../components/HeaderPages';
 import { Link, useNavigate } from 'react-router';
-import Modal from "../../components/err/erro";
+import Modal from "../../components/err/erro404/index.jsx";
 import { useState, useEffect } from 'react';
 import apiLink from "../../axios";
 import './Login.scss';
@@ -36,7 +36,11 @@ function Login() {
         nome,
         email,
         senha
-      })
+      });
+
+      const token = res.data.token;
+      localStorage.setItem("token", token);
+  
       alert('Login feito com sucesso')
       navigate('/')
     } catch (error) {

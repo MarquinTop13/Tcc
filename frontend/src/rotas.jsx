@@ -4,7 +4,6 @@ import Cas from "./pages/cadastro/cadastro"
 import Verify from "./pages/verifyarchiver/verify"
 import VerifyLinks from "./pages/verifylinks/verifylinks"
 import Login from "./pages/login/Login.jsx"
-import Err from "./components/err/erro/index.jsx"
 
 export default function Rotas(){
     return(
@@ -15,7 +14,6 @@ export default function Rotas(){
                 <Route path="/VerifyLinks" element={<VerifyLinks />} />
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Cadastro" element={<Cas />}/>
-                <Route path="/Err" element={<Err />}/>
             </Routes>
         </BrowserRouter>
     )

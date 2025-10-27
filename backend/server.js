@@ -10,7 +10,10 @@ const app = express();
 const PORT = process.env.PORT || 5010;
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 app.use(express.json());
 
 // Debug: Verificar se a API Key foi carregada
