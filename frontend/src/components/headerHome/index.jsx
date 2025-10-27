@@ -7,7 +7,7 @@ import brightnessWhite from "/images/White/brightnessWhite.png";
 import menuWhite from "/images/White/menuWhite.png";
 import menuBlack from "/images/Black/menuBlack.png";
 
-export default function Cabecalho({ darkTheme, onChangeTheme }) {
+export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
     //Sol Giratorio
     const [img90Dg, setImg90Dg] = useState(false);
     function MoverImg() {
@@ -81,7 +81,18 @@ export default function Cabecalho({ darkTheme, onChangeTheme }) {
                     <Link className="link" to="/Login">
                         Login
                     </Link>
+                    {AdminVerify ? false : ''}
+
+                    {AdminVerify &&
+                    
+                        <Link className="link" to={'/Admin'}>Admin </Link>}
+
+                    {!AdminVerify &&
+                        <h3></h3>
+                    }
                 </div>
+
+                
 
                 <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
                     <img

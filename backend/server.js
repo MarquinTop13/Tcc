@@ -10,14 +10,11 @@ const app = express();
 const PORT = process.env.PORT || 5010;
 
 // Middlewares
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 
 // Debug: Verificar se a API Key foi carregada
-console.log('🔑 API Key carregada:', process.env.GOOGLE_SAFE_BROWSING_API_KEY ? 'Sim' : 'Não');
+console.log('API Key carregada ? ', process.env.GOOGLE_SAFE_BROWSING_API_KEY ? 'Sim' : 'Não');
 
 // Configura todas as rotas
 AddRotas(app);
@@ -36,5 +33,5 @@ app.use((error, req, res, next) => {
 
 //Iniciando o server
 app.listen(PORT, () => {
-  console.log(` Servidor rodando na porta ${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
 });

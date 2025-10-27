@@ -36,8 +36,12 @@ body {
 
         .text {
             padding: 3%;
-            text-align: center;
+            text-align: start;
             color: var(--text-color);
+
+            h3{
+                margin-left: 1.6%;
+            }
         }
 
         .cards {
@@ -68,7 +72,7 @@ body {
                 border: 2px solid var(--card-border);
 
                 &:hover {
-                    cursor: var(--cursor-pointer);
+                    
                     transform: translateY(-10px);
                     box-shadow: var(--card-hover-shadow);
                 }

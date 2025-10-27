@@ -42,12 +42,10 @@ function Login() {
       localStorage.setItem("token", token);
   
       alert('Login feito com sucesso')
-      navigate('/')
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setShowModal(true);
       } else {
-        alert('Erro ao conectar com o servidor.')
         setShowModal(true)
       }
     }

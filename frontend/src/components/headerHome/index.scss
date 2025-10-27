@@ -64,7 +64,7 @@
 
     .column1 {
       width: auto;
-      padding-left: 250px;
+      margin-left: 250px;
 
       img {
         width: 30%;
@@ -100,6 +100,8 @@
     }
 
     .column4 {
+      flex-direction: row;
+      gap: 20px;
 
       h3,
       .link {
@@ -107,6 +109,14 @@
         color: var(--link-color);
       }
     }
+  }
+}
+
+@media (min-width: 769px){
+  .header-home{
+      .opcoes{
+        flex-direction: row;
+      }
   }
 }
 

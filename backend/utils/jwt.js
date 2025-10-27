@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken'
 
 const KEY = 'numsei'
 
-
 export default function generateToken(userInfo) {
   if (!userInfo.role)
     userInfo.role = 'user';
@@ -10,17 +9,23 @@ export default function generateToken(userInfo) {
   return jwt.sign(userInfo, KEY, { expiresIn: '1h' });
 }
 
+export function verifyToken(token) {
+  try {
+    return jwt.verify(token, KEY); 
+  } catch {
+    return null;
+  }
+}
+
+
 export function getTokenInfo(req) {
   try {
     let token = req.headers['x-access-token'];
-
     if (token === undefined)
       token = req.query['x-access-token']
 
-    let signd = jwt.verify(token, KEY);
-    return signd;
-  }
-  catch {
+    return jwt.verify(token, KEY);
+  } catch {
     return null;
   }
 }
@@ -29,28 +34,22 @@ export function getAuthentication(checkRole, throw401 = true) {
   return (req, resp, next) => {
     try {
       let token = req.headers['x-access-token'];
-  
       if (token === undefined)
         token = req.query['x-access-token'];
     
-      let signd = jwt.verify(token, KEY);
-    
+      const signd = jwt.verify(token, KEY);
       req.user = signd;
-      if (checkRole && !checkRole(signd) && signd.role.type !== 'admin')
+      
+      if (checkRole && !checkRole(signd) && signd.role !== 'admin')
         return resp.status(403).end();
     
       next();
-    }
-    catch {
+    } catch {
       if (throw401) {
-        let error = new Error();
-        error.stack = 'Authentication Error: JWT must be provided';
         resp.status(401).end();
-      }
-      else {
+      } else {
         next();
       }
     }
   }
 }
-

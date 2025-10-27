@@ -1,6 +1,7 @@
 import '../../scss/global.scss'
 import '../../scss/fonts.scss'
 import './home.scss'
+import apiLink from '../../axios'
 import Cabecalho from "../../components/headerHome"
 import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
@@ -14,9 +15,11 @@ import Machine from "/images/White/machine.png"
 
 import { Link } from "react-router"
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
 
 export default function Home() {
-
+    const navigate = useNavigate();
+    const [admin, setAdmin] = useState(false);
     const [darkTheme, setDarkTheme] = useState(() => {
         const themeSaved = localStorage.getItem("TemaEscuro");
         return themeSaved ? themeSaved === 'true' : false;
@@ -36,10 +39,39 @@ export default function Home() {
         localStorage.setItem('TemaEscuro', darkTheme.toString())
     }, [darkTheme])
 
+    //Verificador de ADM
+    useEffect(() => {
+        AdmVerificador();
+    })
+
+    async function AdmVerificador() {
+        try {
+            localStorage.removeItem('Admin');
+            const Token = localStorage.getItem('token');
+            const response = await apiLink.post('/LoginADM', {
+                'tokenInserido': Token
+            });
+
+            if(!response){
+                return;
+            }
+            const data = response.data || response;
+            const usuario = data.Usuario[0];
+
+            if(usuario.nome === "MgsTop13" || usuario.nome === "Gustivo" || usuario.nome === "Vitu"){
+                setAdmin(true);
+                localStorage.setItem('Admin', usuario.nome);
+            }
+        }
+        catch (error) {
+            alert('Erro: ' + error.message);
+        }
+    }
+
+
     return (
         <main className={`MainHome ${darkTheme ? "dark" : "light"}`}>
-            <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
-
+            <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme} AdminVerify={admin} />
             <section className="text">
                 <h1>Proteja seu dispositivo com um clique!</h1>
                 <h3>Verifique arquivos e links que causem danos.</h3>
@@ -79,7 +111,7 @@ export default function Home() {
                         icon: darkTheme ? MachineBlack : Machine,
                         title: "Gerador de senhas",
                         text: "Um simples gerador de senha com alta segurança",
-                        link: "/", //Alguem faz ai tambem
+                        link: "/PasswordGenerator",
                         button: "Gere sua senha",
                     }
                 ].map(card => (
