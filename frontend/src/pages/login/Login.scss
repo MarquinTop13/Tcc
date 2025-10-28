@@ -1,16 +1,15 @@
 .MainLogin {
   background-color: var(--cor-geral-fundo);
-  height: 100vh;
+  min-height: 100dvh;
   min-height: 100vh;
 
   --cor-geral-fundo: #767676a4;
   --text-input: #181717b7;
   --input-border: #2C2C2E;
-  --fundo-input: #868E96;
   --fundo-botao: #333366;
   --text-Login: #333333;
   --text-link: #1F2937;
-  --input-bg: #868E96;
+  --input-bg: #c8ced4;
   --text-botao: #fff;
 
   &.dark {
@@ -18,7 +17,6 @@
     --text-input: #ffffff85;
     --input-border: #2C2C2E;
     --fundo-botao: #37376b;
-    --fundo-input: #868E96;
     --text-Login: #FFFFFF;
     --input-bg: #1E1E1E;
     --text-botao: #fff;
@@ -33,7 +31,7 @@
     align-items: end;
 
     .fundo-secundario {
-      margin-top: 2rem;
+      margin-top: 5rem;
       padding: 1rem;
       width: 100%;
       max-width: 500px;
@@ -42,7 +40,7 @@
       .login-fundo {
         text-align: start;
         color: var(--text-Login);
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
 
         h1 {
           margin-left: 1rem;

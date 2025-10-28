@@ -1,5 +1,5 @@
 .MainErr{
-    --blur-fundo: rgba(0, 0, 0, 0.4);
+    --blur-fundo: rgba(0, 0, 0, 0.7);
     --borda-externa: #67b4dd;
     --text-destaque: #ff001e;
     --fundo-err: #ced5dbe3;
@@ -38,7 +38,6 @@
                 display: flex;
             }
             .err-text{
-                box-shadow: 2px 1px 2px var(--blur-fundo);
                 font-size: 1.4rem;
                 margin-left: auto;
                 margin-right:auto;
@@ -50,10 +49,6 @@
                 .dd{
                     color: var(--text-destaque);
                 }
-            }
-            .fecho{
-                color: var(--B-t-geral);
-                cursor: pointer;
             }
         }
     }

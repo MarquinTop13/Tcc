@@ -2,7 +2,7 @@ import BackgroundBlack from "/images/Black/BackgroundBlack.png";
 import BackgroundWhite from "/images/White/BackgroundWhite.png";
 import Cabecalho2 from '../../components/HeaderPages';
 import { Link, useNavigate } from 'react-router';
-import Modal from "../../components/err/erro404/index.jsx";
+import Modal from "../../components/err/index.jsx";
 import { useState, useEffect } from 'react';
 import apiLink from "../../axios";
 import './Login.scss';
@@ -24,11 +24,12 @@ function Login() {
     document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
   }, [darkTheme]);
 
+  const [codigoErro, setCodigoErro] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [nome, setNome] = useState('')
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
-  const navigate = useNavigate()
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const navigate = useNavigate();
 
   async function Enviarlogin() {
     try {
@@ -41,12 +42,12 @@ function Login() {
       const token = res.data.token;
       localStorage.setItem("token", token);
   
-      alert('Login feito com sucesso')
+      alert('Login feito com sucesso');
+      navigate("/");
     } catch (error) {
-      if (error.response && error.response.status === 401) {
+      const status = error.response?.status || "default"; {
+        setCodigoErro(status);
         setShowModal(true);
-      } else {
-        setShowModal(true)
       }
     }
   }
