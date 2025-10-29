@@ -3,7 +3,7 @@ import mascote404 from "/images/icons/mascoteG404.png";
 import mascote401 from "/images/icons/mascote401.png";
 import mascote403 from "/images/icons/mascote403.png";
 import cabo from "/images/icons/cabos.png";
-import mascote from "/images/icons/Mgs-d.png";
+import mascoteg from "/images/icons/Mgs-d.png";
 import "./erro.scss";
 
 const errosConfig = {
@@ -48,7 +48,7 @@ const errosConfig = {
         <br />Algo deu errado. Tente novamente mais tarde.
       </>
     ),
-    mascote: mascote,
+    mascote: mascoteg,
     cabo: cabo
   }
 };
