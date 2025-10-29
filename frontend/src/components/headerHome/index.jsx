@@ -69,7 +69,7 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
             {!resolution && <section className="opcoes">
 
                 <div className="column2">
-                    <h3>Suporte</h3>
+                    <Link className="link" to='/Support'>Suporte</Link>
                 </div>
 
                 <div className="column3">
@@ -78,7 +78,7 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                 </div>
 
                 <div className="column4">
-                    <Link className="link" to="/Login">
+                    <Link className="link" to={"/Login"}>
                         Login
                     </Link>
                     {AdminVerify ? false : ''}

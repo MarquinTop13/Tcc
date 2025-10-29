@@ -3,9 +3,10 @@ import Home from "./pages/home/home"
 import Cas from "./pages/cadastro/cadastro"
 import Verify from "./pages/verifyarchiver/verify"
 import VerifyLinks from "./pages/verifylinks/verifylinks"
-import PasswordGenerator from "./pages/passwordGenerate/password.jsx"
-import Login from "./pages/login/Login.jsx"
-import Admin from "./pages/admin/admin.jsx"
+import PasswordGenerator from "./pages/passwordGenerate/password"
+import Login from "./pages/login/Login"
+import Admin from "./pages/admin/admin"
+import Support from "./pages/support/support"
 
 export default function Rotas(){
     return(
@@ -18,6 +19,7 @@ export default function Rotas(){
                 <Route path="/PasswordGenerator" element={<PasswordGenerator />} />
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Cadastro" element={<Cas />}/>
+                <Route path="/Support" element={<Support />}/>
             </Routes>
         </BrowserRouter>
     )

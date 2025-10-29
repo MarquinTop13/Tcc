@@ -58,9 +58,11 @@ export default function Home() {
             const data = response.data || response;
             const usuario = data.Usuario[0];
 
-            if(usuario.nome === "MgsTop13" || usuario.nome === "Gustivo" || usuario.nome === "Vitu"){
+            if(usuario.nome === "MgsTop13" && usuario.email === "mgs350084@gmail.com" || usuario.nome === "Gustivo" || usuario.nome === "Vitu"){
                 setAdmin(true);
                 localStorage.setItem('Admin', usuario.nome);
+            } else if(usuario.nome === null || usuario.nome === ""){
+                alert("Faça login")
             }
         }
         catch (error) {

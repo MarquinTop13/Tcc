@@ -1,0 +1,51 @@
+
+.hub{
+  --fundo-g: #ced4da;
+  --text-c: #fff;
+  --fundo-b: #333366;
+  --fundo-i: #696969;
+}
+ .support-fundo{ 
+  text-align: center;
+
+  .container-support{
+    background-color: var(--fundo-g);
+    width: 70%;
+    height: 60vh;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid black 2px;  
+
+    .div-input{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 30vh;
+      gap: 25px;
+
+      .input-branco{
+        background-color: var(--fundo-i);
+        color: var(--text-c);
+        width: 50%;
+        height: 2rem;
+      }
+      .text-preto{
+        background-color: var(--fundo-i);
+        color: var(--text-c);
+        width: 50%;
+        height: 7rem;
+      }
+    }
+    .butao-verificated{
+      background-color: var(--fundo-b);
+      width: 25%;
+      height: 10%;
+      font-size: 1.5rem;
+      color: var(--text-c);
+      margin-top: 60px;
+    }
+  }
+ }
+ h1, h2{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+ }

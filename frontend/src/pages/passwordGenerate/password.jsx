@@ -29,7 +29,7 @@ export default function PasswordGenerator(){
     //Gerador de senhas:
         const [password1, setPassword1] = useState("");
         const [passwordLength, setPasswordLength] = useState();
-        const [textUp, setTextUp] = useState(false);
+        const [textUp, setTextUp] = useState(true);
         const [textLower, setTextLower] = useState(true);
         const [numbers, setNumbers] = useState(true);
         const [symbols, setSymbols] = useState(true);
@@ -95,6 +95,22 @@ export default function PasswordGenerator(){
                     <input 
                         checked={textLower}
                         onChange={(e) => setTextLower(e.target.checked)}
+                        type="checkbox" />
+                </div>
+
+                <div className="op4">
+                    <h2>Numeros?</h2>
+                    <input 
+                        checked={numbers}
+                        onChange={(e) => setNumbers(e.target.checked)}
+                        type="checkbox" />
+                </div>
+
+                <div className="op5">
+                    <h2>Caracteres especiais?</h2>
+                    <input 
+                        checked={symbols}
+                        onChange={(e) => setSymbols(e.target.checked)}
                         type="checkbox" />
                 </div>
                 

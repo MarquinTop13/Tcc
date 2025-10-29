@@ -9,7 +9,28 @@ import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import { useState, useEffect } from 'react'
 
 export default function VerifyLinks() {
-    const [darkTheme, setDarkTheme] = useState(true)
+
+     //Modo escuro:
+            const [darkTheme, setDarkTheme] = useState(() => {
+                const themeSaved = localStorage.getItem("TemaEscuro");
+                return themeSaved ? themeSaved === 'true' : false;
+            })
+            //Mudar tema escuro para claro
+            function ChangeTheme() {
+                setDarkTheme(prevTheme => !prevTheme)
+            }
+    
+            //Background mudando de acordo com o tema escolhido
+            useEffect(() => {
+                document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
+            }, [darkTheme]);
+    
+            //Setar o modo escuro no localStorage
+            useEffect(() => {
+                localStorage.setItem('TemaEscuro', darkTheme.toString())
+            }, [darkTheme])
+    
+
     const [link, setLink] = useState('');
     const [resultado, setResultado] = useState('');
     const [carregando, setCarregando] = useState(false);
@@ -64,14 +85,6 @@ export default function VerifyLinks() {
             setCarregando(false);
         }
     }
-
-    function ChangeTheme() {
-        setDarkTheme(prev => !prev);
-    }
-
-    useEffect(() => {
-        document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`;
-    }, [darkTheme]);
 
     return (
         <main className={`MainVerifyLinks ${darkTheme ? "dark" : "light"}`}>

@@ -9,6 +9,15 @@ export async function salvarUsuario({ nome, email, senha, palavra, idade }) {
   return res.insertId;
 }
 
+export async function UserIgual(nome){
+  const comando = `
+    select nome from cadastro
+      where nome = ?;
+  `
+
+  const [info] = await conexao.query(comando,[nome]);
+  return info[0];
+}
 
 export async function salvarLogin({ id_cadastro, nome, email, senha }) {
   const comando = `

@@ -8,16 +8,26 @@ import '../../scss/fonts.scss';
 import "./verify.scss";
 
 export default function Verify() {
-  //Modo escuro
-  const [darkTheme, setDarkTheme] = useState(true);
-
-  function ChangeTheme() {
-    setDarkTheme(nomeAleatorio => !nomeAleatorio)
-  }
-
-  useEffect(() => {
-    document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`;
-  }, [darkTheme]);
+   //Modo escuro:
+          const [darkTheme, setDarkTheme] = useState(() => {
+              const themeSaved = localStorage.getItem("TemaEscuro");
+              return themeSaved ? themeSaved === 'true' : false;
+          })
+          //Mudar tema escuro para claro
+          function ChangeTheme() {
+              setDarkTheme(prevTheme => !prevTheme)
+          }
+  
+          //Background mudando de acordo com o tema escolhido
+          useEffect(() => {
+              document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
+          }, [darkTheme]);
+  
+          //Setar o modo escuro no localStorage
+          useEffect(() => {
+              localStorage.setItem('TemaEscuro', darkTheme.toString())
+          }, [darkTheme])
+  
 
   //Verificação dos arquivos:
   const extensoesSuportadas = ['bat','sh','ps1','vbs','cmd', 'txt'];
