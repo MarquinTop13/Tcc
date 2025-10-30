@@ -4,6 +4,7 @@ import Cas from "./pages/cadastro/cadastro"
 import Verify from "./pages/verifyarchiver/verify"
 import VerifyLinks from "./pages/verifylinks/verifylinks"
 import PasswordGenerator from "./pages/passwordGenerate/password"
+import Perfil from "./pages/perfil/Perfil"
 import Login from "./pages/login/Login"
 import Admin from "./pages/admin/admin"
 import Support from "./pages/support/support"
@@ -20,6 +21,7 @@ export default function Rotas(){
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Cadastro" element={<Cas />}/>
                 <Route path="/Support" element={<Support />}/>
+                <Route path="/Perfil" element={<Perfil />}/>
             </Routes>
         </BrowserRouter>
     )

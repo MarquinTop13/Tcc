@@ -62,7 +62,8 @@ function Login() {
             <h2>Seja Bem-vindo de volta</h2>
           </div>
           <div className="conteiner-login">
-            <input className='um' type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} />
+            <input className='um' type="text" placeholder="Nome/Apelido
+            " value={nome} onChange={(e) => setNome(e.target.value)} />
             <input className='um' type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
           </div>

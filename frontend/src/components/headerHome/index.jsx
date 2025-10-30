@@ -2,12 +2,31 @@ import "./index.scss";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import Logo from "/images/icons/logod.png";
+import Account from "/images/Black/iconContaBlack.png"
 import brightness from "/images/Black/brightness.png";
 import brightnessWhite from "/images/White/brightnessWhite.png";
 import menuWhite from "/images/White/menuWhite.png";
+import Perfil from "../../pages/perfil/Perfil"; 
 import menuBlack from "/images/Black/menuBlack.png";
 
 export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
+
+    //Conta:
+        const [accountLogo, setAccountLogo] = useState(false);
+
+        function MostarInfoConta(){
+            if(accountLogo === false){
+                setAccountLogo(true);
+                console.log(accountLogo);   
+            }
+
+            else{
+                console.log(true)
+                setAccountLogo(false);
+            }
+
+        }
+
     //Sol Giratorio
     const [img90Dg, setImg90Dg] = useState(false);
     function MoverImg() {
@@ -93,6 +112,10 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                 </div>
 
                 
+
+                <img onClick={MostarInfoConta} className="accountLogo" src={Account} />
+                {accountLogo && <Perfil onClose={() => setAccountLogo(false)} />}
+
 
                 <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
                     <img
