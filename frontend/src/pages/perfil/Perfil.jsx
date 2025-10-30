@@ -1,24 +1,64 @@
 import imgperf from "/images/icons/imagemPerfil.png";
-import { useState } from "react";
+import apiLink from "../../axios";
+import { useState, useRef, useEffect } from "react";
 import "./Perfil.scss";
 
-export default function Perfil({ onClose }) {
+export default function Perfil({ onClose, triggerRef }) {
+  const [nomeUser,setNomeUser] = useState(localStorage.getItem('Admin'));
   const [abaAtiva, setAbaAtiva] = useState("sobre");
+  const modalRef = useRef(null);
 
-  // Fechar modal ao clicar fora
+  useEffect(() => {
+    if (triggerRef.current && modalRef.current) {
+      const triggerRect = triggerRef.current.getBoundingClientRect();
+      const modalRect = modalRef.current.getBoundingClientRect();
+      
+      // Posiciona à direita do ícone
+      let left = triggerRect.right + 10;
+      let top = triggerRect.top;
+      
+      // Ajusta se o modal sair da tela à direita
+      if (left + modalRect.width > window.innerWidth) {
+        left = triggerRect.left - modalRect.width - 1;
+      }
+      
+      // Ajusta se o modal sair da tela na parte inferior
+      if (top + modalRect.height > window.innerHeight) {
+        top = window.innerHeight - modalRect.height - 10;
+      }
+      
+      modalRef.current.style.left = `${left}px`;
+      modalRef.current.style.top = `${top}px`;
+    }
+  }, [triggerRef]);
+
   const handleClickFora = (e) => {
     if (e.target.classList.contains("overlay-perfil")) {
       onClose();
     }
   };
 
+  //PegarDadosConta:
+    async function DadosConta(){
+      try{
+        const informacoesUser = apiLink.post('/InfoUser',{
+          nome: nomeUser
+      })
+      } catch(error){
+        alert(error.response);
+      }
+
+    }
+
+    
+
   return (
     <div className="overlay-perfil" onClick={handleClickFora}>
-      <main className="MainPerfil">
+      <main className="MainPerfil" ref={modalRef}>
         <section className="imagem-abas">
           <div className="cabecalho-perfil">
             <img className="img-perfil" src={imgperf} height="130px" />
-            <h1 className="apelido">Sergio</h1>
+            <h1 className="apelido">{localStorage.getItem('Admin')}</h1>
           </div>
 
           <div className="perfil-abas">
@@ -40,7 +80,7 @@ export default function Perfil({ onClose }) {
             {abaAtiva === "sobre" ? (
               <div>
                 <p>Idade: 22</p>
-                <p>Data de criação: 20/10/2024</p>
+                <p>Data de criação: {informacoesUser}</p>
               </div>
             ) : (
               <div>

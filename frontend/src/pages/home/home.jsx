@@ -46,7 +46,7 @@ export default function Home() {
 
     async function AdmVerificador() {
         try {
-            localStorage.removeItem('Admin');
+            localStorage.removeItem('User');
             const Token = localStorage.getItem('token');
             const response = await apiLink.post('/LoginADM', {
                 'tokenInserido': Token
@@ -60,13 +60,13 @@ export default function Home() {
 
             if(usuario.nome === "MgsTop13" && usuario.email === "mgs350084@gmail.com" || usuario.nome === "Gustivo" || usuario.nome === "Vitu"){
                 setAdmin(true);
-                localStorage.setItem('Admin', usuario.nome);
+                localStorage.setItem('User', usuario.nome);
             } else if(usuario.nome === null || usuario.nome === ""){
                 alert("Faça login")
             }
         }
         catch (error) {
-            alert('Erro: ' + error.message);
+            console.log('Erro: ' + error.message);
         }
     }
 
@@ -104,7 +104,7 @@ export default function Home() {
                         icon: darkTheme ? PassToPassWhite : PassToPassBlack,
                         title: "Instuções para se previnir",
                         text: "Dicas de como se previnir de vírus perigosos",
-                        link: "/", //Alguem Faz aí :(
+                        link: "/Viruspage",
                         button: "Se Proteja",
                     },
 

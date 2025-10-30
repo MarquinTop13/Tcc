@@ -1,5 +1,5 @@
 import "./index.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router";
 import Logo from "/images/icons/logod.png";
 import Account from "/images/Black/iconContaBlack.png"
@@ -10,24 +10,15 @@ import Perfil from "../../pages/perfil/Perfil";
 import menuBlack from "/images/Black/menuBlack.png";
 
 export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
+    // Conta:
+    const [accountLogo, setAccountLogo] = useState(false);
+    const accountRef = useRef(null); // Ref para o ícone de perfil
 
-    //Conta:
-        const [accountLogo, setAccountLogo] = useState(false);
+    function MostarInfoConta(){
+        setAccountLogo(!accountLogo);
+    }
 
-        function MostarInfoConta(){
-            if(accountLogo === false){
-                setAccountLogo(true);
-                console.log(accountLogo);   
-            }
-
-            else{
-                console.log(true)
-                setAccountLogo(false);
-            }
-
-        }
-
-    //Sol Giratorio
+    // Resto do seu código permanece igual...
     const [img90Dg, setImg90Dg] = useState(false);
     function MoverImg() {
         if (img90Dg === false) {
@@ -40,7 +31,6 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
         }
     }
 
-    //Pegar resolução:
     const [resolution, setResolution] = useState(window.innerWidth < 768);
 
     useEffect(() => {
@@ -48,28 +38,20 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
             setResolution(window.innerWidth < 768);
         };
 
-        // Adiciona o event listener
         window.addEventListener('resize', handleResize);
-
-        // Atualiza a resolução inicial
         handleResize();
 
-        // Cleanup function
         return () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
 
-
     return (
         <header className={`header-home ${darkTheme ? "dark" : "light"}`}>
             <img src={Logo} className="logo" alt="Logo" />
 
-            
-
             {/*Caso for um mobile, aparecerá um menu hamburguer*/}
             {resolution && <section className="opcoes cell">
-
                 <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
                     <img
                         id="imgsun"
@@ -77,16 +59,13 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                     />
                     <h3>{darkTheme ? "Modo Claro" : "Modo Escuro"}</h3>
                 </div>
-
                 <div className="column2">
                     <img src={darkTheme ? menuWhite : menuBlack} />
                 </div>
-
             </section>}
 
             {/*Caso for um pc, irá funcionar normalmente*/}
             {!resolution && <section className="opcoes">
-
                 <div className="column2">
                     <Link className="link" to='/Support'>Suporte</Link>
                 </div>
@@ -103,7 +82,6 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                     {AdminVerify ? false : ''}
 
                     {AdminVerify &&
-                    
                         <Link className="link" to={'/Admin'}>Admin </Link>}
 
                     {!AdminVerify &&
@@ -111,11 +89,21 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                     }
                 </div>
 
+                {/* Ícone de perfil com ref */}
+                <img 
+                    ref={accountRef}
+                    onClick={MostarInfoConta} 
+                    className="accountLogo" 
+                    src={Account} 
+                />
                 
-
-                <img onClick={MostarInfoConta} className="accountLogo" src={Account} />
-                {accountLogo && <Perfil onClose={() => setAccountLogo(false)} />}
-
+                {/* Passa a ref do ícone para o componente Perfil */}
+                {accountLogo && (
+                    <Perfil 
+                        onClose={() => setAccountLogo(false)} 
+                        triggerRef={accountRef}
+                    />
+                )}
 
                 <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
                     <img
@@ -124,7 +112,6 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                     />
                     <h3>{darkTheme ? "Modo Claro" : "Modo Escuro"}</h3>
                 </div>
-
             </section>}
         </header>
     );

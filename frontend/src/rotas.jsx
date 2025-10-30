@@ -8,7 +8,7 @@ import Perfil from "./pages/perfil/Perfil"
 import Login from "./pages/login/Login"
 import Admin from "./pages/admin/admin"
 import Support from "./pages/support/support"
-import VR from "./pages/infovirus/virusinfo.jsx"
+import VR from "./pages/infovirus/virusinfo"
 
 export default function Rotas(){
     return(
@@ -22,11 +22,8 @@ export default function Rotas(){
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Cadastro" element={<Cas />}/>
                 <Route path="/Support" element={<Support />}/>
-<<<<<<< Updated upstream
                 <Route path="/Perfil" element={<Perfil />}/>
-=======
                 <Route path="/Viruspage" element={<VR />}/>
->>>>>>> Stashed changes
             </Routes>
         </BrowserRouter>
     )

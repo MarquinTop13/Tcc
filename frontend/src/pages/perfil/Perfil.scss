@@ -1,113 +1,116 @@
 /* Fundo escurecido atrás do modal */
 .overlay-perfil {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(3px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    animation: aparecer 0.25s ease-in-out forwards;
-  }
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  z-index: 1;
+}
+
+
+.MainPerfil {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
   
-  /* Animação suave de entrada */
-  @keyframes aparecer {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
+  .imagem-abas {
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 300px;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    margin: 10px;
+
+    .cabecalho-perfil {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .img-perfil {
+        border-radius: 100%;
+        max-width: 55%;
+        border: 3px solid #1e90ff;
+        margin-bottom: 10px;
+      }
+
+      .apelido {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: black;
+      }
     }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  
-  .MainPerfil {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  
-    .imagem-abas {
-      border-radius: 20px;
-      padding: 40px;
-      max-width: 400px;
-      width: 90%;
-      background-color: #fff;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-  
-      .cabecalho-perfil {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 20px;
-  
-        .img-perfil {
-          border-radius: 50%;
-          border: 3px solid #1e90ff;
-          margin-bottom: 10px;
-        }
-  
-        .apelido {
-          font-size: 1.4rem;
-          font-weight: bold;
-          color: black;
-        }
-      }
-  
-      .perfil-abas {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-        justify-content: center;
-  
-        button {
-          background-color: #104e8b;
-          color: white;
-          border: none;
-          padding: 10px 18px;
-          border-radius: 8px;
-          font-size: 0.95rem;
-          cursor: pointer;
-          transition: background-color 0.2s;
-  
-          &.ativo {
-            background-color: #104e8b;
-          }
-  
-          &:hover {
-            background-color: #628fbd;
-          }
-        }
-      }
-  
-      .perfil-info {
-        text-align: left;
-        color: #333;
-        line-height: 1.6;
-  
-        p {
-          margin: 6px 0;
-          font-size: 1rem;
-        }
-      }
-  
-      .btn-fechar {
-        display: block;
-        margin: 20px auto 0;
-        padding: 8px 20px;
-        background-color: #e63946;
-        color: #fff;
+
+    .perfil-abas {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+
+      button {
+        background-color: #104e8b;
+        color: white;
         border: none;
+        padding: 10px 18px;
         border-radius: 8px;
+        font-size: 0.95rem;
         cursor: pointer;
         transition: background-color 0.2s;
-  
+
+        &.ativo {
+          background-color: #104e8b;
+        }
+
         &:hover {
-          background-color: #b71c1c;
+          background-color: #628fbd;
         }
       }
     }
+
+    .perfil-info {
+      text-align: left;
+      color: #333;
+      line-height: 1.6;
+
+      p {
+        margin: 6px 0;
+        font-size: 1rem;
+      }
+    }
+
+    .btn-fechar {
+      display: block;
+      margin: 20px auto 0;
+      padding: 8px 20px;
+      background-color: #e63946;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: #b71c1c;
+      }
+    }
   }
-  
+}
+
+// Responsividade para mobile
+@media (max-width: 768px) {
+  .MainPerfil {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 350px;
+    
+    .imagem-abas {
+      padding: 20px;
+    }
+  }
+}
