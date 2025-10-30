@@ -48,7 +48,7 @@ export default function PasswordGenerator(){
                   const lower = "abcdefghijklmnopqrstuvwxyz";
                   const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                   const nums  = "0123456789";
-                  const syms  = "!@#$%^&*()_+";
+                  const syms  = "!@#$%&()_";
                 
                   let all = "";
                   if (textLower) all += lower;
