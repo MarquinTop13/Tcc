@@ -1,6 +1,6 @@
 import {BrowserRouter, Routes, Route} from "react-router"
-import Home from "./pages/home/home"
-import Cas from "./pages/cadastro/cadastro"
+import Home from "./pages/home/home.jsx"
+import Cas from "./pages/cadastro/cadastro.jsx"
 import Verify from "./pages/verifyarchiver/verify"
 import VerifyLinks from "./pages/verifylinks/verifylinks"
 import PasswordGenerator from "./pages/passwordGenerate/password"
@@ -8,6 +8,7 @@ import Perfil from "./pages/perfil/Perfil"
 import Login from "./pages/login/Login"
 import Admin from "./pages/admin/admin"
 import Support from "./pages/support/support"
+import VR from "./pages/infovirus/virusinfo.jsx"
 
 export default function Rotas(){
     return(
@@ -21,7 +22,11 @@ export default function Rotas(){
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Cadastro" element={<Cas />}/>
                 <Route path="/Support" element={<Support />}/>
+<<<<<<< Updated upstream
                 <Route path="/Perfil" element={<Perfil />}/>
+=======
+                <Route path="/Viruspage" element={<VR />}/>
+>>>>>>> Stashed changes
             </Routes>
         </BrowserRouter>
     )
