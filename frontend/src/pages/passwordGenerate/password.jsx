@@ -44,8 +44,8 @@ export default function PasswordGenerator(){
                     return;
                   }
                 
-                else if(passwordLength < 5){
-                    alert("Mínimo de caracteres são 5!");
+                else if(passwordLength < 5 || passwordLength > 16){
+                    alert("Fora do limite de caracteres!");
                     return;
                 }
                 
@@ -144,7 +144,7 @@ export default function PasswordGenerator(){
                         <button className="botao-gerar" onClick={GerarSenhas}>Gerar Senha:</button>
                     </div>
                     <div className="senha-gerada">
-                        <h1 className="senha">Senha:</h1>
+                        <h1 className="titulo-senha">Senha:</h1>
                         <h1 className="senha">{password1}</h1>
                     </div>
                 </div>
