@@ -43,16 +43,17 @@ endpoint.post('/RecuperarSenha', async (req, resp) => {
     }
     catch (error) {
         resp.status(500).send({
-            error: "Erro interno do servidor",
             message: "Não foi possível processar a solicitação",
+            error: "Erro interno do servidor",
         });
     }
 });
 
 endpoint.post('/InfoUser', async (req, resp) => {
     const { nome } = req.body;
+    console.log(nome);
     const buscarNome = await SenhaRepository.InfoConta2(nome);
-
+    console.log(buscarNome);
     if (buscarNome.nome === nome) {
         resp.send({buscarNome});
     }

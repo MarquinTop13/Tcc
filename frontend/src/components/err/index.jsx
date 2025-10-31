@@ -57,10 +57,7 @@ export default function Err({ isOpen, setModalOpen, codigoErro }) {
   if (!isOpen) return null;
 
   const erro = errosConfig[codigoErro];
-
-  if(codigoErro === 500){
-    erro = 'default';
-  }
+  
 
   function fechamento(e) {
     if (e.target.classList.contains("MainErr")) {

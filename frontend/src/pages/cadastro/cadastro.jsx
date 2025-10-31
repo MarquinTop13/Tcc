@@ -82,15 +82,20 @@ function Cas() {
       navigate("/Login")
     } catch (error) {
       const status = error.response?.status; {
-        setCodigoErro(status);
-
+        if(status === 500){
+          setCodigoErro('default')
+        } else{
+          setCodigoErro(status);
+        }
 
         if(status === 404 || codigoErro === 404){
           setShowModal(true);
+          alert(status || codigoErro)
         }
 
         else if(status === 500 || codigoErro === 500){
           setShowModal(true);
+          alert(status || codigoErro);
         }
       }
       

@@ -46,7 +46,6 @@ export default function Home() {
 
     async function AdmVerificador() {
         try {
-            localStorage.removeItem('User');
             const Token = localStorage.getItem('token');
             const response = await apiLink.post('/LoginADM', {
                 'tokenInserido': Token
@@ -58,9 +57,9 @@ export default function Home() {
             const data = response.data || response;
             const usuario = data.Usuario[0];
 
-            if(usuario.nome === "MgsTop13" && usuario.email === "mgs350084@gmail.com" || usuario.nome === "Gustivo" || usuario.nome === "Vitu"){
+            if( usuario.nome === "MgsTop13", usuario.email === "Mgs350084@gmail.com" || usuario.nome === "Gustavo" || usuario.nome === "Vitu"){
                 setAdmin(true);
-                localStorage.setItem('User', usuario.nome);
+                localStorage.setItem('Admin', usuario.nome);
             } else if(usuario.nome === null || usuario.nome === ""){
                 alert("Faça login")
             }

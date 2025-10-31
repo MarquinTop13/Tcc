@@ -1,3 +1,6 @@
+create database Tcc;
+use Tcc;
+
 create table cadastro(
     id_cadastro int primary key auto_increment,
     nome varchar(100) not null,

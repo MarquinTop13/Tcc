@@ -4,7 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import "./Perfil.scss";
 
 export default function Perfil({ onClose, triggerRef }) {
-  const [nomeUser,setNomeUser] = useState(localStorage.getItem('Admin'));
+  const [nome,setNome] = useState(localStorage.getItem('Admin'));
+  const [dadosUser, setDadosUser] = useState([]);
   const [abaAtiva, setAbaAtiva] = useState("sobre");
   const modalRef = useRef(null);
 
@@ -39,22 +40,32 @@ export default function Perfil({ onClose, triggerRef }) {
   };
 
   //PegarDadosConta:
-    async function DadosConta(){
-      try{
-        const informacoesUser = apiLink.post('/InfoUser',{
-          nome: nomeUser
-      })
-      } catch(error){
-        alert(error.response);
+  async function DadosConta(){
+    try {
+      const response = await apiLink.post('/InfoUser', { nome });
+      const userData = response.data.buscarNome;
+      setDadosUser(userData);
+      
+    } catch(error) {
+      if (error.response) {
+        // Erro do servidor (500, 404, etc.)
+        console.error("Erro do servidor:", error.response.status, error.response.data);
+        if (error.response.status === 500) {
+          alert("Erro interno do servidor. Tente novamente mais tarde.");
+        } else {
+          alert(`Erro ${error.response.status}: ${error.response.data?.message || 'Erro na requisição'}`);
+        }
+      } else {
+        alert(`Erro: ${error.message}`);
       }
-
     }
+  }
 
     
 
   return (
     <div className="overlay-perfil" onClick={handleClickFora}>
-      <main className="MainPerfil" ref={modalRef}>
+      <main onClick={DadosConta} className="MainPerfil" ref={modalRef}>
         <section className="imagem-abas">
           <div className="cabecalho-perfil">
             <img className="img-perfil" src={imgperf} height="130px" />
@@ -78,14 +89,14 @@ export default function Perfil({ onClose, triggerRef }) {
 
           <div className="perfil-info">
             {abaAtiva === "sobre" ? (
-              <div>
+              <div onClick={DadosConta}>
                 <p>Idade: 22</p>
-                <p>Data de criação: {}</p>
+                <p>Data de criação: {dadosUser.idade}</p>
               </div>
             ) : (
               <div>
-                <p>Email: {}</p>
-                <p>Senha: {}</p>
+                <p>Email: {dadosUser.email}</p>
+                <p>Senha: {dadosUser.palavra}</p>
               </div>
             )}
           </div>
