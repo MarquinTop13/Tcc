@@ -45,9 +45,25 @@ function Login() {
       alert('Login feito com sucesso');
       navigate("/");
     } catch (error) {
-      const status = error.response?.status || "default"; {
+      const status = error.response?.status; {
         setCodigoErro(status);
-        setShowModal(true);
+        alert(status)
+        
+        if(codigoErro === 401 || status === 401){
+          setShowModal(true);
+        }
+
+        else if(codigoErro === 403 || status === 403){
+          setShowModal(true);
+        }
+
+        else if(codigoErro === 404 || status === 404){
+          setShowModal(true);
+        }
+
+        else if(codigoErro === 500 || status === 500){
+          setShowModal(true);
+        }
       }
     }
   }
@@ -73,7 +89,7 @@ function Login() {
           <Link to="/Cadastro" className="link-login">Criar Conta!</Link>
           <button className='botao' onClick={Enviarlogin}>Entrar</button>
         </section>
-        <Modal isOpen={showModal} setModalOpen={() => setShowModal(!showModal)}></Modal>
+        <Modal isOpen={showModal} setModalOpen={() => setShowModal(!showModal)} codigoErro={codigoErro}></Modal>
       </section>
     </main>
   )

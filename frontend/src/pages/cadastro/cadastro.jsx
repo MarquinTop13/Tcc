@@ -4,55 +4,57 @@ import { Link } from 'react-router';
 import { useState, useEffect } from 'react'
 import BackgroundBlack from "/images/Black/BackgroundBlack.png";
 import BackgroundWhite from "/images/White/BackgroundWhite.png";
+import Modal from "../../components/err"
 import apiLink from '../../axios';
 import './cadastro.scss';
 
 function Cas() {
   //Modo escuro:
-              const [darkTheme, setDarkTheme] = useState(() => {
-                  const themeSaved = localStorage.getItem("TemaEscuro");
-                  return themeSaved ? themeSaved === 'true' : false;
-              })
-              //Mudar tema escuro para claro
-              function ChangeTheme() {
-                  setDarkTheme(prevTheme => !prevTheme)
-              }
-      
-              //Background mudando de acordo com o tema escolhido
-              useEffect(() => {
-                  document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
-              }, [darkTheme]);
-      
-              //Setar o modo escuro no localStorage
-              useEffect(() => {
-                  localStorage.setItem('TemaEscuro', darkTheme.toString())
-              }, [darkTheme])
+    const [darkTheme, setDarkTheme] = useState(() => {
+      const themeSaved = localStorage.getItem("TemaEscuro");
+      return themeSaved ? themeSaved === 'true' : false;
+    })
+    function ChangeTheme() {
+      setDarkTheme(prevTheme => !prevTheme)
+    }
+    useEffect(() => {
+      document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
+    }, [darkTheme]);
 
-  const [form, setForm] = useState({
-    nome: "",
-    email: "",
-    senha: "",
-    palavra: "",
-    confirmarSenha: "",
-    idade: ""
-  })
+    useEffect(() => {
+      localStorage.setItem('TemaEscuro', darkTheme.toString())
+    }, [darkTheme])
 
-  function validarEmail(email) {
-    const Regex = [
-      /^[^\s@]+@gmail\.com$/,
-      /^[^\s@]+@outlook\.com$/,
-      /^[^\s@]+@yahoo\.com$/,
-      /^[^\s@]+@hotmail\.com$/,
-      /^[^\s@]+@icloud\.com$/,
-      /^[^\s@]+@protonmail\.com$/,
-      /^[^\s@]+@live\.com$/,
-      /^[^\s@]+@zoho\.com$/,
-      /^[^\s@]+@gmx\.com$/,
-      /^[^\s@]+@yandex\.com$/,
-      /^[^\s@]+@aol\.com$/
-    ];
-    return Regex.some(regex => regex.test(email));
-  }
+  //Status Err:
+    const [codigoErro, setCodigoErro] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+
+  //Cadastro:
+    const [form, setForm] = useState({
+      nome: "",
+      email: "",
+      senha: "",
+      palavra: "",
+      confirmarSenha: "",
+      idade: ""
+    })
+
+    function validarEmail(email) {
+      const Regex = [
+        /^[^\s@]+@gmail\.com$/,
+        /^[^\s@]+@outlook\.com$/,
+        /^[^\s@]+@yahoo\.com$/,
+        /^[^\s@]+@hotmail\.com$/,
+        /^[^\s@]+@icloud\.com$/,
+        /^[^\s@]+@protonmail\.com$/,
+        /^[^\s@]+@live\.com$/,
+        /^[^\s@]+@zoho\.com$/,
+        /^[^\s@]+@gmx\.com$/,
+        /^[^\s@]+@yandex\.com$/,
+        /^[^\s@]+@aol\.com$/
+      ];
+      return Regex.some(regex => regex.test(email));
+    }
 
   const navigate = useNavigate()
 
@@ -78,12 +80,21 @@ function Cas() {
       await apiLink.post("/registro", form)
       alert("Usuário cadastrado com sucesso!")
       navigate("/Login")
-    } catch (err) {
-      if (err.response) {
-        alert(err.response.data.error || "Erro no cadastro")
-      } else {
-        alert("Erro ao conectar com o servidor.")
+    } catch (error) {
+      const status = error.response?.status; {
+        setCodigoErro(status);
+
+
+        if(status === 404 || codigoErro === 404){
+          setShowModal(true);
+        }
+
+        else if(status === 500 || codigoErro === 500){
+          setShowModal(true);
+        }
       }
+      
+
     }
   }
 
@@ -112,6 +123,7 @@ function Cas() {
         <div className='fundo-botao'>
           <p className='texto'>Pronto! Agora que tem uma conta <br /> faça o <Link className='Link' to={'/Login'}>Login</Link>!</p>
           <button className='botao' onClick={FF}>Cadastrar</button>
+          <Modal isOpen={showModal} setModalOpen={() => setShowModal(!showModal)} codigoErro={codigoErro} />
         </div>
       </section>
     </main>
