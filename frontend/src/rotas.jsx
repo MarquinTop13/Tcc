@@ -1,14 +1,14 @@
 import {BrowserRouter, Routes, Route} from "react-router"
-import Home from "./pages/home/home.jsx"
-import Cas from "./pages/cadastro/cadastro.jsx"
-import Verify from "./pages/verifyarchiver/verify"
-import VerifyLinks from "./pages/verifylinks/verifylinks"
 import PasswordGenerator from "./pages/passwordGenerate/password"
-import Perfil from "./pages/perfil/Perfil"
-import Login from "./pages/login/Login"
-import Admin from "./pages/admin/admin"
+import VerifyLinks from "./pages/verifylinks/verifylinks"
+import Verify from "./pages/verifyarchiver/verify"
+import Cas from "./pages/cadastro/cadastro.jsx"
 import Support from "./pages/support/support"
 import VR from "./pages/infovirus/virusinfo"
+import Perfil from "./pages/perfil/Perfil"
+import Home from "./pages/home/home.jsx"
+import Login from "./pages/login/Login"
+import Admin from "./pages/admin/admin"
 
 export default function Rotas(){
     return(

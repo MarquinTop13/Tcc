@@ -41,27 +41,27 @@ function Login() {
 
       const token = res.data.token;
       localStorage.setItem("token", token);
-  
+
       alert('Login feito com sucesso');
       navigate("/");
     } catch (error) {
       const status = error.response?.status; {
         setCodigoErro(status);
         alert(status)
-        
-        if(codigoErro === 401 || status === 401){
+
+        if (codigoErro === 401 || status === 401) {
           setShowModal(true);
         }
 
-        else if(codigoErro === 403 || status === 403){
+        else if (codigoErro === 403 || status === 403) {
           setShowModal(true);
         }
 
-        else if(codigoErro === 404 || status === 404){
+        else if (codigoErro === 404 || status === 404) {
           setShowModal(true);
         }
 
-        else if(codigoErro === 500 || status === 500){
+        else if (codigoErro === 500 || status === 500) {
           setShowModal(true);
         }
       }
@@ -78,10 +78,26 @@ function Login() {
             <h2>Seja Bem-vindo de volta</h2>
           </div>
           <div className="conteiner-login">
-            <input className='um' type="text" placeholder="Nome/Apelido
-            " value={nome} onChange={(e) => setNome(e.target.value)} />
-            <input className='um' type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
+            <input 
+            className='um' 
+            type="text" 
+            placeholder="Nome/Apelido" 
+            value={nome} 
+            onChange={(e) => setNome(e.target.value)} 
+            />
+            <input 
+            className='um' 
+            type="email" 
+            placeholder="Email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            />
+            <input 
+            type="password" 
+            placeholder="Senha" 
+            value={senha} 
+            onChange={(e) => setSenha(e.target.value)}
+            />
           </div>
         </div>
 

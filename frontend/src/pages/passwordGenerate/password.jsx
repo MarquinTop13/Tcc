@@ -33,8 +33,12 @@ export default function PasswordGenerator(){
         const [textLower, setTextLower] = useState(true);
         const [numbers, setNumbers] = useState(true);
         const [symbols, setSymbols] = useState(true);
+        const [senha, setSenha] = useState("");
+        const [forca, setForca] = useState("");
 
             function GerarSenhas(){
+                const len = Number(passwordLength) || 0;
+
                 if (!textLower && !textUp && !numbers && !symbols) {
                     alert("Selecione pelo menos uma opção!");
                     return;
@@ -48,7 +52,7 @@ export default function PasswordGenerator(){
                   const lower = "abcdefghijklmnopqrstuvwxyz";
                   const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                   const nums  = "0123456789";
-                  const syms  = "!@#$%&()_";
+                  const syms  = "!@#$&()_|";
                 
                   let all = "";
                   if (textLower) all += lower;
@@ -64,6 +68,30 @@ export default function PasswordGenerator(){
                 
                   setPassword1(password);
             }
+            function evaluatePasswordStrength(password1) {
+                let score = 0;
+                if (!password1) return "";
+            
+                if (password1.length > 8) score += 1;
+                if (/[a-z]/.test(password1)) score += 1;
+                if (/[A-Z]/.test(password1)) score += 1;
+                if (/\d/.test(password1)) score += 1;
+                if (/[^A-Za-z0-9]/.test(password1)) score += 1;
+            
+                switch (score) {
+                  case 0:
+                  case 1:
+                  case 2:
+                    return "Fraca";
+                  case 3:
+                    return "Média";
+                  case 4:
+                  case 5:
+                    return "Forte";
+                  default:
+                    return "";
+                }
+              }
     return(
         <main className={`mainPassword ${darkTheme ? "dark": "light"}`}>
             <Cabecalho2 darkTheme={darkTheme}  onChangeTheme={ChangeTheme}/>
@@ -74,6 +102,7 @@ export default function PasswordGenerator(){
                         <div className="op1">
                             <h2>Quantidade de números: </h2>
                             <input 
+                                className="tamanho-senha"
                                 value={passwordLength}
                                 onChange={(e) => setPasswordLength(e.target.value)}
                                 type="number" />
@@ -122,13 +151,21 @@ export default function PasswordGenerator(){
             </section>
             <section className="conteiner-forca">
                 <div className="seguranca">
-                    <h2>Segurança</h2>
-                    <h2></h2>
+                    <h2 className="resultado">Segurança:</h2>
+                    <h2 className="resultado">{forca}</h2>
                 </div>
-                <div className="">
-                    <h2>Verificador de Senhas</h2>
-                    <input type="text" value={password1} />
-                    <button>Verificar senha</button>
+                <div className="verificar-forca">
+                    <h2 className="titulo-veri">Verificador de Senhas</h2>
+                    <input 
+                        type="text"
+                        placeholder="Insira a Senha"
+                        value={senha}
+                        onChange={(e) => {setSenha(e.target.value) }}
+                  />
+                    <button 
+                        className="botao-forca"
+                        onClick={() => setForca(evaluatePasswordStrength(senha))}> Verificar senha
+                    </button>
                 </div>
             </section>
         </main>
