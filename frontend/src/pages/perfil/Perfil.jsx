@@ -80,7 +80,7 @@ export default function Perfil({ onClose, triggerRef }) {
             {abaAtiva === "sobre" ? (
               <div>
                 <p>Idade: 22</p>
-                <p>Data de criação: {informacoesUser}</p>
+                <p>Data de criação: {}</p>
               </div>
             ) : (
               <div>

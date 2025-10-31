@@ -64,59 +64,73 @@ export default function PasswordGenerator(){
                 
                   setPassword1(password);
             }
-  
-  
-
     return(
         <main className={`mainPassword ${darkTheme ? "dark": "light"}`}>
             <Cabecalho2 darkTheme={darkTheme}  onChangeTheme={ChangeTheme}/>
-            <h1 className="title">Gerador de Senhas!</h1>
-            <button onClick={GerarSenhas}>Gerar Senha:</button>
-            <div className="opcoes1">
-                <div className="op1">
-                    <h2>Quantidade de números: </h2>
-                    <input 
-                        value={passwordLength}
-                        onChange={(e) => setPasswordLength(e.target.value)}
-                        type="number" />
-                </div>
+            <section className="conteiner-gerador">    
+                <div className="gerar">
+                    <div className="opcoes1">
+                        <h1 className="title">Gerador de Senhas!</h1>
+                        <div className="op1">
+                            <h2>Quantidade de números: </h2>
+                            <input 
+                                value={passwordLength}
+                                onChange={(e) => setPasswordLength(e.target.value)}
+                                type="number" />
+                        </div>
 
-                <div className="op2">
-                    <h2>Letras maiusculas?</h2>
-                    <input 
-                        checked={textUp}
-                        onChange={(e) => setTextUp(e.target.checked)}
-                        type="checkbox" 
-                    />
-                </div>
+                        <div className="op2">
+                            <h2>Letras maiusculas?</h2>
+                            <input 
+                                checked={textUp}
+                                onChange={(e) => setTextUp(e.target.checked)}
+                                type="checkbox" 
+                            />
+                        </div>
 
-                <div className="op3">
-                    <h2>Letras minusculas?</h2>
-                    <input 
-                        checked={textLower}
-                        onChange={(e) => setTextLower(e.target.checked)}
-                        type="checkbox" />
-                </div>
+                        <div className="op3">
+                            <h2>Letras minusculas?</h2>
+                            <input 
+                                checked={textLower}
+                                onChange={(e) => setTextLower(e.target.checked)}
+                                type="checkbox" />
+                        </div>
 
-                <div className="op4">
-                    <h2>Numeros?</h2>
-                    <input 
-                        checked={numbers}
-                        onChange={(e) => setNumbers(e.target.checked)}
-                        type="checkbox" />
-                </div>
+                        <div className="op4">
+                            <h2>Numeros?</h2>
+                            <input 
+                                checked={numbers}
+                                onChange={(e) => setNumbers(e.target.checked)}
+                                type="checkbox" />
+                        </div>
 
-                <div className="op5">
-                    <h2>Caracteres especiais?</h2>
-                    <input 
-                        checked={symbols}
-                        onChange={(e) => setSymbols(e.target.checked)}
-                        type="checkbox" />
+                        <div className="op5">
+                            <h2>Caracteres especiais?</h2>
+                            <input 
+                                checked={symbols}
+                                onChange={(e) => setSymbols(e.target.checked)}
+                                type="checkbox" />
+                        </div>
+                        
+                        <button className="botao-gerar" onClick={GerarSenhas}>Gerar Senha:</button>
+                    </div>
+                    <div className="senha-gerada">
+                        <h1 className="senha">Senha:</h1>
+                        <h1 className="senha">{password1}</h1>
+                    </div>
                 </div>
-                
-            </div>
-
-            <h1>{password1}</h1>
+            </section>
+            <section className="conteiner-forca">
+                <div className="seguranca">
+                    <h2>Segurança</h2>
+                    <h2></h2>
+                </div>
+                <div className="">
+                    <h2>Verificador de Senhas</h2>
+                    <input type="text" value={password1} />
+                    <button>Verificar senha</button>
+                </div>
+            </section>
         </main>
     )
 }
