@@ -7,6 +7,7 @@ create table cadastro(
     email varchar(100) not null,
     senha varchar(100) not null,
     palavra varchar(100) not null,
+    senhaGerada varchar(100),
     idade date not null
 );
 
