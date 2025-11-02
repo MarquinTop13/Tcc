@@ -44,7 +44,7 @@ export default function PasswordGenerator(){
                     return;
                   }
                 
-                else if(passwordLength < 5 || passwordLength > 16){
+                else if(passwordLength < 5 || passwordLength > 14){
                     alert("Fora do limite de caracteres!");
                     return;
                 }
@@ -76,7 +76,7 @@ export default function PasswordGenerator(){
                 if (/[a-z]/.test(password1)) score += 1;
                 if (/[A-Z]/.test(password1)) score += 1;
                 if (/\d/.test(password1)) score += 1;
-                if (/[^A-Za-z0-9]/.test(password1)) score += 1;
+                if (/[^A-Za-z0-9]/.test(password1)) score += 3;
             
                 switch (score) {
                   case 0:
