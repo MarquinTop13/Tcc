@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import "./Perfil.scss";
 
 export default function Perfil({ onClose, triggerRef }) {
-  const [nome,setNome] = useState(localStorage.getItem('Admin'));
+  const [nome,setNome] = useState(localStorage.getItem('User'));
   const [dadosUser, setDadosUser] = useState([]);
   const [abaAtiva, setAbaAtiva] = useState("sobre");
   const modalRef = useRef(null);
@@ -61,6 +61,10 @@ export default function Perfil({ onClose, triggerRef }) {
     }
   }
 
+  useEffect(() => {
+    DadosConta()
+  })
+
     
 
   return (
@@ -69,7 +73,7 @@ export default function Perfil({ onClose, triggerRef }) {
         <section className="imagem-abas">
           <div className="cabecalho-perfil">
             <img className="img-perfil" src={imgperf} height="130px" />
-            <h1 className="apelido">{localStorage.getItem('Admin')}</h1>
+            <h1 className="apelido">{localStorage.getItem('User')}</h1>
           </div>
 
           <div className="perfil-abas">
@@ -96,7 +100,8 @@ export default function Perfil({ onClose, triggerRef }) {
             ) : (
               <div>
                 <p>Email: {dadosUser.email}</p>
-                <p>Senha: {dadosUser.palavra}</p>
+                <p>Palavra de Recuperação: {dadosUser.palavra}</p>
+                <p>Senha Salva: {dadosUser.senhaGerada}</p>
               </div>
             )}
           </div>

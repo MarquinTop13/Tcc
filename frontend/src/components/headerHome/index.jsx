@@ -11,11 +11,16 @@ import menuBlack from "/images/Black/menuBlack.png";
 
 export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
     // Conta:
+    const [user, setUser] = useState(localStorage.getItem('User'));
     const [accountLogo, setAccountLogo] = useState(false);
     const accountRef = useRef(null); // Ref para o ícone de perfil
 
     function MostarInfoConta(){
-        setAccountLogo(!accountLogo);
+        if(user === ""){
+            alert("Faça Login!")
+        } else{
+            setAccountLogo(!accountLogo);
+        }
     }
 
     // Resto do seu código permanece igual...

@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router'
 
 export default function Home() {
     const navigate = useNavigate();
-    const [admin, setAdmin] = useState(false);
+    const [user, setUser] = useState(false);
     const [darkTheme, setDarkTheme] = useState(() => {
         const themeSaved = localStorage.getItem("TemaEscuro");
         return themeSaved ? themeSaved === 'true' : false;
@@ -57,9 +57,10 @@ export default function Home() {
             const data = response.data || response;
             const usuario = data.Usuario[0];
 
-            if( usuario.nome === "MgsTop13", usuario.email === "Mgs350084@gmail.com" || usuario.nome === "Gustavo" || usuario.nome === "Vitu"){
-                setAdmin(true);
-                localStorage.setItem('Admin', usuario.nome);
+            if( usuario.nome === "MgsTop13", usuario.email === "mgs350084@gmail.com" || usuario.nome === "Gustavo" || usuario.nome === "Vitu"){
+                setUser(true);
+                localStorage.setItem('User', usuario.nome);
+                localStorage.setItem('Email', usuario.email)
             } else if(usuario.nome === null || usuario.nome === ""){
                 alert("Faça login")
             }
@@ -72,7 +73,7 @@ export default function Home() {
 
     return (
         <main className={`MainHome ${darkTheme ? "dark" : "light"}`}>
-            <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme} AdminVerify={admin} />
+            <Cabecalho darkTheme={darkTheme} onChangeTheme={ChangeTheme} AdminVerify={user} />
             <section className="text">
                 <h1>Proteja seu dispositivo com um clique!</h1>
                 <h3>Verifique arquivos e links que causem danos.</h3>

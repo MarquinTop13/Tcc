@@ -3,6 +3,7 @@ import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import Cabecalho2 from '../../components/HeaderPages/';
 import React, { useState, useEffect } from "react";
 import './password.scss';
+import apiLink from "../../axios";
 
 
 export default function PasswordGenerator(){
@@ -25,6 +26,10 @@ export default function PasswordGenerator(){
         useEffect(() => {
             localStorage.setItem('TemaEscuro', darkTheme.toString())
         }, [darkTheme])
+
+        useEffect(() => {
+            evaluatePasswordStrength()
+        })
 
     //Gerador de senhas:
         const [password1, setPassword1] = useState("");
@@ -76,22 +81,51 @@ export default function PasswordGenerator(){
                 if (/[a-z]/.test(password1)) score += 1;
                 if (/[A-Z]/.test(password1)) score += 1;
                 if (/\d/.test(password1)) score += 1;
-                if (/[^A-Za-z0-9]/.test(password1)) score += 3;
+                if (/[^A-Za-z0-9]/.test(password1)) score += 2;
             
                 switch (score) {
-                  case 0:
-                  case 1:
-                  case 2:
-                    return "Fraca";
-                  case 3:
-                    return "Média";
-                  case 4:
-                  case 5:
-                    return "Forte";
-                  default:
-                    return "";
+                    case 0:
+                    case 1:
+                    case 2:
+                        return "Fraca";
+                    case 3:
+                        return "Média";
+                    case 4:
+                    case 5:
+                        return "Forte";
+                    case 6:
+                        return "Muito forte";
+                    default:
+                        return "";
                 }
-              }
+            }
+
+            async function SalvarSenha(){
+                const nome = localStorage.getItem('User');
+                const email = localStorage.getItem('Email');
+
+                if(!password1){
+                    alert("Não tem senha para ser salva")
+                    return;
+                }
+
+                if(!nome || !email){
+                    alert("Usuário não logado, por favor Logue!");
+                }
+                if(confirm(`Deseja salvar a senha ${password1} em seu usuario?`)){
+                    try{
+                        const InsertSenha = await apiLink.post('/InserirSenhaForte', {
+                            senha: password1, 
+                            email, 
+                            nome
+                        });
+                        alert("Senha Salva, cheque sua senha nas configurações da conta!");
+                    }
+                    catch(error){
+                        alert(error)
+                    }
+                }
+            }
     return(
         <main className={`mainPassword ${darkTheme ? "dark": "light"}`}>
             <Cabecalho2 darkTheme={darkTheme}  onChangeTheme={ChangeTheme}/>
@@ -162,12 +196,19 @@ export default function PasswordGenerator(){
                         value={senha}
                         onChange={(e) => {setSenha(e.target.value) }}
                   />
-                    <button 
+                  <div className="botoesSenha">
+                  <button className="BotaoSalvarSenha" onClick={SalvarSenha}>Salvar Senha</button>
+                  <button 
                         className="botao-forca"
                         onClick={() => setForca(evaluatePasswordStrength(senha))}> Verificar senha
                     </button>
+                  </div>
+                    
+
+
                 </div>
             </section>
+
         </main>
     )
 }

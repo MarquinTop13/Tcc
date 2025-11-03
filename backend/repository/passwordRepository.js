@@ -18,7 +18,7 @@ export async function InfoConta(dados){
 
 export async function InfoConta2(nome){
     const command = `
-        select nome, email, palavra, idade from cadastro
+        select * from cadastro
         where nome = ?;
     `
     const [info] = await conexao.query(command,[nome]);
@@ -40,19 +40,10 @@ export async function RecuperarSenha(senha, email, nomeUser){
 export async function InserirSenhaForte(senha, email, nomeUser) {
     const commandSQL = `
         update cadastro
-            set senhaFortePeloSite = ?
+            set senhaGerada = ?
             where email = ? and nome = ?;
     `
 
     const [info] = await conexao.query(commandSQL, [senha, email, nomeUser]);
-}
-
-export async function ListarSenhaForte(email, nomeUser){
-    const commandSQL = `
-        select senhaFortePeloSite from cadastro
-            where email = ? and nome = ?;
-    `
-
-    const [info] = await conexao.query(commandSQL,[email,nomeUser]);
-    return info;
+    return info.insertId
 }

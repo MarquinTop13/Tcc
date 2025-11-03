@@ -51,11 +51,21 @@ endpoint.post('/RecuperarSenha', async (req, resp) => {
 
 endpoint.post('/InfoUser', async (req, resp) => {
     const { nome } = req.body;
-    console.log(nome);
     const buscarNome = await SenhaRepository.InfoConta2(nome);
-    console.log(buscarNome);
     if (buscarNome.nome === nome) {
-        resp.send({buscarNome});
+        resp.send({ buscarNome });
+    }
+
+
+})
+
+endpoint.post('/InserirSenhaForte', async (req, resp) => {
+    const { senha, email, nome } = req.body;
+    try {
+        const IdSenha = await SenhaRepository.InserirSenhaForte(senha, email, nome);
+        resp.send({NewId: IdSenha});
+    } catch(error){
+        resp.send(error)
     }
 })
 
