@@ -32,6 +32,16 @@ function Login() {
   const navigate = useNavigate();
 
   async function Enviarlogin() {
+    // Validação básica dos campos
+    if (!nome && !email) {
+      alert('Preencha pelo menos o nome ou email!');
+      return;
+    }
+    if (!senha) {
+      alert('Preencha a senha!');
+      return;
+    }
+
     try {
       const res = await apiLink.post('/Login', {
         nome,
@@ -45,26 +55,20 @@ function Login() {
       alert('Login feito com sucesso');
       navigate("/");
     } catch (error) {
-      const status = error.response?.status; {
-        setCodigoErro(status);
-        alert(status)
-
-        if (codigoErro === 401 || status === 401) {
-          setShowModal(true);
-        }
-
-        else if (codigoErro === 403 || status === 403) {
-          setShowModal(true);
-        }
-
-        else if (codigoErro === 404 || status === 404) {
-          setShowModal(true);
-        }
-
-        else if (codigoErro === 500 || status === 500) {
-          setShowModal(true);
-        }
+      // Remove o alert que estava atrapalhando
+      
+      // Tratamento de erro de conexão (servidor offline)
+      if (error.code === 'ERR_NETWORK' || error.message?.includes('CONNECTION_REFUSED')) {
+        setCodigoErro('network');
+        setShowModal(true);
+        return;
       }
+
+      const status = error.response?.status;
+      
+      // Define o código de erro e mostra o modal para qualquer erro
+      setCodigoErro(status || 'default');
+      setShowModal(true);
     }
   }
 
@@ -79,24 +83,24 @@ function Login() {
           </div>
           <div className="conteiner-login">
             <input 
-            className='um' 
-            type="text" 
-            placeholder="Nome/Apelido" 
-            value={nome} 
-            onChange={(e) => setNome(e.target.value)} 
+              className='um' 
+              type="text" 
+              placeholder="Nome/Apelido" 
+              value={nome} 
+              onChange={(e) => setNome(e.target.value)} 
             />
             <input 
-            className='um' 
-            type="email" 
-            placeholder="Email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
+              className='um' 
+              type="email" 
+              placeholder="Email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
             />
             <input 
-            type="password" 
-            placeholder="Senha" 
-            value={senha} 
-            onChange={(e) => setSenha(e.target.value)}
+              type="password" 
+              placeholder="Senha" 
+              value={senha} 
+              onChange={(e) => setSenha(e.target.value)}
             />
           </div>
         </div>

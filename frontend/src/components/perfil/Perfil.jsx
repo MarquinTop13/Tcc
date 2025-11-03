@@ -1,12 +1,15 @@
 import imgperf from "/images/icons/imagemPerfil.png";
 import apiLink from "../../axios";
 import { useState, useRef, useEffect } from "react";
+import Modal from "../err/index";
 import "./Perfil.scss";
 
 export default function Perfil({ onClose, triggerRef }) {
-  const [nome,setNome] = useState(localStorage.getItem('User'));
+  const [nome, setNome] = useState(localStorage.getItem('User'));
   const [dadosUser, setDadosUser] = useState([]);
   const [abaAtiva, setAbaAtiva] = useState("sobre");
+  const [codigoErro, setCodigoErro] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -39,8 +42,8 @@ export default function Perfil({ onClose, triggerRef }) {
     }
   };
 
-  //PegarDadosConta:
-  async function DadosConta(){
+  // PegarDadosConta com tratamento de erro melhorado
+  async function DadosConta() {
     try {
       const response = await apiLink.post('/InfoUser', { nome });
       const userData = response.data.buscarNome;
@@ -48,28 +51,42 @@ export default function Perfil({ onClose, triggerRef }) {
       
     } catch(error) {
       if (error.response) {
-        // Erro do servidor (500, 404, etc.)
         console.error("Erro do servidor:", error.response.status, error.response.data);
-        if (error.response.status === 500) {
-          alert("Erro interno do servidor. Tente novamente mais tarde.");
-        } else {
-          alert(`Erro ${error.response.status}: ${error.response.data?.message || 'Erro na requisição'}`);
+        
+        // Usa o modal em vez de alert
+        const status = error.response.status;
+        setCodigoErro(status);
+        setShowModal(true);
+        alert(status)
+        
+        if (codigoErro === 401 || status === 401) {
+          setShowModal(true);
         }
-      } else {
-        alert(`Erro: ${error.message}`);
-      }
+
+        else if (codigoErro === 403 || status === 403) {
+          setShowModal(true);
+        }
+
+        else if (codigoErro === 404 || status === 404) {
+          setShowModal(true);
+        }
+
+        else if (codigoErro === 500 || status === 500) {
+          setShowModal(true);
+        }
+      } 
     }
   }
 
   useEffect(() => {
-    DadosConta()
-  })
-
-    
+    if (nome) {
+      DadosConta();
+    }
+  }, [nome]); 
 
   return (
     <div className="overlay-perfil" onClick={handleClickFora}>
-      <main onClick={DadosConta} className="MainPerfil" ref={modalRef}>
+      <main className="MainPerfil" ref={modalRef}>
         <section className="imagem-abas">
           <div className="cabecalho-perfil">
             <img className="img-perfil" src={imgperf} height="130px" />
@@ -93,22 +110,34 @@ export default function Perfil({ onClose, triggerRef }) {
 
           <div className="perfil-info">
             {abaAtiva === "sobre" ? (
-              <div onClick={DadosConta}>
-                <p>Idade: 22</p>
-                <p>Data de criação: {dadosUser.idade}</p>
+              <div>
+                <p>Idade: {}</p>
+                <p>Data de criação: {dadosUser.idade || 'Não disponível'}</p>
               </div>
             ) : (
               <div>
-                <p>Email: {dadosUser.email}</p>
+                <p>Email: {dadosUser.email || 'Não disponível'}</p>
                 <p>Palavra de Recuperação: {dadosUser.palavra}</p>
-                <p>Senha Salva: {dadosUser.senhaGerada}</p>
+                <p>Senha Salva: {dadosUser.senhaGerada || 'Não salva'}</p>
               </div>
             )}
           </div>
 
-          <button className="btn-fechar" onClick={onClose}>Fechar</button>
+          <div className="perfil-actions">
+            <button className="btn-atualizar" onClick={DadosConta}>
+              Atualizar Dados
+            </button>
+            <button className="btn-fechar" onClick={onClose}>Fechar</button>
+          </div>
         </section>
       </main>
+
+      {/* Modal de Erro */}
+      <Modal 
+        isOpen={showModal} 
+        setModalOpen={() => setShowModal(!showModal)} 
+        codigoErro={codigoErro} 
+      />
     </div>
   );
 }

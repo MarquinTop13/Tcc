@@ -40,6 +40,28 @@ const errosConfig = {
     mascote: mascote403,
     cabo: cabo
   },
+  500: {
+    boxShadow: "#ff6b6b",
+    text: (
+      <>
+        <span className="dd">Erro 500</span>: Erro interno do servidor!
+        <br />Tente novamente mais tarde.
+      </>
+    ),
+    mascote: mascoteg,
+    cabo: cabo
+  },
+  network: {
+    boxShadow: "#ff001e",
+    text: (
+      <>
+        <span className="dd">Erro de Conexão</span>: Servidor offline!
+        <br />Verifique sua conexão e tente novamente.
+      </>
+    ),
+    mascote: mascoteg,
+    cabo: cabo
+  },
   default: {
     boxShadow: "#ff001e",
     text: (
@@ -56,8 +78,8 @@ const errosConfig = {
 export default function Err({ isOpen, setModalOpen, codigoErro }) {
   if (!isOpen) return null;
 
-  const erro = errosConfig[codigoErro];
-  
+  // Usa o código de erro ou 'default' se não encontrado
+  const erro = errosConfig[codigoErro] || errosConfig.default;
 
   function fechamento(e) {
     if (e.target.classList.contains("MainErr")) {
@@ -69,7 +91,6 @@ export default function Err({ isOpen, setModalOpen, codigoErro }) {
     <main
       className="MainErr"
       onClick={fechamento}
-      style={{ "--box-shadow": erro.boxShadow }}
     >
       <section className="fundo-err">
         <div className="conteiner-err">

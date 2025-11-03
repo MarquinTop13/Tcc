@@ -63,9 +63,8 @@ function Cas() {
   }
 
   const FF = async () => {
-
     if (!validarEmail(form.email)) {
-      alert('o email precisa ser válido!');
+      alert('O email precisa ser válido!');
       return;
     }
     if (!form.senha || form.senha.length < 8) {
@@ -73,33 +72,31 @@ function Cas() {
       return;
     }
     if (form.senha !== form.confirmarSenha) {
-      alert('as senhas não são iguais!');
+      alert('As senhas não são iguais!');
       return;
     }
+    if (!form.nome || !form.palavra || !form.idade) {
+      alert('Preencha todos os campos obrigatórios!');
+      return;
+    }
+
     try {
       await apiLink.post("/registro", form)
       alert("Usuário cadastrado com sucesso!")
       navigate("/Login")
     } catch (error) {
-      const status = error.response?.status; {
-        if(status === 500){
-          setCodigoErro('default')
-        } else{
-          setCodigoErro(status);
-        }
-
-        if(status === 404 || codigoErro === 404){
-          setShowModal(true);
-          alert(status || codigoErro)
-        }
-
-        else if(status === 500 || codigoErro === 500){
-          setShowModal(true);
-          alert(status || codigoErro);
-        }
+      // Tratamento de erro de conexão (servidor offline)
+      if (error.code === 'ERR_NETWORK' || error.message?.includes('CONNECTION_REFUSED')) {
+        setCodigoErro('network');
+        setShowModal(true);
+        return;
       }
-      
 
+      const status = error.response?.status;
+      
+      // Define o código de erro e mostra o modal
+      setCodigoErro(status || 'default');
+      setShowModal(true);
     }
   }
 

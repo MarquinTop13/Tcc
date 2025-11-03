@@ -6,7 +6,7 @@ import Account from "/images/Black/iconContaBlack.png"
 import brightness from "/images/Black/brightness.png";
 import brightnessWhite from "/images/White/brightnessWhite.png";
 import menuWhite from "/images/White/menuWhite.png";
-import Perfil from "../../pages/perfil/Perfil"; 
+import Perfil from "../../components/perfil/Perfil"; 
 import menuBlack from "/images/Black/menuBlack.png";
 
 export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
@@ -16,14 +16,14 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
     const accountRef = useRef(null); // Ref para o ícone de perfil
 
     function MostarInfoConta(){
-        if(user === ""){
+        if(user){
             alert("Faça Login!")
+            return;
         } else{
             setAccountLogo(!accountLogo);
         }
     }
 
-    // Resto do seu código permanece igual...
     const [img90Dg, setImg90Dg] = useState(false);
     function MoverImg() {
         if (img90Dg === false) {
