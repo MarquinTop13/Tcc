@@ -1,4 +1,6 @@
 create database Tcc;
+drop database Tcc;
+create database Tcc;
 use Tcc;
 
 create table cadastro(
@@ -24,8 +26,11 @@ create table tb_login(
 create table tb_support (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idUser int,
-    msgUser varchar(255),
-    opcaoSelecionada varchar(255),
+    msgUser varchar(255) not null,
+    opcaoSelecionada varchar(255) not null,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     foreign key(idUser) references cadastro(id_cadastro)
 );
+delete from tb_support
+where idUser = 1;
+select * from tb_support;
