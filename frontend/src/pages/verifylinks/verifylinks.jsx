@@ -67,7 +67,7 @@ export default function VerifyLinks() {
             } else {
                 // Tenta verificação rápida como fallback
                 try {
-                    const quickResponse = await apiLink.post('/quick-check', { url: link });
+                    const quickResponse = await apiLink.post('/api/quick-check', { url: link });
                     const quickData = quickResponse.data;
                     
                     if (quickData.segura) {

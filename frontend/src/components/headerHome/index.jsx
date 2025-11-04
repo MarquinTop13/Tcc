@@ -16,7 +16,7 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
     const accountRef = useRef(null); // Ref para o ícone de perfil
 
     function MostarInfoConta(){
-        if(user){
+        if(user === ""){
             alert("Faça Login!")
             return;
         } else{

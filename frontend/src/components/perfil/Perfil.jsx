@@ -77,12 +77,7 @@ export default function Perfil({ onClose, triggerRef }) {
       } 
     }
   }
-
-  useEffect(() => {
-    if (nome) {
-      DadosConta();
-    }
-  }, [nome]); 
+ 
 
   return (
     <div className="overlay-perfil" onClick={handleClickFora}>

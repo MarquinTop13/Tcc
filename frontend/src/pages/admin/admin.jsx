@@ -30,7 +30,7 @@ export default function Admin() {
             <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
 
             <h1>Admin Page!</h1>
-            <p>Welcome {localStorage.getItem('Admin')}</p>
+            <p>Welcome {localStorage.getItem('User')}</p>
         </main>
     )
 }

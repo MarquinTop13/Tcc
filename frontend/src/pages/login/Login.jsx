@@ -26,22 +26,14 @@ function Login() {
 
   const [codigoErro, setCodigoErro] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [mostrar, setMostrar] = useState(false);
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const navigate = useNavigate();
 
-  async function Enviarlogin() {
-    // Validação básica dos campos
-    if (!nome && !email) {
-      alert('Preencha pelo menos o nome ou email!');
-      return;
-    }
-    if (!senha) {
-      alert('Preencha a senha!');
-      return;
-    }
 
+  async function Enviarlogin() {
     try {
       const res = await apiLink.post('/Login', {
         nome,
@@ -55,23 +47,27 @@ function Login() {
       alert('Login feito com sucesso');
       navigate("/");
     } catch (error) {
-      // Remove o alert que estava atrapalhando
-      
-      // Tratamento de erro de conexão (servidor offline)
-      if (error.code === 'ERR_NETWORK' || error.message?.includes('CONNECTION_REFUSED')) {
-        setCodigoErro('network');
-        setShowModal(true);
-        return;
-      }
+      const status = error.response?.status; {
+        setCodigoErro(status);
 
-      const status = error.response?.status;
-      
-      // Define o código de erro e mostra o modal para qualquer erro
-      setCodigoErro(status || 'default');
-      setShowModal(true);
+        if (codigoErro === 401 || status === 401) {
+          setShowModal(true);
+        }
+
+        else if (codigoErro === 403 || status === 403) {
+          setShowModal(true);
+        }
+
+        else if (codigoErro === 404 || status === 404) {
+          setShowModal(true);
+        }
+
+        else if (codigoErro === 500 || status === 500) {
+          setShowModal(true);
+        }
+      }
     }
   }
-
   return (
     <main className={`MainLogin ${darkTheme ? "dark" : "light"}`}>
       <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
@@ -83,25 +79,29 @@ function Login() {
           </div>
           <div className="conteiner-login">
             <input 
-              className='um' 
-              type="text" 
-              placeholder="Nome/Apelido" 
-              value={nome} 
-              onChange={(e) => setNome(e.target.value)} 
+            className='um' 
+            type="text" 
+            placeholder="Nome/Apelido" 
+            value={nome} 
+            onChange={(e) => setNome(e.target.value)} 
             />
             <input 
-              className='um' 
-              type="email" 
-              placeholder="Email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
+            className='um' 
+            type="email" 
+            placeholder="Email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
             />
+          <div className="campo-senha">
             <input 
-              type="password" 
-              placeholder="Senha" 
-              value={senha} 
-              onChange={(e) => setSenha(e.target.value)}
+            className="input-senha"
+            type={mostrar ? "text" : "password"} 
+            placeholder="Senha" 
+            value={senha} 
+            onChange={(e) => setSenha(e.target.value)}
             />
+            <button className="botao-visivel" onClick={() => setMostrar(!mostrar)}></button>
+          </div>
           </div>
         </div>
 

@@ -15,7 +15,6 @@ export default function Support() {
                         <textarea className='text-black' name=""></textarea>
                     </div>
                     <button className='butao-verificated'>Verificar</button>
-                    <Link to={"/virus"}>ir</Link>
                 </div>
             </section>
         </main>
