@@ -43,6 +43,8 @@ function Login() {
 
       const token = res.data.token;
       localStorage.setItem("token", token);
+      localStorage.setItem("User", nome);
+      localStorage.setItem("Email", email);
 
       alert('Login feito com sucesso');
       navigate("/");

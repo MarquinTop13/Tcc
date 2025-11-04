@@ -77,7 +77,6 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
 
                 <div className="column3">
                     <h3>Atualizações</h3>
-                    <h3 className="h32">Serviços</h3>
                 </div>
 
                 <div className="column4">

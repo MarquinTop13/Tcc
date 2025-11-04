@@ -3,7 +3,8 @@
   --fundo-g: #ced4da;
   --text-c: #fff;
   --fundo-b: #333366;
-  --fundo-i: #696969;
+  --fundo-i: #a5a9ad;
+  --color-text: #000;
 }
  .support-fundo{ 
   text-align: center;
@@ -20,32 +21,36 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: 30vh;
+      height: 70%;
       gap: 25px;
 
       .input-branco{
+        border: solid var(--color-text) 1.5px;
         background-color: var(--fundo-i);
-        color: var(--text-c);
         width: 50%;
         height: 2rem;
+        color: var(--color-text);
       }
       .text-preto{
         background-color: var(--fundo-i);
-        color: var(--text-c);
-        width: 50%;
-        height: 7rem;
+        border: solid var(--color-text) 1.5px;
+        width: 60%;
+        height: 12rem;
+        color: var(--color-text);
       }
     }
     .butao-verificated{
+      border: solid var(--color-text) 1.5px;
       background-color: var(--fundo-b);
       width: 25%;
       height: 10%;
       font-size: 1.5rem;
       color: var(--text-c);
-      margin-top: 60px;
+      margin-top: 10px;
     }
   }
  }
  h1, h2{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 10px 0;
  }

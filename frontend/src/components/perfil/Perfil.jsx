@@ -1,17 +1,20 @@
 import imgperf from "/images/icons/imagemPerfil.png";
 import apiLink from "../../axios";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect} from "react";
 import Modal from "../err/index";
 import "./Perfil.scss";
+import { useNavigate } from "react-router";
 
 export default function Perfil({ onClose, triggerRef }) {
   const [nome, setNome] = useState(localStorage.getItem('User'));
-  const [dadosUser, setDadosUser] = useState([]);
+  const [dadosUser, setDadosUser] = useState({});
   const [abaAtiva, setAbaAtiva] = useState("sobre");
   const [codigoErro, setCodigoErro] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
 
+  const navigate = useNavigate();
+  
   useEffect(() => {
     if (triggerRef.current && modalRef.current) {
       const triggerRect = triggerRef.current.getBoundingClientRect();
@@ -35,20 +38,20 @@ export default function Perfil({ onClose, triggerRef }) {
       modalRef.current.style.top = `${top}px`;
     }
   }, [triggerRef]);
-
+  
   const handleClickFora = (e) => {
     if (e.target.classList.contains("overlay-perfil")) {
       onClose();
     }
   };
-
+  
+  
   // PegarDadosConta com tratamento de erro melhorado
   async function DadosConta() {
     try {
       const response = await apiLink.post('/InfoUser', { nome });
       const userData = response.data.buscarNome;
-      setDadosUser(userData);
-      
+      setDadosUser(userData); 
     } catch(error) {
       if (error.response) {
         console.error("Erro do servidor:", error.response.status, error.response.data);
@@ -57,7 +60,6 @@ export default function Perfil({ onClose, triggerRef }) {
         const status = error.response.status;
         setCodigoErro(status);
         setShowModal(true);
-        alert(status)
         
         if (codigoErro === 401 || status === 401) {
           setShowModal(true);
@@ -76,6 +78,20 @@ export default function Perfil({ onClose, triggerRef }) {
         }
       } 
     }
+  }
+  useEffect(() => {
+    DadosConta();
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      DadosConta();
+    }
+  }, []);      
+
+  function Desconectar(){
+    localStorage.clear();
+    navigate("/Login");
   }
  
 
@@ -99,7 +115,7 @@ export default function Perfil({ onClose, triggerRef }) {
               className={abaAtiva === "sensiveis" ? "ativo" : ""}
               onClick={() => setAbaAtiva("sensiveis")}
             >
-              Mais sobre sua conta
+              Mais...
             </button>
           </div>
 
@@ -111,7 +127,7 @@ export default function Perfil({ onClose, triggerRef }) {
               </div>
             ) : (
               <div>
-                <p>Email: {dadosUser.email || 'Não disponível'}</p>
+                <p>Email: {localStorage.getItem("Email") || 'Não disponível'}</p>
                 <p>Palavra de Recuperação: {dadosUser.palavra}</p>
                 <p>Senha Salva: {dadosUser.senhaGerada || 'Não salva'}</p>
               </div>
@@ -119,10 +135,8 @@ export default function Perfil({ onClose, triggerRef }) {
           </div>
 
           <div className="perfil-actions">
-            <button className="btn-atualizar" onClick={DadosConta}>
-              Atualizar Dados
-            </button>
             <button className="btn-fechar" onClick={onClose}>Fechar</button>
+            <button className="btn-fechar" onClick={Desconectar}>Desconectar</button>
           </div>
         </section>
       </main>

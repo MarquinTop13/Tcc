@@ -42,6 +42,7 @@ export default function Support() {
                 <div className='container-support'>
                     <h2>O que trás aqui?</h2>
                     <div className='div-input'>
+<<<<<<< Updated upstream
                         <label htmlFor="">Escolha uma opção</label>
                         <select name="valores" value={opcaoEscolhida} onChange={(e) => setOpcaoEscolhida(e.target.value)}>
                             <option value="0"></option>
@@ -53,6 +54,10 @@ export default function Support() {
                             value={msgUser}
                             onChange={(e) => setmsgUser(e.target.value)}    
                         />
+=======
+                        <input type="text" className='input-branco' />
+                        <textarea className='text-preto' name=""></textarea>
+>>>>>>> Stashed changes
                     </div>
                     <button onClick={sentMsg} className='butao-verificated'>Verificar</button>
                 </div>

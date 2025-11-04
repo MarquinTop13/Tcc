@@ -17,20 +17,22 @@
 
   --fundo-botao-fechar-A: #b71c1c;
   --fundo-botao-fechar: #e63946;
-  --fundo-perfil: #8eace2;
+  --shadow: rgba(0, 0, 0, 0.4);
   --fundo-botao-P: #628fbd;
   --fundo-botao-A: #104e8b;
+  --fundo-perfil: #8eace2;
   --borda-img: #1e90ff;
-  --text-infos: ;
-  --text-nome: ;
-  --shadow: rgba(0, 0, 0, 0.4);;
+  --text-nome: #2f4253;
+  --black: #000000;
+  --white: #fff;
   
   .imagem-abas {
+    background-color: var(--fundo-perfil);
+    border: solid var(--black) 2px;
     border-radius: 20px;
     padding: 30px;
     max-width: 300px;
-    width: 100%;
-    background-color: var(--fundo-perfil);
+    width: 100vh;
     box-shadow: var(--shadow);
     margin: 10px;
 
@@ -50,7 +52,7 @@
       .apelido {
         font-size: 1.4rem;
         font-weight: bold;
-        color: black;
+        color: var(--text-nome);
       }
     }
 
@@ -82,30 +84,36 @@
 
     .perfil-info {
       text-align: left;
-      color: #333;
       line-height: 1.6;
 
       p {
-        margin: 6px 0;
         font-size: 1rem;
+        margin: 6px 0;
+        color: var(--black);
       }
     }
 
-    .btn-fechar {
-      display: block;
-      margin: 20px auto 0;
-      padding: 8px 20px;
-      background-color: var(--fundo-botao-fechar);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.2s;
+    .perfil-actions{
+      display: flex;
+      flex-direction: row;
 
-      &:hover {
-        background-color: var(--fundo-botao-fechar-A);
+      .btn-fechar {
+        display: block;
+        margin: 20px auto 0;
+        padding: 8px 20px;
+        background-color: var(--fundo-botao-fechar);
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+  
+        &:hover {
+          background-color: var(--fundo-botao-fechar-A);
+        }
       }
     }
+
   }
 }
 
