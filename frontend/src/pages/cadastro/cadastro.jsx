@@ -59,6 +59,7 @@ function Cas() {
   }
 
   const navigate = useNavigate()
+  
 
   const F = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -122,6 +123,9 @@ function Cas() {
                 value={form.senha}
                 onChange={F}
               />
+              <button className="botao-visivel" onClick={() => setMostrar(!mostrar)}></button>
+            </div>
+            <div className='senhas'>
               <input
                 type={mostrar ? "text" : "password"}
                 name='confirmarSenha'

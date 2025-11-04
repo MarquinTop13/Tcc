@@ -79,15 +79,12 @@ export default function Perfil({ onClose, triggerRef }) {
       } 
     }
   }
-  useEffect(() => {
+ useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (token) {
     DadosConta();
-  }, []);
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      DadosConta();
-    }
-  }, []);      
+  }
+}, []);      
 
   function Desconectar(){
     localStorage.clear();
@@ -122,14 +119,13 @@ export default function Perfil({ onClose, triggerRef }) {
           <div className="perfil-info">
             {abaAtiva === "sobre" ? (
               <div>
-                <p>Idade: {}</p>
+                <p>Idade: {localStorage.getItem("Idade")}</p>
                 <p>Data de criação: {dadosUser.idade || 'Não disponível'}</p>
               </div>
             ) : (
               <div>
                 <p>Email: {localStorage.getItem("Email") || 'Não disponível'}</p>
                 <p>Palavra de Recuperação: {dadosUser.palavra}</p>
-                <p>Senha Salva: {dadosUser.senhaGerada || 'Não salva'}</p>
               </div>
             )}
           </div>

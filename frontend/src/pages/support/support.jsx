@@ -62,7 +62,11 @@ export default function Support() {
                     <h1 className="titleSupport">Suporte</h1>
                     <h2>O que te trás aqui?</h2>
                     <div className='div-input'>
+<<<<<<< Updated upstream
                         <label>Escolha uma opção</label>
+=======
+                        <label htmlFor="">Escolha uma opção</label>
+>>>>>>> Stashed changes
                         <select name="valores" value={opcaoEscolhida} onChange={(e) => setOpcaoEscolhida(e.target.value)}>
                             <option value=""></option>
                             <option value="1">Error</option>
@@ -79,10 +83,17 @@ export default function Support() {
                         <textarea 
                             className='text-area-custom' 
                             value={msgUser}
+<<<<<<< Updated upstream
                             onChange={(e) => setMsgUser(e.target.value)}
                             placeholder="Escreva sua mensagem aqui..."
                         />  
 
+=======
+                            onChange={(e) => setmsgUser(e.target.value)}    
+                        />
+                        <input type="text" className='input-branco' />
+                        <textarea className='text-preto' name=""></textarea>
+>>>>>>> Stashed changes
                     </div>
                     <button onClick={sentMsg} className='butao-verificated'>Verificar</button>
                 </div>
