@@ -1,23 +1,19 @@
 import * as Support from "../repository/supportRepository.js"; 
-import { getAuthentication } from "../utils/jwt.js"; 
+import { getAuthentication, verifyToken } from "../utils/jwt.js"; 
 import Router from "express"; 
 const endpoints = Router(); 
 
-endpoints.post("/UserHelp1", getAuthentication(), async (req, resp) => { 
-    const msgUser = req.body.msg;
-    const idUser = req.headers;
+endpoints.post("/UserHelp", async (req, resp) => { 
+    const {tokenInserido, msg, opcao} = req.body;
+    const dadosToken = verifyToken(tokenInserido)
     
-    try { 
-        const id = await Support.MensagemUser(idUser, msgUser); 
-        resp.send({ mensagemId: id }); 
+    try {
+        const idUser = dadosToken.id;
+        const resposta = await Support.MensagemUser(idUser, msg, opcao); 
+        resp.send({ mensagemId: resposta }); 
     } catch (error) { 
-        resp.status(500).send({ error: error.message }); 
+        resp.status(500).send({ error: error }); 
     } }); 
     
-endpoints.post("/UserHelp2", async (req, resp) => { 
-    const opcaoEscolhida = req.body.opcao; 
-    const Resposta = await Support.SuportePronto(opcaoEscolhida); 
-    resp.send({ Mensagem: Resposta }); 
-});
 
 export default endpoints;

@@ -1,22 +1,11 @@
 import {conexao} from "./conections.js"
 
-
-export async function MensagemUser(idUser,msg){
+export async function MensagemUser(idUser,msg, opcao){
     const mensagemUser = ` 
-        insert into tb_suport(idUser,msgUser)
-            values(?,?)
+        insert into tb_support(idUser,msgUser, opcaoSelecionada)
+            values(?,?,?)
     `
     
-    const [info] = await conexao.query(mensagemUser, [idUser, msg]);
+    const [info] = await conexao.query(mensagemUser, [idUser, msg, opcao]);
     return info.insertId;
-}
-
-export async function SuportePronto(mensagem){
-    const OpcaoSelecionada = `
-        select msg from tb_support2
-           where opcao = ?
-    `
-    
-    const [info] = await conexao.query(OpcaoSelecionada, [mensagem]);
-    return info;
 }
