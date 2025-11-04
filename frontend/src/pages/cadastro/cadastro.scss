@@ -58,6 +58,23 @@
     position: relative;
     transition: all 270ms ease;
 
+    .senhas{
+      display: flex;
+      width: 107%;
+
+      .input-senha{
+        border-radius: 10px 0 0 10px;
+        width: 100%;
+      }
+      .botao-visivel{
+        border: 1px solid var(--input-border);
+        background-color: var(--input-bg);
+        border-radius: 0 10px 10px 0;
+        cursor: pointer;
+        width: 25px;
+      }
+    }
+
     input {
       background-color: var(--input-bg);
       color: var(--text-input);

@@ -10,51 +10,53 @@ import './cadastro.scss';
 
 function Cas() {
   //Modo escuro:
-    const [darkTheme, setDarkTheme] = useState(() => {
-      const themeSaved = localStorage.getItem("TemaEscuro");
-      return themeSaved ? themeSaved === 'true' : false;
-    })
-    function ChangeTheme() {
-      setDarkTheme(prevTheme => !prevTheme)
-    }
-    useEffect(() => {
-      document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
-    }, [darkTheme]);
+  const [darkTheme, setDarkTheme] = useState(() => {
+    const themeSaved = localStorage.getItem("TemaEscuro");
+    return themeSaved ? themeSaved === 'true' : false;
+  })
+  function ChangeTheme() {
+    setDarkTheme(prevTheme => !prevTheme)
+  }
+  useEffect(() => {
+    document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
+  }, [darkTheme]);
 
-    useEffect(() => {
-      localStorage.setItem('TemaEscuro', darkTheme.toString())
-    }, [darkTheme])
+  useEffect(() => {
+    localStorage.setItem('TemaEscuro', darkTheme.toString())
+  }, [darkTheme])
 
   //Status Err:
-    const [codigoErro, setCodigoErro] = useState(null);
-    const [showModal, setShowModal] = useState(false);
+  const [codigoErro, setCodigoErro] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [mostrar, setMostrar] = useState(false);
+
 
   //Cadastro:
-    const [form, setForm] = useState({
-      nome: "",
-      email: "",
-      senha: "",
-      palavra: "",
-      confirmarSenha: "",
-      idade: ""
-    })
+  const [form, setForm] = useState({
+    nome: "",
+    email: "",
+    senha: "",
+    palavra: "",
+    confirmarSenha: "",
+    idade: ""
+  })
 
-    function validarEmail(email) {
-      const Regex = [
-        /^[^\s@]+@gmail\.com$/,
-        /^[^\s@]+@outlook\.com$/,
-        /^[^\s@]+@yahoo\.com$/,
-        /^[^\s@]+@hotmail\.com$/,
-        /^[^\s@]+@icloud\.com$/,
-        /^[^\s@]+@protonmail\.com$/,
-        /^[^\s@]+@live\.com$/,
-        /^[^\s@]+@zoho\.com$/,
-        /^[^\s@]+@gmx\.com$/,
-        /^[^\s@]+@yandex\.com$/,
-        /^[^\s@]+@aol\.com$/
-      ];
-      return Regex.some(regex => regex.test(email));
-    }
+  function validarEmail(email) {
+    const Regex = [
+      /^[^\s@]+@gmail\.com$/,
+      /^[^\s@]+@outlook\.com$/,
+      /^[^\s@]+@yahoo\.com$/,
+      /^[^\s@]+@hotmail\.com$/,
+      /^[^\s@]+@icloud\.com$/,
+      /^[^\s@]+@protonmail\.com$/,
+      /^[^\s@]+@live\.com$/,
+      /^[^\s@]+@zoho\.com$/,
+      /^[^\s@]+@gmx\.com$/,
+      /^[^\s@]+@yandex\.com$/,
+      /^[^\s@]+@aol\.com$/
+    ];
+    return Regex.some(regex => regex.test(email));
+  }
 
   const navigate = useNavigate()
 
@@ -93,7 +95,7 @@ function Cas() {
       }
 
       const status = error.response?.status;
-      
+
       // Define o código de erro e mostra o modal
       setCodigoErro(status || 'default');
       setShowModal(true);
@@ -112,8 +114,23 @@ function Cas() {
           <div className="conteiner-cadastro">
             <input type="text" name='nome' placeholder="Nome" value={form.nome} onChange={F} />
             <input type="email" name='email' placeholder="Email" value={form.email} onChange={F} />
-            <input type="password" name='senha' placeholder="Senha" value={form.senha} onChange={F} />
-            <input type="password" name='confirmarSenha' placeholder="Confirmar Senha" value={form.confirmarSenha} onChange={F} />
+            <div className="senhas">
+              <input
+                type={mostrar ? "text" : "password"}
+                name='senha'
+                placeholder="Senha"
+                value={form.senha}
+                onChange={F}
+              />
+              <input
+                type={mostrar ? "text" : "password"}
+                name='confirmarSenha'
+                placeholder="Confirmar Senha"
+                value={form.confirmarSenha}
+                onChange={F}
+              />
+              <button className="botao-visivel" onClick={() => setMostrar(!mostrar)}></button>
+            </div>
             <div className='separados'>
               <input type="text" className='separado' name='palavra' placeholder="Palavra de Segurança" value={form.palavra} onChange={F} />
               <input type="date" className='data' name='idade' value={form.idade} onChange={F} />
