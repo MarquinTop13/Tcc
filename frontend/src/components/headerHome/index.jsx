@@ -104,7 +104,7 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                     {/* Menu de Opções Dropdown */}
                     {menuAberto && (
                         <div className="menu-opcoes" ref={menuMobileRef}>
-                            <Link className="link" to='/Support' onClick={() => setMenuAberto(false)}>Suporte</Link>
+                            <Link className="link" to='/Support' onClick={() => setMenuAberto(false)}>Ajuda</Link>
                             <h3>Atualizações</h3>
                             <Link className="link" to={"/Login"} onClick={() => setMenuAberto(false)}>
                                 Login
@@ -114,7 +114,9 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                                     Admin
                                 </Link>
                             )}
-                            
+
+                            <Link className="link" to={'/Pagamento'} onClick={() => setMenuAberto(false)}>Pagamento</Link>
+
                             {/* Ícone de perfil no menu mobile */}
                             <div className="menu-perfil" onClick={MostarInfoConta}>
                                 <img src={Account} alt="Conta" />
@@ -129,7 +131,7 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
             {!resolution && (
                 <section className="opcoes">
                     <div className="column2">
-                        <Link className="link" to='/Support'>Suporte</Link>
+                        <Link className="link" to='/Support'>Ajuda</Link>
                     </div>
 
                     <div className="column3">
@@ -144,7 +146,7 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                             <Link className="link" to={'/Admin'}>Admin</Link>
                         )}
                         
-                        
+                        <Link className="link" to={'/Pagamento'}>Pagamento</Link>
                     </div>
 
                     {/* Ícone de perfil com ref */}

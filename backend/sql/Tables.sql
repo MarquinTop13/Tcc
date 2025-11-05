@@ -1,4 +1,3 @@
-create database Tcc;
 drop database Tcc;
 create database Tcc;
 use Tcc;
@@ -9,6 +8,9 @@ create table cadastro(
     email varchar(100) not null,
     senha varchar(100) not null,
     palavra varchar(100) not null,
+    maxArquivo int default (5),
+    maxLink int default (5),
+    pago boolean default (0),
     senhaGerada varchar(100),
     idade date not null
 );
@@ -26,11 +28,8 @@ create table tb_login(
 create table tb_support (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idUser int,
-    msgUser varchar(255) not null,
-    opcaoSelecionada varchar(255) not null,
+    msgUser varchar(255),
+    opcaoSelecionada varchar(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     foreign key(idUser) references cadastro(id_cadastro)
 );
-delete from tb_support
-where idUser = 1;
-select * from tb_support;
