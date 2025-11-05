@@ -57,7 +57,7 @@ export default function Home() {
             const data = response.data || response;
             const usuario = data.Usuario[0];
 
-            if( usuario.nome === "MgsTop13", usuario.email === "mgs350084@gmail.com" || usuario.nome === "Gustavo" || usuario.nome === "Vitu"){
+            if( usuario.nome === "MgsTop13", usuario.email === "mgs350084@gmail.com" || usuario.nome === "Gustavo Max", usuario.email === "GUGU@gmx.com" ||usuario.nome === "Vitu"){
                 setUser(true);
                 localStorage.setItem('User', usuario.nome);
                 localStorage.setItem('Email', usuario.email)

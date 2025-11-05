@@ -32,4 +32,25 @@ create table tb_support (
     opcaoSelecionada varchar(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     foreign key(idUser) references cadastro(id_cadastro)
+<<<<<<< Updated upstream
 );
+=======
+);
+
+create table tb_support_resposta (
+    id int primary key auto_increment,
+    idSupport int not null,
+    idAdmin int not null,
+    resposta text not null,
+    created_at timestamp default current_timestamp,
+
+    foreign key (idSupport) references tb_support(id),
+    foreign key (idAdmin) references cadastro(id_cadastro)
+);
+
+
+
+delete from tb_support
+where idUser = 1;
+select * from tb_support;
+>>>>>>> Stashed changes

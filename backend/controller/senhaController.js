@@ -50,9 +50,9 @@ endpoint.post('/RecuperarSenha', async (req, resp) => {
 });
 
 endpoint.post('/InfoUser', async (req, resp) => {
-    const { nome } = req.body;
-    const buscarNome = await SenhaRepository.InfoConta2(nome);
-    if (buscarNome.nome === nome) {
+    const { nomes } = req.body;
+    const buscarNome = await SenhaRepository.InfoConta2(nomes);
+    if (buscarNome.nome === nomes) {
         resp.send({ buscarNome });
     }
 
