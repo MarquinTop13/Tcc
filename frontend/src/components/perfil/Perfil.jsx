@@ -20,16 +20,13 @@ export default function Perfil({ onClose, triggerRef }) {
       const triggerRect = triggerRef.current.getBoundingClientRect();
       const modalRect = modalRef.current.getBoundingClientRect();
       
-      // Posiciona à direita do ícone
       let left = triggerRect.right + 10;
       let top = triggerRect.top;
       
-      // Ajusta se o modal sair da tela à direita
       if (left + modalRect.width > window.innerWidth) {
         left = triggerRect.left - modalRect.width - 1;
       }
       
-      // Ajusta se o modal sair da tela na parte inferior
       if (top + modalRect.height > window.innerHeight) {
         top = window.innerHeight - modalRect.height - 10;
       }
@@ -37,6 +34,8 @@ export default function Perfil({ onClose, triggerRef }) {
       modalRef.current.style.left = `${left}px`;
       modalRef.current.style.top = `${top}px`;
     }
+    
+    DadosConta();
   }, [triggerRef]);
   
   const handleClickFora = (e) => {
@@ -45,59 +44,85 @@ export default function Perfil({ onClose, triggerRef }) {
     }
   };
   
+  // Função para formatar a data
+  const formatarData = (dataISO) => {
+    if (!dataISO) return 'Não disponível';
+    
+    try {
+      const data = new Date(dataISO);
+      if (isNaN(data.getTime())) {
+        return 'Data inválida';
+      }
+      return data.toLocaleDateString('pt-BR');
+    } catch (error) {
+      console.error('Erro ao formatar data:', error);
+      return 'Erro na data';
+    }
+  };
+
+  // Função para calcular idade a partir da data de criação
+  const calcularIdade = (dataCriacaoISO) => {
+    if (!dataCriacaoISO) return 'Não disponível';
+    
+    try {
+      const dataCriacao = new Date(dataCriacaoISO);
+      const agora = new Date();
+      
+      if (isNaN(dataCriacao.getTime())) {
+        return 'Data inválida';
+      }
+      
+      const diffMs = agora - dataCriacao;
+      const diffAnos = diffMs / (1000 * 60 * 60 * 24 * 365.25);
+      
+      return Math.floor(diffAnos) + ' anos';
+    } catch (error) {
+      console.error('Erro ao calcular idade:', error);
+      return 'Erro no cálculo';
+    }
+  };
   
   // PegarDadosConta com tratamento de erro melhorado
   async function DadosConta() {
     try {
       const response = await apiLink.post('/InfoUser', { nome });
       const userData = response.data.buscarNome;
-      setDadosUser(userData); 
+      const campoData = userData.idade
+      
+      // Formata os dados antes de salvar no state
+      const userDataFormatado = {
+        ...userData,
+        dataCriacaoFormatada: formatarData(campoData),
+        idadeConta: calcularIdade(campoData)
+      };
+      
+      setDadosUser(userDataFormatado); 
     } catch(error) {
       if (error.response) {
         console.error("Erro do servidor:", error.response.status, error.response.data);
         
-        // Usa o modal em vez de alert
         const status = error.response.status;
         setCodigoErro(status);
         setShowModal(true);
-        
-        if (codigoErro === 401 || status === 401) {
-          setShowModal(true);
-        }
-
-        else if (codigoErro === 403 || status === 403) {
-          setShowModal(true);
-        }
-
-        else if (codigoErro === 404 || status === 404) {
-          setShowModal(true);
-        }
-
-        else if (codigoErro === 500 || status === 500) {
-          setShowModal(true);
-        }
-      } 
+      } else {
+        console.error("Erro na requisição:", error);
+      }
     }
-  }
- useEffect(() => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    DadosConta();
-  }
-}, []);      
+  } 
 
   function Desconectar(){
-    localStorage.clear();
+    localStorage.removeItem("User");
+    localStorage.removeItem("token");
+    localStorage.removeItem("Email");
     navigate("/Login");
   }
- 
 
   return (
     <div className="overlay-perfil" onClick={handleClickFora}>
       <main className="MainPerfil" ref={modalRef}>
         <section className="imagem-abas">
           <div className="cabecalho-perfil">
-            <img className="img-perfil" src={imgperf} height="130px" />
+            <img className="img-perfil" src={imgperf} height="130px" alt="Perfil" />
             <h1 className="apelido">{localStorage.getItem('User')}</h1>
           </div>
 
@@ -119,13 +144,14 @@ export default function Perfil({ onClose, triggerRef }) {
           <div className="perfil-info">
             {abaAtiva === "sobre" ? (
               <div>
-                <p>Idade: {localStorage.getItem("Idade")}</p>
-                <p>Data de criação: {dadosUser.idade || 'Não disponível'}</p>
+                <p>Idade: {dadosUser.idadeConta || 'Não disponível'}</p>
+                <p>Data de criação: {dadosUser.dataCriacaoFormatada || 'Não disponível'}</p>
               </div>
             ) : (
               <div>
                 <p>Email: {localStorage.getItem("Email") || 'Não disponível'}</p>
-                <p>Palavra de Recuperação: {dadosUser.palavra}</p>
+                <p>Palavra de Recuperação: {dadosUser.palavra || 'Não disponível'}</p>
+                <p>Senha: {dadosUser.senhaGerada || 'Não disponível'}</p>
               </div>
             )}
           </div>
@@ -137,7 +163,6 @@ export default function Perfil({ onClose, triggerRef }) {
         </section>
       </main>
 
-      {/* Modal de Erro */}
       <Modal 
         isOpen={showModal} 
         setModalOpen={() => setShowModal(!showModal)} 

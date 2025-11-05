@@ -1,6 +1,7 @@
 import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import Cabecalho2 from '../../components/HeaderPages';
+import apiLink from '../../axios.js'
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import '../../scss/global.scss';
@@ -8,41 +9,34 @@ import '../../scss/fonts.scss';
 import "./verify.scss";
 
 export default function Verify() {
-   //Modo escuro:
-          const [darkTheme, setDarkTheme] = useState(() => {
-              const themeSaved = localStorage.getItem("TemaEscuro");
-              return themeSaved ? themeSaved === 'true' : false;
-          })
-          //Mudar tema escuro para claro
-          function ChangeTheme() {
-              setDarkTheme(prevTheme => !prevTheme)
-          }
-  
-          //Background mudando de acordo com o tema escolhido
-          useEffect(() => {
-              document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
-          }, [darkTheme]);
-  
-          //Setar o modo escuro no localStorage
-          useEffect(() => {
-              localStorage.setItem('TemaEscuro', darkTheme.toString())
-          }, [darkTheme])
-  
+  //Modo escuro:
+  const [darkTheme, setDarkTheme] = useState(() => {
+    const themeSaved = localStorage.getItem("TemaEscuro");
+    return themeSaved ? themeSaved === 'true' : false;
+  })
 
-  //Verificação dos arquivos:
-  const extensoesSuportadas = ['bat','sh','ps1','vbs','cmd', 'txt'];
-
-  function getExtension(filename) {
-    if (!filename || filename.indexOf('.') === -1) return '';
-    return filename.split('.').pop().toLowerCase();
+  function ChangeTheme() {
+    setDarkTheme(prevTheme => !prevTheme)
   }
 
-  function isScriptExtension(ext) {
-    return extensoesSuportadas.includes(ext);
-  }
+  useEffect(() => {
+    document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
+  }, [darkTheme]);
 
+  useEffect(() => {
+    localStorage.setItem('TemaEscuro', darkTheme.toString())
+  }, [darkTheme])
 
-  function verificar() {
+  const [user, setUser] = useState(localStorage.getItem('User'))
+  async function VerificarLogin() {
+    const user = localStorage.getItem("User");
+    if (!user || user === "") {
+      alert("Faça login para continuar");
+      return;
+    }
+
+    //Verificador De arquivos:
+    const extensoesSuportadas = ['bat', 'sh', 'ps1', 'vbs', 'cmd', 'txt'];
     const arquivo = document.getElementById('arquivo').files[0];
     const resultado = document.getElementById('resultado');
 
@@ -51,71 +45,59 @@ export default function Verify() {
       return;
     }
 
-    const extensao = getExtension(arquivo.name);
-
-    if(!isScriptExtension(extensao)){
-      resultado.textContent = `❌ Tipo de arquivo não suportado: .${extensao}\nSuportados: ${extensoesSuportadas.join(', ')}`;
+    const extensao = arquivo.name.split('.').pop().toLowerCase();
+    if (!extensoesSuportadas.includes(extensao)) {
+      resultado.textContent = `❌ Tipo de arquivo não suportado: .${extensao} Suportados: ${extensoesSuportadas.join(', ')}`;
       resultado.classList.add('mostrar');
       return;
-
     }
-    
 
-    mostrarCarregamento(resultado);
-
-    // Remove o delay artificial e processa imediatamente
-    processarArquivo(arquivo, resultado);
-  }
-
-  function mostrarCarregamento(resultado) {
     resultado.classList.remove('mostrar');
-    resultado.textContent = '⏳ Aguarde, estamos verificando...';
+    resultado.textContent = '⏳ Aguarde, verificando arquivo...';
     setTimeout(() => resultado.classList.add('mostrar'), 10);
-  }
 
-  function processarArquivo(arquivo, resultado) {
     const reader = new FileReader();
-
-    reader.onload = function (e) {
+    reader.onload = async (e) => {
       const texto = e.target.result.toLowerCase();
-      const comandosPerigosos = verificarComandosPerigosos(texto);
-      exibirResultado(comandosPerigosos, resultado);
+
+      const comandos = [
+        { palavras: ['del', 'remove', 'delete', 'erase', 'rd', 'rmdir'], descricao: 'Remove pastas/arquivos' },
+        { palavras: ['move'], descricao: 'Move arquivos ou pastas' },
+        { palavras: ['cipher'], descricao: 'Criptografa arquivos' },
+        { palavras: ['format'], descricao: 'Formata o disco' },
+        { palavras: ['start cmd', 'cmd.exe', 'powershell'], descricao: 'Executa comandos via terminal' },
+        { palavras: ['.exe'], descricao: 'Executa binário' },
+        { palavras: ['shutdown'], descricao: 'Desliga o sistema' }
+      ];
+
+      const encontrados = comandos.filter(cmd =>
+        cmd.palavras.some(p => texto.includes(p))
+      );
+
+      if (encontrados.length > 0) {
+        const lista = encontrados.map(c => c.descricao).join('\n');
+        resultado.textContent = `⚠️ Detectamos comandos suspeitos:\n${lista}`;
+        resultado.classList.add('mostrar');
+        return;
+      }
+
+      const respostaGemini = await apiLink.post('/VerificarArquivo', { arquivo: texto });
+
+      const respNormalizada = String(respostaGemini.data.Resposta || respostaGemini.data.resposta || respostaGemini.data)
+        .trim()
+        .toLowerCase();
+
+      if (respNormalizada === "inofensivo") {
+        resultado.textContent = '✅ Nenhuma ameaça detectada.';
+      } else {
+        resultado.textContent = `⚠️ Arquivo suspeito:\n${respostaGemini.data.Resposta || respostaGemini.data}`;
+      }
+
+      resultado.classList.add('mostrar');
     };
 
     reader.readAsText(arquivo);
   }
-
-  function verificarComandosPerigosos(texto) {
-    const comandos = [
-      { palavras: ['del', 'remove', 'delete', 'erase', 'rd', 'rmdir'], descricao: 'Remove pastas/arquivos' },
-      { palavras: ['move'], descricao: 'Move arquivos ou pastas' },
-      { palavras: ['cipher'], descricao: 'Criptografa arquivos' },
-      { palavras: ['format'], descricao: 'Formata o disco' },
-      { palavras: ['start cmd', 'cmd.exe', 'powershell'], descricao: 'Executa comandos perigosos via terminal' },
-      { palavras: ['.exe'], descricao: 'Instala/executa comandos perigosos' },
-      { palavras: ['shutdown'], descricao: 'Desliga o computador' }
-    ];
-
-    return comandos.filter(comando =>
-      comando.palavras.some(palavra => texto.includes(palavra))
-    );
-  }
-
-  function exibirResultado(encontrados, resultado) {
-    resultado.classList.remove('mostrar');
-
-    setTimeout(() => {
-      if (encontrados.length === 0) {
-        resultado.textContent = '✅ Nenhum comando perigoso detectado.';
-      } else {
-        const comandosList = encontrados.map(c => c.descricao).join('\n');
-        resultado.textContent = `⚠️ Detectamos comandos perigosos:\n${comandosList}`;
-      }
-
-      resultado.classList.add('mostrar');
-    }, 400);
-  }
-
 
   return (
     <main className={`MainVerifyArchiver ${darkTheme ? "dark" : "light"}`}>
@@ -125,14 +107,13 @@ export default function Verify() {
           <div className="part1-archiver">
             <h2>Verificador de arquivos</h2>
             <input type="file" id="arquivo" />
-
           </div>
 
           <div className="part2-archiver">
             <h3>Resultado:</h3>
             <pre className="resultado" id="resultado"></pre>
           </div>
-          <button className="button-verifyArchiver" onClick={verificar}>Verificar</button>
+          <button className="button-verifyArchiver" onClick={VerificarLogin}>Verificar</button>
         </div>
       </section>
     </main>

@@ -32,11 +32,17 @@ export default function VerifyLinks() {
     
 
     const [link, setLink] = useState('');
+    const [user,setUser] = useState(localStorage.getItem('User'))
     const [resultado, setResultado] = useState('');
     const [carregando, setCarregando] = useState(false);
     const [detalhes, setDetalhes] = useState(null);
 
-    async function VerificarLinks() {
+    async function VerificarLogin(){
+        if(!user || user === ""){
+            alert("Faça Login para continuar!")
+            return;
+        }
+
         if (!link) {
             alert('Insira um link!');
             return;
@@ -138,7 +144,7 @@ export default function VerifyLinks() {
                         )}
                     </div>
 
-                    <button className='button-verifyLinks' onClick={VerificarLinks} disabled={carregando}>
+                    <button className='button-verifyLinks' onClick={VerificarLogin} disabled={carregando}>
                         {carregando ? 'Verificando...' : 'Verificar'}
                     </button>
                 </div>

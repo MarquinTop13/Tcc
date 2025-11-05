@@ -15,12 +15,23 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
     const [accountLogo, setAccountLogo] = useState(false);
     const accountRef = useRef(null); // Ref para o ícone de perfil
 
+    // Menu hamburguer
+    const [menuAberto, setMenuAberto] = useState(false);
+    const [resolution, setResolution] = useState(window.innerWidth < 768);
+
+    // Ref para o menu mobile (para o componente Perfil)
+    const menuMobileRef = useRef(null);
+
     function MostarInfoConta(){
-        if(user === ""){
+        if(!user || user === ""){
             alert("Faça Login!")
             return;
         } else{
             setAccountLogo(!accountLogo);
+            // Fecha o menu hamburguer quando abrir o perfil no mobile
+            if (resolution) {
+                setMenuAberto(false);
+            }
         }
     }
 
@@ -36,11 +47,13 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
         }
     }
 
-    const [resolution, setResolution] = useState(window.innerWidth < 768);
-
     useEffect(() => {
         const handleResize = () => {
             setResolution(window.innerWidth < 768);
+            // Fecha o menu quando redimensionar para desktop
+            if (window.innerWidth >= 768) {
+                setMenuAberto(false);
+            }
         };
 
         window.addEventListener('resize', handleResize);
@@ -51,72 +64,119 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
         };
     }, []);
 
+    // Fecha o menu quando clicar fora
+    useEffect(() => {
+        const handleClickFora = (e) => {
+            if (menuAberto && !e.target.closest('.menu-hamburguer') && !e.target.closest('.menu-opcoes')) {
+                setMenuAberto(false);
+            }
+        };
+
+        document.addEventListener('click', handleClickFora);
+        return () => document.removeEventListener('click', handleClickFora);
+    }, [menuAberto]);
+
     return (
         <header className={`header-home ${darkTheme ? "dark" : "light"}`}>
             <img src={Logo} className="logo" alt="Logo" />
 
-            {/*Caso for um mobile, aparecerá um menu hamburguer*/}
-            {resolution && <section className="opcoes cell">
-                <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
-                    <img
-                        id="imgsun"
-                        src={darkTheme ? brightnessWhite : brightness}
+            {/* MOBILE - Menu Hamburguer */}
+            {resolution && (
+                <section className="opcoes cell">
+                    {/* Menu Hamburguer */}
+                    <div 
+                        className="menu-hamburguer"
+                        onClick={() => setMenuAberto(!menuAberto)}
+                        style={{ marginRight: '15px' }}
+                    >
+                        <img src={darkTheme ? menuWhite : menuBlack} alt="Menu" />
+                    </div>
+
+                    {/* Modo Escuro/Claro */}
+                    <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
+                        <img
+                            id="imgsun"
+                            src={darkTheme ? brightnessWhite : brightness}
+                            alt="Tema"
+                        />
+                    </div>
+
+                    {/* Menu de Opções Dropdown */}
+                    {menuAberto && (
+                        <div className="menu-opcoes" ref={menuMobileRef}>
+                            <Link className="link" to='/Support' onClick={() => setMenuAberto(false)}>Suporte</Link>
+                            <h3>Atualizações</h3>
+                            <Link className="link" to={"/Login"} onClick={() => setMenuAberto(false)}>
+                                Login
+                            </Link>
+                            {AdminVerify && (
+                                <Link className="link" to={'/Admin'} onClick={() => setMenuAberto(false)}>
+                                    Admin
+                                </Link>
+                            )}
+                            
+                            {/* Ícone de perfil no menu mobile */}
+                            <div className="menu-perfil" onClick={MostarInfoConta}>
+                                <img src={Account} alt="Conta" />
+                                <span>Perfil</span>
+                            </div>
+                        </div>
+                    )}
+                </section>
+            )}
+
+            {/* DESKTOP - Header Normal */}
+            {!resolution && (
+                <section className="opcoes">
+                    <div className="column2">
+                        <Link className="link" to='/Support'>Suporte</Link>
+                    </div>
+
+                    <div className="column3">
+                        <h3>Atualizações</h3>
+                    </div>
+
+                    <div className="column4">
+                        <Link className="link" to={"/Login"}>
+                            Login
+                        </Link>
+                        {AdminVerify && (
+                            <Link className="link" to={'/Admin'}>Admin</Link>
+                        )}
+                        
+                        
+                    </div>
+
+                    {/* Ícone de perfil com ref */}
+                    <img 
+                        ref={accountRef}
+                        onClick={MostarInfoConta} 
+                        className="accountLogo" 
+                        src={Account} 
+                        alt="Conta"
                     />
-                    <h3>{darkTheme ? "Modo Claro" : "Modo Escuro"}</h3>
-                </div>
-                <div className="column2">
-                    <img src={darkTheme ? menuWhite : menuBlack} />
-                </div>
-            </section>}
 
-            {/*Caso for um pc, irá funcionar normalmente*/}
-            {!resolution && <section className="opcoes">
-                <div className="column2">
-                    <Link className="link" to='/Support'>Suporte</Link>
-                </div>
+                    <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
+                        <img
+                            id="imgsun"
+                            src={darkTheme ? brightnessWhite : brightness}
+                            alt="Tema"
+                        />
+                        <h3>{darkTheme ? "Modo Claro" : "Modo Escuro"}</h3>
+                    </div>
 
-                <div className="column3">
-                    <h3>Atualizações</h3>
-                </div>
+                    
+                </section>
+            )}
 
-                <div className="column4">
-                    <Link className="link" to={"/Login"}>
-                        Login
-                    </Link>
-                    {AdminVerify ? false : ''}
-
-                    {AdminVerify &&
-                        <Link className="link" to={'/Admin'}>Admin </Link>}
-
-                    {!AdminVerify &&
-                        <h3></h3>
-                    }
-                </div>
-
-                {/* Ícone de perfil com ref */}
-                <img 
-                    ref={accountRef}
-                    onClick={MostarInfoConta} 
-                    className="accountLogo" 
-                    src={Account} 
+            {/* Componente Perfil (funciona tanto para mobile quanto desktop) */}
+            {accountLogo && (
+                <Perfil 
+                    onClose={() => setAccountLogo(false)} 
+                    // No mobile usa a ref do menu, no desktop usa a ref da conta
+                    triggerRef={resolution ? menuMobileRef : accountRef}
                 />
-                
-                {/* Passa a ref do ícone para o componente Perfil */}
-                {accountLogo && (
-                    <Perfil 
-                        onClose={() => setAccountLogo(false)} 
-                        triggerRef={accountRef}
-                    />
-                )}
-
-                <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">
-                    <img
-                        id="imgsun"
-                        src={darkTheme ? brightnessWhite : brightness}
-                    />
-                    <h3>{darkTheme ? "Modo Claro" : "Modo Escuro"}</h3>
-                </div>
-            </section>}
+            )}
         </header>
     );
 }
