@@ -1,6 +1,7 @@
 import PasswordGenerator from "./pages/passwordGenerate/password"
 import {BrowserRouter, Routes, Route} from "react-router"
 import VerifyLinks from "./pages/verifylinks/verifylinks"
+import UserSupport from "./pages/UserSupport/userSupport"
 import Pagamento from "./pages/pagamento/pagamento.jsx"
 import Verify from "./pages/verifyarchiver/verify"
 import Cas from "./pages/cadastro/cadastro.jsx"
@@ -26,6 +27,7 @@ export default function Rotas(){
                 <Route path="/Perfil" element={<Perfil />}/>
                 <Route path="/Viruspage" element={<VR />}/>
                 <Route path="/Pagamento" element={<Pagamento />} />
+                <Route path="/UserSupport" element={<UserSupport />} />
             </Routes>
         </BrowserRouter>
     )

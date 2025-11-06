@@ -50,14 +50,45 @@ endpoint.post('/RecuperarSenha', async (req, resp) => {
 });
 
 endpoint.post('/InfoUser', async (req, resp) => {
-    const { nomes } = req.body;
-    const buscarNome = await SenhaRepository.InfoConta2(nomes);
-    if (buscarNome.nome === nomes) {
-        resp.send({ buscarNome });
+    try {
+        const { nome } = req.body;
+        
+        // Validação do nome
+        if (!nome || nome.trim() === "") {
+            return resp.status(400).send({ 
+                error: "Nome é obrigatório",
+                message: "O campo nome não pode estar vazio" 
+            });
+        }
+
+        const buscarNome = await SenhaRepository.InfoConta2(nome);
+        
+        // Verifica se o usuário foi encontrado
+        if (!buscarNome) {
+            return resp.status(404).send({ 
+                error: "Usuário não encontrado",
+                message: "Nenhum usuário encontrado com o nome fornecido" 
+            });
+        }
+
+        // Verifica se o nome corresponde
+        if (buscarNome.nome === nome) {
+            resp.send({ buscarNome });
+        } else {
+            resp.status(404).send({ 
+                error: "Usuário não encontrado",
+                message: "Nome não corresponde" 
+            });
+        }
+        
+    } catch (error) {
+        console.error("Erro no endpoint InfoUser:", error);
+        resp.status(500).send({ 
+            error: "Erro interno do servidor",
+            message: error.message 
+        });
     }
-
-
-})
+});
 
 endpoint.post('/InserirSenhaForte', async (req, resp) => {
     const { senha, email, nome } = req.body;

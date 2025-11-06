@@ -32,10 +32,8 @@ create table tb_support (
     opcaoSelecionada varchar(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     foreign key(idUser) references cadastro(id_cadastro)
-<<<<<<< Updated upstream
 );
-=======
-);
+
 
 create table tb_support_resposta (
     id int primary key auto_increment,
@@ -43,14 +41,13 @@ create table tb_support_resposta (
     idAdmin int not null,
     resposta text not null,
     created_at timestamp default current_timestamp,
-
     foreign key (idSupport) references tb_support(id),
     foreign key (idAdmin) references cadastro(id_cadastro)
 );
 
+drop table tb_support;
+drop table tb_login;
+drop table cadastro;
 
-
-delete from tb_support
-where idUser = 1;
-select * from tb_support;
->>>>>>> Stashed changes
+Gustavo adiciona aí:
+    ALTER TABLE tb_support ADD COLUMN status VARCHAR(50) DEFAULT 'pendente';

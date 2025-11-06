@@ -4,6 +4,7 @@ import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import "./support.scss"
 import apiLink from "../../axios.js" 
 import { useState, useEffect } from "react"
+import { Link } from "react-router"
 
 export default function Support() {
     const [opcaoEscolhida, setOpcaoEscolhida] = useState("");
@@ -55,7 +56,7 @@ export default function Support() {
     }
 
     return (
-        <main className='hub'>
+        <main className={`MainSupport ${darkTheme ? "dark" : "light"}`}>
             <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme}/>
             <section className='support-fundo'>
                 <div className='container-support'>
@@ -67,11 +68,11 @@ export default function Support() {
 
                         <select name="valores" value={opcaoEscolhida} onChange={(e) => setOpcaoEscolhida(e.target.value)}>
                             <option value=""></option>
-                            <option value="1">Error</option>
-                            <option value="2">Bug</option>
-                            <option value="3">Dúvida</option>
-                            <option value="4">Sugestão</option>
-                            <option value="5">Outro</option>
+                            <option value="Error">Error</option>
+                            <option value="Bug">Bug</option>
+                            <option value="Dúvida">Dúvida</option>
+                            <option value="Sugestão">Sugestão</option>
+                            <option value="Outro">Outro</option>
                         </select>
                         
                         <div className="separator">
@@ -86,7 +87,8 @@ export default function Support() {
                         />  
 
                     </div>
-                    <button onClick={sentMsg} className='butao-verificated'>Verificar</button>
+                    <button onClick={sentMsg} className='butao-verificated'>Enviar</button>
+                    <Link to={'/UserSupport'} className="link-mensagens">Ver minhas mensagens</Link>
                 </div>
             </section>
         </main>

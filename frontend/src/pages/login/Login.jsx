@@ -8,18 +8,15 @@ import apiLink from "../../axios";
 import './Login.scss';
 
 function Login() {
-  // Apenas LER o localStorage que já foi salvo anteriormente
   const [darkTheme, setDarkTheme] = useState(() => {
     const themeSaved = localStorage.getItem("TemaEscuro");
     return themeSaved ? themeSaved === 'true' : false;
   })
 
-  // Mudar tema escuro para claro
   function ChangeTheme() {
     setDarkTheme(prevTheme => !prevTheme)
   }
 
-  // Apenas aplicar o background - NÃO salvar no localStorage aqui
   useEffect(() => {
     document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
   }, [darkTheme]);
@@ -32,44 +29,32 @@ function Login() {
   const [senha, setSenha] = useState('');
   const navigate = useNavigate();
 
-
   async function Enviarlogin() {
     try {
-      const res = await apiLink.post('/Login', {
+      const resposta = await apiLink.post('/Login', {
         nome,
         email,
         senha
       });
 
-      const token = res.data.token;
+      const token = resposta.data.token;
+      const idCadastro = resposta.data.id_cadastro; // AGORA VEM DA RESPOSTA
+      
+      // ARMAZENE TODOS OS DADOS
       localStorage.setItem("token", token);
       localStorage.setItem("User", nome);
       localStorage.setItem("Email", email);
+      localStorage.setItem('id_cadastro', idCadastro);
 
       alert('Login feito com sucesso');
       navigate("/");
     } catch (error) {
-      const status = error.response?.status; {
-        setCodigoErro(status);
-
-        if (codigoErro === 401 || status === 401) {
-          setShowModal(true);
-        }
-
-        else if (codigoErro === 403 || status === 403) {
-          setShowModal(true);
-        }
-
-        else if (codigoErro === 404 || status === 404) {
-          setShowModal(true);
-        }
-
-        else if (codigoErro === 500 || status === 500) {
-          setShowModal(true);
-        }
-      }
+      const status = error.response?.status; 
+      setCodigoErro(status);
+      setShowModal(true);
     }
   }
+
   return (
     <main className={`MainLogin ${darkTheme ? "dark" : "light"}`}>
       <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />

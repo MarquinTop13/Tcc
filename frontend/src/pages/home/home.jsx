@@ -24,6 +24,7 @@ export default function Home() {
         const themeSaved = localStorage.getItem("TemaEscuro");
         return themeSaved ? themeSaved === 'true' : false;
     })
+
     //Mudar tema escuro para claro
     function ChangeTheme() {
         setDarkTheme(prevTheme => !prevTheme)
@@ -39,37 +40,61 @@ export default function Home() {
         localStorage.setItem('TemaEscuro', darkTheme.toString())
     }, [darkTheme])
 
-    //Verificador de ADM
+    //Verificador de ADM - CORRIGIDO
     useEffect(() => {
         AdmVerificador();
-    })
+    }, []); // Adicionei array de dependências vazio para executar apenas uma vez
 
     async function AdmVerificador() {
         try {
             const Token = localStorage.getItem('token');
+            
+            // Se não tem token, não faz requisição
+            if (!Token) {
+                console.log('Token não encontrado');
+                return;
+            }
+
             const response = await apiLink.post('/LoginADM', {
                 'tokenInserido': Token
             });
 
-            if(!response){
+            if (!response) {
+                console.log('Resposta vazia');
                 return;
             }
-            const data = response.data || response;
-            const usuario = data.Usuario[0];
 
-            if( usuario.nome === "MgsTop13", usuario.email === "mgs350084@gmail.com" || usuario.nome === "Gustavo Max", usuario.email === "GUGU@gmx.com" ||usuario.nome === "Vitu"){
+            const data = response.data || response;
+            
+            // Verifica se existe Usuario e se tem pelo menos um item
+            if (!data.Usuario || !data.Usuario[0]) {
+                console.log('Usuário não encontrado na resposta');
+                return;
+            }
+
+            const usuario = data.Usuario[0];
+            const nomeUsuario = usuario.nome;
+            const emailUsuario = usuario.email;
+
+
+            // CORREÇÃO: Condição correta para verificar admin
+            if (
+                (nomeUsuario === "MgsTop13" && emailUsuario === "mgs350084@gmail.com") ||
+                (nomeUsuario === "Gustavo Max" && emailUsuario === "GUGU@gmx.com") ||
+                nomeUsuario === "Vitu"
+            ) {
                 setUser(true);
-                localStorage.setItem('User', usuario.nome);
-                localStorage.setItem('Email', usuario.email)
-            } else if(usuario.nome === null || usuario.nome === ""){
-                alert("Faça login")
+                localStorage.setItem('User', nomeUsuario);
+                localStorage.setItem('Email', emailUsuario);
+            } else {
+                setUser(false);
             }
         }
         catch (error) {
-            console.log('Erro: ' + error.message);
+            console.log('Erro na verificação de admin: ' + error.message);
+            setUser(false); // Garante que não seja admin em caso de erro
         }
     }
-
 
     return (
         <main className={`MainHome ${darkTheme ? "dark" : "light"}`}>
@@ -133,4 +158,4 @@ export default function Home() {
             </section>
         </main>
     )
-}
+} 

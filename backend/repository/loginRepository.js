@@ -3,32 +3,40 @@ import MD5 from 'md5';
 
 export async function consultarCredenciais(nome, email, senha) {
   const senhaMD5 = MD5(senha);
-  const comando = `
-    select 
-          id_login,
-          nome,
-          email
-      from tb_login
-        where nome = ?
-          and email = ?
-          and senha = ?
-    `;
+  const comandoSQL = `
+    SELECT 
+      tb_login.id_login,
+      tb_login.nome,
+      tb_login.email,
+      cadastro.id_cadastro
+    FROM tb_login
+    INNER JOIN cadastro ON tb_login.id_cadastro = cadastro.id_cadastro
+    WHERE tb_login.nome = ?
+      AND tb_login.email = ?
+      AND tb_login.senha = ?
+  `;
 
-  const [res] = await conexao.query(comando, [ nome, email, senhaMD5 ]);
-  if (res.length > 0) {
-    return res[0];
+  const [registros] = await conexao.query(comandoSQL, [nome, email, senhaMD5]);
+  if (registros.length > 0) {
+    return registros[0];
   } else {
     return null;
   }
 }
+
 export async function buscarUsuarioPorId(id) {
-    // Sua consulta SQL para buscar usuário por ID
-    const query = `
-        SELECT id_login, nome, email, senha
-        FROM tb_login
-        WHERE id_login = ?
-    `;
-    
-    const [usuario] = await conexao.query(query, [id]);
-    return usuario;
+  const comandoSQL = `
+    SELECT 
+      tb_login.id_login,
+      tb_login.nome,
+      tb_login.email,
+      tb_login.senha,
+      cadastro.id_cadastro
+    FROM tb_login
+    INNER JOIN cadastro ON tb_login.id_cadastro = cadastro.id_cadastro
+    WHERE tb_login.id_login = ?
+  `;
+  
+  const [registros] = await conexao.query(comandoSQL, [id]);
+  return registros;
 }

@@ -6,7 +6,7 @@ import "./Perfil.scss";
 import { useNavigate } from "react-router";
 
 export default function Perfil({ onClose, triggerRef }) {
-  const [nome, setNome] = useState(localStorage.getItem('User'));
+  const [nome, setNome] = useState(localStorage.getItem("User"));
   const [dadosUser, setDadosUser] = useState({});
   const [abaAtiva, setAbaAtiva] = useState("sobre");
   const [codigoErro, setCodigoErro] = useState(null);

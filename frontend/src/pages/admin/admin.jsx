@@ -2,11 +2,11 @@ import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import Cabecalho2 from "../../components/HeaderPages"
 import { useState, useEffect } from "react"
+import apiLink from "../../axios"
 import "./admin.scss"
 
 export default function Admin() {
-
-  //Modo escuro
+  // Modo escuro
   const [darkTheme, setDarkTheme] = useState(() => {
     const themeSaved = localStorage.getItem("TemaEscuro")
     return themeSaved ? themeSaved === "true" : false
@@ -25,27 +25,83 @@ export default function Admin() {
   }, [darkTheme])
 
   // Dados
-  const [usuarios, setUsuarios] = useState([
-    { id: 1, nome: "Gustavo", foto: "", duvida: "", resposta: "" },
-    { id: 2, nome: "Marcos", foto: "", duvida: "", resposta: "" }
-  ])
-
-  const [usuarioSelecionado, setUsuarioSelecionado] = useState(null)
+  const [mensagens, setMensagens] = useState([])
+  const [mensagemSelecionada, setMensagemSelecionada] = useState(null)
   const [resposta, setResposta] = useState("")
+  const [carregando, setCarregando] = useState(true)
 
-  function enviarResposta() {
-    if (!usuarioSelecionado) return
-    if (!resposta.trim()) return
-  
-    const atualizados = usuarios.map(u =>
-      u.id === usuarioSelecionado.id ? { ...u, resposta } : u
-    )
-  
-    setUsuarios(atualizados)
-    setUsuarioSelecionado(prev => ({ ...prev, resposta }))
-    setResposta("")
+  // Buscar mensagens do backend
+  useEffect(() => {
+    buscarMensagens()
+  }, [])
+
+  async function buscarMensagens() {
+    try {
+      setCarregando(true)
+      const response = await apiLink.get('/support')
+      setMensagens(response.data)
+    } catch (error) {
+      console.error("Erro ao buscar mensagens:", error)
+      alert("Erro ao carregar mensagens")
+    } finally {
+      setCarregando(false)
+    }
   }
-  
+
+  async function selecionarMensagem(id) {
+    try {
+      const response = await apiLink.get(`/support/${id}`)
+      setMensagemSelecionada(response.data)
+      setResposta("")
+    } catch (error) {
+      console.error("Erro ao buscar mensagem:", error)
+      alert("Erro ao carregar mensagem")
+    }
+  }
+
+  async function enviarResposta() {
+    if (!mensagemSelecionada) return
+    if (!resposta.trim()) {
+      alert("Digite uma resposta")
+      return
+    }
+
+    try {
+      const idAdmin = localStorage.getItem("id_cadastro") || 1 // Você precisa ajustar isso conforme sua autenticação
+      
+      await apiLink.post('/support/responder', {
+        idSupport: mensagemSelecionada.id,
+        idAdmin: idAdmin,
+        resposta: resposta
+      })
+
+      alert("Resposta enviada com sucesso!")
+      setResposta("")
+      
+      // Atualizar a lista de mensagens
+      buscarMensagens()
+      
+      // Atualizar a mensagem selecionada
+      selecionarMensagem(mensagemSelecionada.id)
+      
+    } catch (error) {
+      console.error("Erro ao enviar resposta:", error)
+      alert("Erro ao enviar resposta")
+    }
+  }
+
+  function formatarData(data) {
+    if (!data) return ''
+    return new Date(data).toLocaleString('pt-BR')
+  }
+
+  function getStatusColor(status) {
+    switch (status) {
+      case 'respondido': return '#4CAF50'
+      case 'pendente': return '#FF9800'
+      default: return '#757575'
+    }
+  }
 
   return (
     <main className={`MainAdmin ${darkTheme ? "dark" : "light"}`}>
@@ -53,50 +109,88 @@ export default function Admin() {
 
       <div className="MensagensMain">
         <div className="card">
-          <h1 className="titulo">Mensagens</h1>
+          <h1 className="titulo">Mensagens de Suporte</h1>
 
           <div className="container">
-
             <div className="col-esquerda">
-              {usuarios.map((u) => (
-                <div
-                  key={u.id}
-                  className={`usuario-item ${usuarioSelecionado?.id === u.id ? "ativo" : ""}`}
-                  onClick={() => setUsuarioSelecionado(u)}
-                >
-                  <img src={u.foto} alt={u.nome} />
-                  <span>{u.nome}</span>
-                </div>
-              ))}
+              {carregando ? (
+                <p>Carregando mensagens...</p>
+              ) : mensagens.length === 0 ? (
+                <p>Nenhuma mensagem encontrada</p>
+              ) : (
+                mensagens.map((mensagem) => (
+                  <div
+                    key={mensagem.id}
+                    className={`usuario-item ${mensagemSelecionada?.id === mensagem.id ? "ativo" : ""}`}
+                    onClick={() => selecionarMensagem(mensagem.id)}
+                  >
+                    <div className="avatar-usuario">
+                      {mensagem.nome ? mensagem.nome.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                    <div className="info-usuario">
+                      <span className="nome-usuario">{mensagem.nome || 'Usuário'}</span>
+                      <span 
+                        className="status-mensagem"
+                        style={{ color: getStatusColor(mensagem.status) }}
+                      >
+                        {mensagem.status || 'pendente'}
+                      </span>
+                      <span className="data-mensagem">
+                        {formatarData(mensagem.created_at)}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
 
             <div className="col-direita">
-                {usuarioSelecionado ? (
-                    <>
-                    <div className="mensagens-area">
-                        <h2>{usuarioSelecionado.nome}</h2>
-                        <p className="duvida">💬 {usuarioSelecionado.duvida}</p>
-
-                        {usuarioSelecionado.resposta && (
-                        <div className="resposta-enviada">
-                            <strong>Resposta enviada:</strong>
-                            <p>{usuarioSelecionado.resposta}</p>
-                        </div>
-                        )}
+              {mensagemSelecionada ? (
+                <>
+                  <div className="mensagens-area">
+                    <h2>{mensagemSelecionada.nome || 'Usuário'}</h2>
+                    
+                    <div className="info-contato">
+                      <p><strong>ID:</strong> {mensagemSelecionada.idUser}</p>
+                      <p><strong>Opção:</strong> {mensagemSelecionada.opcaoSelecionada}</p>
+                      <p><strong>Data:</strong> {formatarData(mensagemSelecionada.created_at)}</p>
+                      <p><strong>Status:</strong> 
+                        <span style={{ color: getStatusColor(mensagemSelecionada.status) }}>
+                          {mensagemSelecionada.status || 'pendente'}
+                        </span>
+                      </p>
                     </div>
 
+                    <div className="duvida-usuario">
+                      <strong>Mensagem do usuário:</strong>
+                      <p>{mensagemSelecionada.msgUser}</p>
+                    </div>
+
+                    {mensagemSelecionada.resposta && (
+                      <div className="resposta-enviada">
+                        <strong>Resposta enviada em {formatarData(mensagemSelecionada.respostaData)}:</strong>
+                        <p>{mensagemSelecionada.resposta}</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {(!mensagemSelecionada.resposta || mensagemSelecionada.status !== 'respondido') && (
                     <div className="resposta-area">
-                        <textarea
+                      <textarea
                         placeholder="Escreva sua resposta..."
                         value={resposta}
                         onChange={(e) => setResposta(e.target.value)}
-                        />
-                        <button onClick={enviarResposta}>Enviar resposta</button>
+                        rows="4"
+                      />
+                      <button onClick={enviarResposta}>Enviar resposta</button>
                     </div>
-                    </>
-                ) : (
-                    <p>Selecione um usuário para responder</p>
-                )}
+                  )}
+                </>
+              ) : (
+                <div className="nenhuma-selecao">
+                  <p>Selecione uma mensagem para visualizar e responder</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
