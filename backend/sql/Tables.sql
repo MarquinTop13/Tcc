@@ -12,7 +12,8 @@ create table cadastro(
     maxLink int default (5),
     pago boolean default (0),
     senhaGerada varchar(100),
-    idade date not null
+    idade date not null,
+	fotoPerfil VARCHAR(255)
 );
 
 create table tb_login(
@@ -45,10 +46,3 @@ create table tb_support_resposta (
     foreign key (idSupport) references tb_support(id),
     foreign key (idAdmin) references cadastro(id_cadastro)
 );
-
-drop table tb_support;
-drop table tb_login;
-drop table cadastro;
-
-Gustavo adiciona aí:
-    ALTER TABLE tb_support ADD COLUMN status VARCHAR(50) DEFAULT 'pendente';
