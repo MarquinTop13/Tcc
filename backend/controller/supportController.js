@@ -14,6 +14,16 @@ endpoints.post("/UserHelp", async (req, resp) => {
     } catch (error) { 
         resp.status(500).send({ error: error }); 
     } }); 
+
+    endpoints.get("/support", async (req, res) => {
+        try {
+          const mensagens = await Support.listarMensagens();
+          res.status(200).json(mensagens);
+        } catch (err) {
+          console.error("Erro ao listar mensagens:", err);
+          res.status(500).json({ error: "Erro ao buscar mensagens" });
+        }
+      });
     
 
 export default endpoints;

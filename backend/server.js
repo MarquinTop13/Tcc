@@ -3,10 +3,19 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { AddRotas } from './router.js';
 
+import path from "path";
+import { fileURLToPath } from "url";
+
+const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// servir a pasta de uploads
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+
 // Carrega variáveis de ambiente PRIMEIRO
 dotenv.config();
 
-const app = express();
 const PORT = process.env.PORT || 5010;
 
 // Middlewares

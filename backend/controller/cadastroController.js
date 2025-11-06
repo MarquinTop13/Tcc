@@ -79,10 +79,4 @@ endpoint.post("/uploadFoto", upload.single("foto"), async (req, res) => {
   }
 });
 
-endpoint.use("/uploads", (req, res, next) => {
-  import("express").then(({ default: express }) => {
-    express.static(uploadDir)(req, res, next);
-  });
-});
-
 export default endpoint;

@@ -39,6 +39,7 @@ export default function Admin() {
     try {
       setCarregando(true)
       const response = await apiLink.get('/support')
+      console.log("Mensagens vindas do backend:", response.data) // 👈
       setMensagens(response.data)
     } catch (error) {
       console.error("Erro ao buscar mensagens:", error)
@@ -101,7 +102,6 @@ export default function Admin() {
       default: return '#757575'
     }
   }
-
   return (
     <main className={`MainAdmin ${darkTheme ? "dark" : "light"}`}>
       <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
@@ -124,8 +124,17 @@ export default function Admin() {
                     onClick={() => selecionarMensagem(mensagem.id)}
                   >
                     <div className="avatar-usuario">
-                      {mensagem.nome ? mensagem.nome.charAt(0).toUpperCase() : 'U'}
+                    <img
+                      src={
+                        mensagem.fotoPerfil
+                          ? `${apiLink.defaults.baseURL}${mensagem.fotoPerfil}`
+                          : "/images/icons/imagemPerfil.png"
+                      }
+                      alt={mensagem.nome || "Usuário"}
+                      className="avatar-img"
+                    />
                     </div>
+
                     <div className="info-usuario">
                       <span className="nome-usuario">{mensagem.nome || 'Usuário'}</span>
                       <span 
