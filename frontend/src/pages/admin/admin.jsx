@@ -75,7 +75,6 @@ export default function Admin() {
         resposta: resposta
       })
 
-      alert("Resposta enviada com sucesso!")
       setResposta("")
       
       // Atualizar a lista de mensagens

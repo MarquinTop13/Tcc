@@ -46,13 +46,13 @@ body {
     }
 
     .fundo {
-        color: var(--button-text);
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
         min-height: calc(100vh - 80px);
-        padding: 20px;
+        justify-content: flex-start;
+        color: var(--button-text);
         box-sizing: border-box;
+        align-items: flex-start;
+        display: flex;
+        padding: 20px;
 
         .fundo-secundario-cadastro {
             padding: 2rem;
@@ -88,25 +88,25 @@ body {
     }
 
     .conteiner-cadastro {
-        display: flex;
+        transition: all 0.3s ease;
         flex-direction: column;
         align-items: stretch;
+        display: flex;
         gap: 1rem;
-        transition: all 0.3s ease;
 
         input {
-            background-color: var(--input-bg);
-            color: var(--input-text);
-            width: 100%;
-            height: 3.5rem;
-            padding: 0 16px;
             border: 2px solid var(--input-border);
+            background-color: var(--input-bg);
+            cursor: var(--cursor-default);
+            transition: all 0.3s ease;
+            color: var(--input-text);
+            font-family: inherit;
             border-radius: 8px;
             font-size: 1.1rem;
-            font-family: inherit;
-            transition: all 0.3s ease;
-            cursor: var(--cursor-default);
             margin-bottom: 0;
+            padding: 0 16px;
+            height: 3.5rem;
+            width: 100%;
 
             &::placeholder {
                 color: var(--input-placeholder);
@@ -188,11 +188,11 @@ body {
     }
 
     .conteiner-link-botao-cas {
-        margin-left: 2rem;
-        width: 100%;
-        max-width: 500px;
         color: var(--button-text);
-        margin-top: 2rem;
+        margin-left: 2rem;
+        max-width: 500px;
+        margin-top: -110px;
+        width: 100%;
 
         .fundo-botao {
             display: flex;
@@ -411,7 +411,7 @@ body {
         }
 
         .conteiner-link-botao-cas {
-            margin-left: 4rem;
+            margin-left: 4.7rem;
             max-width: 550px;
 
             .fundo-botao {

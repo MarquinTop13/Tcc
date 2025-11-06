@@ -37,24 +37,56 @@
     margin: 10px;
 
     .cabecalho-perfil {
-      display: flex;
       flex-direction: column;
       align-items: center;
       margin-bottom: 20px;
-
-      .img-perfil {
-        border-radius: 100%;
-        max-width: 55%;
-        border: 3px solid var(--borda-img);
+      display: flex;
+    
+      .foto-perfil {
+        justify-content: center;
+        align-items: flex-end;
         margin-bottom: 10px;
+        display: flex;
+        gap: 12px;
       }
-
+    
+      .img-perfil {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--borda-img);
+      }
+    
+      .botao-add-foto {
+        background-color: var(--fundo-botao-A);
+        border: 2px solid var(--black);
+        justify-content: center;
+        transition: 0.3s ease;
+        align-items: center;
+        border-radius: 50%;
+        font-weight: bold;
+        font-size: 26px;
+        cursor: pointer;
+        color: white;
+        display: flex;
+        height: 38px;
+        width: 38px;
+      }
+    
+      .botao-add-foto:hover {
+        background-color: var(--fundo-botao-P);
+        transform: scale(1.05);
+      }
+    
       .apelido {
+        color: var(--text-nome);
+        text-align: center;
         font-size: 1.4rem;
         font-weight: bold;
-        color: var(--text-nome);
       }
     }
+    
 
     .perfil-abas {
       display: flex;

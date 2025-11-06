@@ -26,12 +26,13 @@ create table tb_login(
 
 
 create table tb_support (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id int auto_increment primary key,
     idUser int,
     msgUser varchar(255),
     opcaoSelecionada varchar(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    foreign key(idUser) references cadastro(id_cadastro)
+    status varchar(50) default 'pendente',
+    created_at timestamp default current_timestamp,
+    foreign key (idUser) references cadastro(id_cadastro)
 );
 
 

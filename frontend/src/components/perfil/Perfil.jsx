@@ -14,6 +14,38 @@ export default function Perfil({ onClose, triggerRef }) {
   const modalRef = useRef(null);
 
   const navigate = useNavigate();
+
+
+      const handleFotoChange = async (event) => {
+        const arquivo = event.target.files[0];
+        if (arquivo) {
+          const formData = new FormData();
+          formData.append("foto", arquivo);
+          formData.append("nome", nome);
+      
+          try {
+            const response = await apiLink.post("/uploadFoto", formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            });
+      
+            const { caminho } = response.data;
+            setDadosUser((prev) => ({ ...prev, fotoPerfil: caminho }));
+            localStorage.setItem("fotoPerfil", caminho);
+          } catch (err) {
+            console.error("Erro ao enviar imagem:", err);
+          }
+        }
+      };
+      
+
+    // Recupera foto salva ao carregar o perfil
+    useEffect(() => {
+      const fotoSalva = localStorage.getItem("fotoPerfil");
+      if (fotoSalva) {
+        setDadosUser((prev) => ({ ...prev, fotoPerfil: fotoSalva }));
+      }
+    }, []);
+
   
   useEffect(() => {
     if (triggerRef.current && modalRef.current) {
@@ -121,10 +153,29 @@ export default function Perfil({ onClose, triggerRef }) {
     <div className="overlay-perfil" onClick={handleClickFora}>
       <main className="MainPerfil" ref={modalRef}>
         <section className="imagem-abas">
-          <div className="cabecalho-perfil">
-            <img className="img-perfil" src={imgperf} height="130px" alt="Perfil" />
-            <h1 className="apelido">{localStorage.getItem('User')}</h1>
+        <div className="cabecalho-perfil">
+          <div className="foto-perfil">
+          <img
+            className="img-perfil"
+            src={
+              dadosUser.fotoPerfil
+                ? `${apiLink.defaults.baseURL}${dadosUser.fotoPerfil}`
+                : imgperf
+            }
+            alt="Perfil"
+          />
+            <label htmlFor="input-foto" className="botao-add-foto">+</label>
+            <input
+              id="input-foto"
+              type="file"
+              accept="image/*"
+              onChange={handleFotoChange}
+              style={{ display: "none" }}
+            />
           </div>
+          <h1 className="apelido">{localStorage.getItem("User")}</h1>
+        </div>
+
 
           <div className="perfil-abas">
             <button

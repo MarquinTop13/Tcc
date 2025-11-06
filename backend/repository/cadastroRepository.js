@@ -27,3 +27,13 @@ export async function salvarLogin({ id_cadastro, nome, email, senha }) {
   const [res] = await conexao.execute(comando, [id_cadastro, nome, email, senha]);
   return res.insertId;
 }
+
+export async function atualizarFotoPerfil(nome, caminho) {
+  const comando = `
+    UPDATE cadastro
+    SET fotoPerfil = ?
+    WHERE nome = ?
+  `;
+  const [res] = await conexao.execute(comando, [caminho, nome]);
+  return res.affectedRows;
+}
