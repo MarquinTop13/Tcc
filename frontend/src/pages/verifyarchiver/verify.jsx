@@ -15,6 +15,11 @@ export default function Verify() {
     return themeSaved ? themeSaved === 'true' : false;
   })
 
+  // Estados para controle de limite
+  const [limite, setLimite] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [mostrarModalPagamento, setMostrarModalPagamento] = useState(false);
+
   function ChangeTheme() {
     setDarkTheme(prevTheme => !prevTheme)
   }
@@ -27,11 +32,37 @@ export default function Verify() {
     localStorage.setItem('TemaEscuro', darkTheme.toString())
   }, [darkTheme])
 
-  const [user, setUser] = useState(localStorage.getItem('User'))
+  // Carregar limite do usuário
+  useEffect(() => {
+    carregarLimite();
+  }, []);
+
+  async function carregarLimite() {
+    const email = localStorage.getItem("Email");
+    const user = localStorage.getItem("User");
+    
+    if (!email || !user) return;
+
+    try {
+      const response = await apiLink.get(`/VerificarLimite/${email}`);
+      setLimite(response.data);
+    } catch (error) {
+      console.error('Erro ao carregar limite:', error);
+    }
+  }
+
   async function VerificarLogin() {
     const user = localStorage.getItem("User");
-    if (!user || user === "") {
+    const email = localStorage.getItem("Email");
+    
+    if (!user || user === "" || !email) {
       alert("Faça login para continuar");
+      return;
+    }
+
+    // Verificar se tem limite
+    if (limite && limite.maxArquivo <= 0 && !limite.pago) {
+      setMostrarModalPagamento(true);
       return;
     }
 
@@ -56,54 +87,148 @@ export default function Verify() {
     resultado.textContent = '⏳ Aguarde, verificando arquivo...';
     setTimeout(() => resultado.classList.add('mostrar'), 10);
 
+    setLoading(true);
+
     const reader = new FileReader();
     reader.onload = async (e) => {
-      const texto = e.target.result.toLowerCase();
+      try {
+        const texto = e.target.result.toLowerCase();
 
-      const comandos = [
-        { palavras: ['del', 'remove', 'delete', 'erase', 'rd', 'rmdir'], descricao: 'Remove pastas/arquivos' },
-        { palavras: ['move'], descricao: 'Move arquivos ou pastas' },
-        { palavras: ['cipher'], descricao: 'Criptografa arquivos' },
-        { palavras: ['format'], descricao: 'Formata o disco' },
-        { palavras: ['start cmd', 'cmd.exe', 'powershell'], descricao: 'Executa comandos via terminal' },
-        { palavras: ['.exe'], descricao: 'Executa binário' },
-        { palavras: ['shutdown'], descricao: 'Desliga o sistema' }
-      ];
+        const comandos = [
+          { palavras: ['del', 'remove', 'delete', 'erase', 'rd', 'rmdir'], descricao: 'Remove pastas/arquivos' },
+          { palavras: ['move'], descricao: 'Move arquivos ou pastas' },
+          { palavras: ['cipher'], descricao: 'Criptografa arquivos' },
+          { palavras: ['format'], descricao: 'Formata o disco' },
+          { palavras: ['start cmd', 'cmd.exe', 'powershell'], descricao: 'Executa comandos via terminal' },
+          { palavras: ['.exe'], descricao: 'Executa binário' },
+          { palavras: ['shutdown'], descricao: 'Desliga o sistema' }
+        ];
 
-      const encontrados = comandos.filter(cmd =>
-        cmd.palavras.some(p => texto.includes(p))
-      );
+        const encontrados = comandos.filter(cmd =>
+          cmd.palavras.some(p => texto.includes(p))
+        );
 
-      if (encontrados.length > 0) {
-        const lista = encontrados.map(c => c.descricao).join('\n');
-        resultado.textContent = `⚠️ Detectamos comandos suspeitos:\n${lista}`;
+        if (encontrados.length > 0) {
+          const lista = encontrados.map(c => c.descricao).join('\n');
+          resultado.textContent = `⚠️ Detectamos comandos suspeitos:\n${lista}`;
+          resultado.classList.add('mostrar');
+          setLoading(false);
+          return;
+        }
+
+        // Usar o novo endpoint com limite
+        const resposta = await apiLink.post('/VerificarArquivoComLimite', { 
+          arquivo: texto, 
+          email: email 
+        });
+
+        const respNormalizada = String(resposta.data.resposta || resposta.data)
+          .trim()
+          .toLowerCase();
+
+        if (respNormalizada === "inofensivo") {
+          resultado.textContent = '✅ Nenhuma ameaça detectada.';
+        } else {
+          resultado.textContent = `⚠️ Arquivo suspeito:\n${resposta.data.resposta || resposta.data}`;
+        }
+
+        // Atualizar limite na interface
+        setLimite({
+          maxArquivo: resposta.data.limiteRestante,
+          pago: resposta.data.pago
+        });
+
         resultado.classList.add('mostrar');
-        return;
+
+      } catch (error) {
+        console.error('Erro na verificação:', error);
+        
+        if (error.response?.status === 402) {
+          if (error.response.data.tipo === "LIMITE_ATINGIDO") {
+            setMostrarModalPagamento(true);
+            resultado.textContent = '❌ Limite de verificações atingido.';
+          } else {
+            resultado.textContent = '❌ Erro ao processar verificação.';
+          }
+        } else {
+          resultado.textContent = '❌ Erro ao verificar arquivo. Tente novamente.';
+        }
+        resultado.classList.add('mostrar');
+      } finally {
+        setLoading(false);
       }
-
-      const respostaGemini = await apiLink.post('/VerificarArquivo', { arquivo: texto });
-
-      const respNormalizada = String(respostaGemini.data.Resposta || respostaGemini.data.resposta || respostaGemini.data)
-        .trim()
-        .toLowerCase();
-
-      if (respNormalizada === "inofensivo") {
-        resultado.textContent = '✅ Nenhuma ameaça detectada.';
-      } else {
-        resultado.textContent = `⚠️ Arquivo suspeito:\n${respostaGemini.data.Resposta || respostaGemini.data}`;
-      }
-
-      resultado.classList.add('mostrar');
     };
 
     reader.readAsText(arquivo);
   }
 
+  async function processarPagamento() {
+    const email = localStorage.getItem("Email");
+    
+    try {
+      setLoading(true);
+      const response = await apiLink.post('/ProcessarPagamento', { email });
+      
+      alert(response.data.message);
+      setMostrarModalPagamento(false);
+      setLimite({ maxArquivo: 999, pago: true });
+      
+    } catch (error) {
+      console.error('Erro ao processar pagamento:', error);
+      alert('Erro ao processar pagamento. Tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <main className={`MainVerifyArchiver ${darkTheme ? "dark" : "light"}`}>
       <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
+      
+      {/* Modal de Pagamento */}
+      {mostrarModalPagamento && (
+        <div className="modal-overlay">
+          <div className="modal-pagamento">
+            <h3>Limite Atingido! 🚫</h3>
+            <p>Você usou todas as suas verificações gratuitas.</p>
+            <p>Faça o pagamento para continuar usando o verificador de arquivos sem limites!</p>
+            
+            <div className="modal-botoes">
+              <button 
+                onClick={processarPagamento}
+                disabled={loading}
+                className="btn-pagar"
+              >
+                {loading ? 'Processando...' : 'Pagar Agora - R$ 9,99'}
+              </button>
+              <button 
+                onClick={() => setMostrarModalPagamento(false)}
+                className="btn-cancelar"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <section className="page-archiver">
         <div className="card-archiver">
+          {/* Informações de Limite */}
+          {limite && (
+            <div className="info-limite">
+              <h4>
+                {limite.pago ? '💎 Premium - Verificações Ilimitadas' : 
+                 `🔓 Verificações Restantes: ${limite.maxArquivo}/5`}
+              </h4>
+              {!limite.pago && limite.maxArquivo <= 2 && (
+                <p className="aviso-limite">
+                  ⚠️ Você está ficando sem verificações gratuitas!
+                </p>
+              )}
+            </div>
+          )}
+
           <div className="part1-archiver">
             <h2>Verificador de arquivos</h2>
             <input type="file" id="arquivo" />
@@ -113,7 +238,14 @@ export default function Verify() {
             <h3>Resultado:</h3>
             <pre className="resultado" id="resultado"></pre>
           </div>
-          <button className="button-verifyArchiver" onClick={VerificarLogin}>Verificar</button>
+          
+          <button 
+            className="button-verifyArchiver" 
+            onClick={VerificarLogin}
+            disabled={loading}
+          >
+            {loading ? 'Verificando...' : 'Verificar'}
+          </button>
         </div>
       </section>
     </main>

@@ -1,4 +1,4 @@
-import ArchiverController from './controller/ArchiverController.js';
+import ArquivoController from './controller/ArquivoController.js';
 import cadastroController from './controller/cadastroController.js';
 import supportController from './controller/supportController.js';
 import UpdateController from './controller/UpdatesController.js';
@@ -8,7 +8,7 @@ import SenhaController from './controller/senhaController.js';
 import LinkRotas from './controller/LinkController.js';
 
 export function AddRotas(api) {
-  api.use(ArchiverController);
+  api.use(ArquivoController);
   api.use(cadastroController);
   api.use('/api', LinkRotas);
   api.use(supportController);
