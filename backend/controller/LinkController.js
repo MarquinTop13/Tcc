@@ -1,41 +1,10 @@
 import * as ArquivoRepository from "../repository/ArquivoRepository.js"
+import * as LinkRepository from "../repository/LinkRepository.js"
+
 import { Router } from "express";
 import axios from "axios";
 
-const endpoint = Router(); // CORREÇÃO: endpoint, não endpoints
-
-// Middleware para verificar limite de links
-async function verificarLimiteLink(req, res, next) {
-    const email = req.body.email || req.query.email;
-    
-    if (!email) {
-        return res.status(400).send({ error: "Email é obrigatório" });
-    }
-
-    try {
-        const usuario = await ArquivoRepository.verificarLimiteLink(email);
-        
-        if (!usuario) {
-            return res.status(404).send({ error: "Usuário não encontrado" });
-        }
-
-        if (usuario.maxLink <= 0 && !usuario.pago) {
-            return res.status(402).send({ 
-                error: "Limite de verificações de links atingido",
-                tipo: "LIMITE_ATINGIDO",
-                mensagem: "Você atingiu o limite de verificações de links gratuitas. Faça o pagamento para continuar usando o serviço."
-            });
-        }
-
-        req.usuario = usuario;
-        next();
-    } catch (error) {
-        console.error('Erro ao verificar limite de link:', error);
-        res.status(500).send({ error: "Erro interno do servidor" });
-    }
-}
-
-// SUAS FUNÇÕES EXISTENTES (mantidas intactas)
+const endpoint = Router();
 
 // Analise de URL offline
 function minhaAnaliseManual(url) {
@@ -72,9 +41,7 @@ function minhaAnaliseManual(url) {
     resultado.alertas.push('Pode roubar dados');
   }
 
-  
   resultado.MuySuspeito = resultado.pontosRisco > 20;
-
   return resultado;
 }
 
@@ -117,12 +84,10 @@ async function verificarComGoogle(url, apiKey) {
   }
 }
 
-// NOVO ENDPOINT COM LIMITE
-endpoint.post('/check-url-com-limite', verificarLimiteLink, async (req, res) => {
+endpoint.post('/check-url', async (req, res) => {
   try {
-    const { url, email } = req.body;
+    const { url } = req.body;
 
-    // Validações básicas
     if (!url) {
       return res.status(400).json({ 
         error: 'URL é obrigatória',
@@ -130,7 +95,6 @@ endpoint.post('/check-url-com-limite', verificarLimiteLink, async (req, res) => 
       });
     }
 
-    // Verifica se URL é válida
     try {
       new URL(url);
     } catch (error) {
@@ -140,42 +104,20 @@ endpoint.post('/check-url-com-limite', verificarLimiteLink, async (req, res) => 
       });
     }
 
-    // Decrementar o limite apenas se não for pago
-    if (!req.usuario.pago) {
-      const decrementado = await ArquivoRepository.decrementarLimiteLink(email);
-      if (!decrementado) {
-        return res.status(402).send({ 
-          error: "Erro ao atualizar limite",
-          tipo: "ERRO_LIMITE"
-        });
-      }
-    }
-
     const API_KEY = process.env.GOOGLE_SAFE_BROWSING_API_KEY;
     
     const [resultadoGoogle, minhaAnalise] = await Promise.all([
-      // Verificação do Google
       API_KEY ? verificarComGoogle(url, API_KEY) : Promise.resolve({ seguro: true, ameacas: [] }),
-      
-      // Verificação Manual
       Promise.resolve(minhaAnaliseManual(url))
     ]);
 
-    // COMBINA OS RESULTADOS
     const urlSegura = resultadoGoogle.seguro && !minhaAnalise.MuySuspeito;
 
-    // Obter o novo limite atualizado
-    const usuarioAtualizado = await ArquivoRepository.verificarLimiteLink(email);
-
-    // RESPOSTA FINAL COM LIMITE
     res.json({
       url: url,
       segura: urlSegura,
       timestamp: new Date().toISOString(),
-      limiteRestante: usuarioAtualizado.maxLink,
-      pago: usuarioAtualizado.pago,
       
-      // Detalhes das análises
       detalhes: {
         google: {
           segura: resultadoGoogle.seguro,
@@ -188,7 +130,6 @@ endpoint.post('/check-url-com-limite', verificarLimiteLink, async (req, res) => 
         }
       },
 
-      // Recomendação final
       recomendacao: urlSegura ? 
         '✅ URL segura - pode acessar' : 
         '🚨 PERIGO - Evite este site!'
@@ -199,7 +140,7 @@ endpoint.post('/check-url-com-limite', verificarLimiteLink, async (req, res) => 
     
     if (error.response) {
       res.status(error.response.status).json({
-        error: 'Erro no serviço de verificação',
+        error: 'Erro no serviço do Google',
         details: error.response.data
       });
     } else {
@@ -211,34 +152,34 @@ endpoint.post('/check-url-com-limite', verificarLimiteLink, async (req, res) => 
   }
 });
 
-// SEUS ENDPOINTS ORIGINAIS (mantidos para compatibilidade) - CORRIGIDOS
-
-endpoint.get('/', (req, res) => { // CORREÇÃO: endpoint, não endpoints
+// ENDPOINTS DE INFO
+endpoint.get('/', (req, res) => {
   res.json({ 
     message: 'Bem-vindo à API Safe Browsing!',
     documentation: 'Acesse /api/info para ver os endpoints'
   });
 });
 
-endpoint.get('/info', (req, res) => { // CORREÇÃO: endpoint, não endpoints
+endpoint.get('/info', (req, res) => {
   res.json({
     endpoints: {
-      '/api/check-url': 'POST - Verificar uma URL',
+      '/api/check-url': 'POST - Verificar uma URL (sem limite)',
+      '/api/check-url-com-limite': 'POST - Verificação com limite',
       '/api/health': 'GET - Status da API',
       '/api/quick-check': 'POST - Verificação Rápida',
-      '/api/check-url-com-limite': 'POST - Verificação com limite de uso'
+      '/api/VerificarLimiteLink/:email': 'GET - Verificar limite do usuário'
     }
   });
 });
 
-endpoint.get('/health', (req, res) => {  // CORREÇÃO: endpoint, não endpoints
+endpoint.get('/health', (req, res) => {
   res.json({ 
     status: 'online', 
     timestamp: new Date().toISOString()
   });
 });
 
-endpoint.post('/quick-check', async (req, res) => { // CORREÇÃO: endpoint, não endpoints
+endpoint.post('/quick-check', async (req, res) => {
   try {
     const { url } = req.body;
 
@@ -265,9 +206,62 @@ endpoint.post('/quick-check', async (req, res) => { // CORREÇÃO: endpoint, nã
   }
 });
 
-endpoint.post('/check-url', async (req, res) => {  // CORREÇÃO: endpoint, não endpoints
+
+
+
+// Middleware para verificar limite de links
+async function verificarLimiteLink(req, res, next) {
+    const { email, nome } = req.body;
+    
+    // Se não tem email, tenta buscar por nome
+    let usuarioEmail = email;
+    
+    if (!usuarioEmail && nome) {
+        try {
+            const usuario = await LinkRepository.buscarUsuarioPorNome(nome);
+            if (usuario) {
+                usuarioEmail = usuario.email;
+            }
+        } catch (error) {
+            console.error('Erro ao buscar usuário por nome:', error);
+        }
+    }
+    
+    if (!usuarioEmail) {
+        return res.status(400).send({ error: "Email ou nome são obrigatórios" });
+    }
+
+    try {
+        const usuario = await LinkRepository.verificarLimiteLink(usuarioEmail);
+        
+        if (!usuario) {
+            return res.status(404).send({ error: "Usuário não encontrado" });
+        }
+
+        // Verifica se tem limite disponível
+        if (usuario.maxLink <= 0) {
+            return res.status(402).send({ 
+                error: "Limite de verificações atingido",
+                tipo: "LIMITE_ATINGIDO",
+                mensagem: "Você atingiu o limite de verificações gratuitas. Faça o pagamento para continuar."
+            });
+        }
+
+        req.usuario = usuario;
+        req.usuarioEmail = usuarioEmail;
+        next();
+    } catch (error) {
+        console.error('Erro ao verificar limite de link:', error);
+        res.status(500).send({ error: "Erro interno do servidor" });
+    }
+}
+
+
+
+// ENDPOINT PRINCIPAL COM LIMITE
+endpoint.post('/check-url-com-limite', verificarLimiteLink, async (req, res) => {
   try {
-    const { url } = req.body;
+    const { url, email, nome } = req.body;
 
     // Validações básicas
     if (!url) {
@@ -287,26 +281,35 @@ endpoint.post('/check-url', async (req, res) => {  // CORREÇÃO: endpoint, não
       });
     }
 
+    // Decrementar o limite
+    const decrementado = await LinkRepository.decrementarLimiteLink(req.usuarioEmail);
+    if (!decrementado) {
+      return res.status(402).send({ 
+        error: "Erro ao atualizar limite",
+        tipo: "ERRO_LIMITE"
+      });
+    }
+
     const API_KEY = process.env.GOOGLE_SAFE_BROWSING_API_KEY;
     
     const [resultadoGoogle, minhaAnalise] = await Promise.all([
-      // Verificação do Google
       API_KEY ? verificarComGoogle(url, API_KEY) : Promise.resolve({ seguro: true, ameacas: [] }),
-      
-      // Verificação Manual
       Promise.resolve(minhaAnaliseManual(url))
     ]);
 
-    // COMBINA OS RESULTADOS
+    // Combina os resultados
     const urlSegura = resultadoGoogle.seguro && !minhaAnalise.MuySuspeito;
+
+    // Obter o novo limite atualizado
+    const usuarioAtualizado = await LinkRepository.verificarLimiteLink(req.usuarioEmail);
 
     // RESPOSTA FINAL
     res.json({
       url: url,
       segura: urlSegura,
       timestamp: new Date().toISOString(),
+      limiteRestante: usuarioAtualizado.maxLink,
       
-      // Detalhes das análises
       detalhes: {
         google: {
           segura: resultadoGoogle.seguro,
@@ -319,7 +322,6 @@ endpoint.post('/check-url', async (req, res) => {  // CORREÇÃO: endpoint, não
         }
       },
 
-      // Recomendação final
       recomendacao: urlSegura ? 
         '✅ URL segura - pode acessar' : 
         '🚨 PERIGO - Evite este site!'
@@ -330,7 +332,7 @@ endpoint.post('/check-url', async (req, res) => {  // CORREÇÃO: endpoint, não
     
     if (error.response) {
       res.status(error.response.status).json({
-        error: 'Erro no serviço do Google',
+        error: 'Erro no serviço de verificação',
         details: error.response.data
       });
     } else {
@@ -342,25 +344,55 @@ endpoint.post('/check-url', async (req, res) => {  // CORREÇÃO: endpoint, não
   }
 });
 
-// Endpoint para verificar limite de links do usuário
+// ENDPOINT PARA VERIFICAR LIMITE
 endpoint.get('/VerificarLimiteLink/:email', async (req, res) => {
     const { email } = req.params;
     
+    console.log('📧 Recebida requisição para verificar limite do email:', email);
+    
     try {
-        const usuario = await ArquivoRepository.verificarLimiteLink(email);
+        const usuario = await LinkRepository.verificarLimiteLink(email);
+        
+        console.log('👤 Usuário encontrado:', usuario);
         
         if (!usuario) {
+            console.log('❌ Usuário não encontrado para email:', email);
             return res.status(404).send({ error: "Usuário não encontrado" });
         }
 
+        console.log('✅ Limite retornado:', { maxLink: usuario.maxLink });
+        
         res.status(200).send({
-            maxLink: usuario.maxLink,
-            pago: usuario.pago
+            maxLink: usuario.maxLink
         });
     } catch (error) {
-        console.error('Erro ao verificar limite de link:', error);
+        console.error('❌ Erro ao verificar limite de link:', error);
         res.status(500).send({ error: "Erro interno do servidor" });
     }
 });
+
+// ENDPOINT PARA BUSCAR USUÁRIO POR NOME
+endpoint.get('/buscar-usuario/:nome', async (req, res) => {
+    const { nome } = req.params;
+    
+    try {
+        const usuario = await LinkRepository.buscarUsuarioPorEmail(nome); // Busca por email ou nome
+        if (!usuario) {
+            return res.status(404).send({ error: "Usuário não encontrado" });
+        }
+        
+        res.status(200).send({
+            id: usuario.id_cadastro,
+            nome: usuario.nome,
+            email: usuario.email,
+            maxLink: usuario.maxLink
+        });
+    } catch (error) {
+        console.error('Erro ao buscar usuário:', error);
+        res.status(500).send({ error: "Erro interno do servidor" });
+    }
+});
+
+
 
 export default endpoint;

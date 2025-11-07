@@ -1,14 +1,16 @@
-import {conexao} from "./conections.js"
+// repository/SupportRepository.js
+import { conexao } from "./conections.js";
 
-export async function MensagemUser(idUser,msg, opcao){
+export async function MensagemUser(idUser, msg, opcao) {
     const mensagemUser = ` 
-        insert into tb_support(idUser,msgUser, opcaoSelecionada)
-            values(?,?,?)
-    `
+        INSERT INTO tb_support(idUser, msgUser, opcaoSelecionada)
+        VALUES(?, ?, ?)
+    `;
     
     const [info] = await conexao.query(mensagemUser, [idUser, msg, opcao]);
     return info.insertId;
 }
+
 export async function listarMensagens() {
     const [rows] = await conexao.query(`
       SELECT 
@@ -26,4 +28,26 @@ export async function listarMensagens() {
     `);
   
     return rows;
-  }
+}
+
+// Funções adicionais para respostas do suporte
+export async function responderMensagemSupport(idSupport, idAdmin, resposta) {
+    const command = `
+        INSERT INTO tb_support_resposta (idSupport, idAdmin, resposta)
+        VALUES(?, ?, ?)
+    `;
+    
+    const [info] = await conexao.query(command, [idSupport, idAdmin, resposta]);
+    return info.insertId;
+}
+
+export async function atualizarStatusMensagem(id, status) {
+    const command = `
+        UPDATE tb_support 
+        SET status = ? 
+        WHERE id = ?
+    `;
+    
+    const [result] = await conexao.query(command, [status, id]);
+    return result.affectedRows > 0;
+}

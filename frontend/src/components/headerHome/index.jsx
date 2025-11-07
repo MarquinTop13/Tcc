@@ -7,7 +7,7 @@ import Account from "/images/Black/iconContaBlack.png"
 import brightness from "/images/Black/brightness.png";
 import brightnessWhite from "/images/White/brightnessWhite.png";
 import menuWhite from "/images/White/menuWhite.png";
-import Perfil from "../../components/perfil/Perfil"; 
+import Perfil from "../../components/perfil/Perfil";
 import menuBlack from "/images/Black/menuBlack.png";
 import closeBlack from "/images/Black/close.png";
 import closeWhite from "/images/White/close.png";
@@ -25,11 +25,11 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
     // Ref para o menu mobile (para o componente Perfil)
     const menuMobileRef = useRef(null);
 
-    function MostarInfoConta(){
-        if(!user || user === ""){
+    function MostarInfoConta() {
+        if (!user || user === "") {
             alert("Faça Login!")
             return;
-        } else{
+        } else {
             setAccountLogo(!accountLogo);
             // Fecha o menu hamburguer quando abrir o perfil no mobile
             if (resolution) {
@@ -92,17 +92,17 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
             {resolution && (
                 <section className="opcoes cell">
                     {/* Menu Hamburguer - Agora alterna entre hamburguer e X */}
-                    <div 
+                    <div
                         className="menu-hamburguer"
                         onClick={toggleMenu}
                         style={{ marginRight: '15px' }}
                     >
-                        <img 
-                            src={menuAberto 
+                        <img
+                            src={menuAberto
                                 ? (darkTheme ? closeWhite : closeBlack) // X quando aberto
                                 : (darkTheme ? menuWhite : menuBlack)   // Hamburguer quando fechado
-                            } 
-                            alt={menuAberto ? "Fechar" : "Menu"} 
+                            }
+                            alt={menuAberto ? "Fechar" : "Menu"}
                         />
                     </div>
 
@@ -119,7 +119,8 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                     {menuAberto && (
                         <div className="menu-opcoes" ref={menuMobileRef}>
                             <Link className="link" to='/Support' onClick={() => setMenuAberto(false)}>Ajuda</Link>
-                            <h3>Atualizações</h3>
+                            <Link className="link" to={"/Updates"}>Atualizações</Link>
+
                             <Link className="link" to={"/Login"} onClick={() => setMenuAberto(false)}>
                                 Login
                             </Link>
@@ -159,16 +160,16 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                         {AdminVerify && (
                             <Link className="link" to={'/Admin'}>Admin</Link>
                         )}
-                        
+
                         <Link className="link" to={'/Pagamento'}>Pagamento</Link>
                     </div>
 
                     {/* Ícone de perfil com ref */}
-                    <img 
+                    <img
                         ref={accountRef}
-                        onClick={MostarInfoConta} 
-                        className="accountLogo" 
-                        src={`${darkTheme ? AccountWhite : Account}`} 
+                        onClick={MostarInfoConta}
+                        className="accountLogo"
+                        src={`${darkTheme ? AccountWhite : Account}`}
                         alt="Conta"
                     />
 
@@ -181,14 +182,14 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                         <h3>{darkTheme ? "Modo Claro" : "Modo Escuro"}</h3>
                     </div>
 
-                    
+
                 </section>
             )}
 
             {/* Componente Perfil (funciona tanto para mobile quanto desktop) */}
             {accountLogo && (
-                <Perfil 
-                    onClose={() => setAccountLogo(false)} 
+                <Perfil
+                    onClose={() => setAccountLogo(false)}
                     // No mobile usa a ref do menu, no desktop usa a ref da conta
                     triggerRef={resolution ? menuMobileRef : accountRef}
                 />

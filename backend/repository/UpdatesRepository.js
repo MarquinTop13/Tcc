@@ -1,20 +1,21 @@
-import {conexao} from "./conections.js"
+// repository/UpdatesRepository.js
+import { conexao } from "./conections.js";
 
-export async function InserirUpdate(date, text){
+export async function InserirUpdate(date, text) {
     const command = `
-        insert into Updates (DiadoUpdate, informacoes)
-        values(?, ?);
-    `
+        INSERT INTO Updates (DiadoUpdate, informacoes)
+        VALUES(?, ?)
+    `;
 
     const [info] = await conexao.query(command, [date, text]);
     return info;
 }
 
-export async function RemoverUpdate(id){
+export async function RemoverUpdate(id) {
     const command = `
-        delete from Updates
-        where id = ?;
-    `
+        DELETE FROM Updates
+        WHERE id = ?
+    `;
     
     const [info] = await conexao.query(command, [id]);
     return info;
@@ -22,13 +23,13 @@ export async function RemoverUpdate(id){
 
 export async function ListarUpdates() {
     const command = `
-        select 
+        SELECT 
             id,
             DATE_FORMAT(DiadoUpdate, '%d/%m/%Y') as dataFormatada,
             DiadoUpdate,
             informacoes
-        from Updates
-        order by DiadoUpdate DESC
+        FROM Updates
+        ORDER BY DiadoUpdate DESC
     `;
     
     const [updates] = await conexao.query(command);
