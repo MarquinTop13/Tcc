@@ -29,6 +29,7 @@ function Login() {
   const [senha, setSenha] = useState('');
   const navigate = useNavigate();
 
+  
   async function Enviarlogin() {
     try {
       const resposta = await apiLink.post('/Login', {
@@ -38,9 +39,8 @@ function Login() {
       });
 
       const token = resposta.data.token;
-      const idCadastro = resposta.data.id_cadastro; // AGORA VEM DA RESPOSTA
+      const idCadastro = resposta.data.id_cadastro;
       
-      // ARMAZENE TODOS OS DADOS
       localStorage.setItem("token", token);
       localStorage.setItem("User", nome);
       localStorage.setItem("Email", email);
@@ -54,6 +54,20 @@ function Login() {
       setShowModal(true);
     }
   }
+
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.key === "Enter") {
+        Enviarlogin();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [nome, email, senha]);
 
   return (
     <main className={`MainLogin ${darkTheme ? "dark" : "light"}`}>

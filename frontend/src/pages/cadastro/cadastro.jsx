@@ -88,7 +88,7 @@ function Cas() {
       alert("Usuário cadastrado com sucesso!")
       navigate("/Login")
     } catch (error) {
-      // Tratamento de erro de conexão (servidor offline)
+
       if (error.code === 'ERR_NETWORK' || error.message?.includes('CONNECTION_REFUSED')) {
         setCodigoErro('network');
         setShowModal(true);
@@ -97,11 +97,23 @@ function Cas() {
 
       const status = error.response?.status;
 
-      // Define o código de erro e mostra o modal
       setCodigoErro(status || 'default');
       setShowModal(true);
     }
   }
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.key === "Enter") {
+        FF();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [form]);
 
   return (
     <main className={`MainCadastro ${darkTheme ? "dark" : "light"}`}>
@@ -117,6 +129,7 @@ function Cas() {
             <input type="email" name='email' placeholder="Email" value={form.email} onChange={F} />
             <div className="senhas">
               <input
+              className='input-senha'
                 type={mostrar ? "text" : "password"}
                 name='senha'
                 placeholder="Senha"
@@ -127,6 +140,7 @@ function Cas() {
             </div>
             <div className='senhas'>
               <input
+                className='input-senha'
                 type={mostrar ? "text" : "password"}
                 name='confirmarSenha'
                 placeholder="Confirmar Senha"
@@ -136,17 +150,30 @@ function Cas() {
               <button className="botao-visivel" onClick={() => setMostrar(!mostrar)}></button>
             </div>
             <div className='separados'>
-              <input type="text" className='separado' name='palavra' placeholder="Palavra de Segurança" value={form.palavra} onChange={F} />
-              <input type="date" className='data' name='idade' value={form.idade} onChange={F} />
+              <input 
+              type="text" 
+              className='separado' 
+              name='palavra' 
+              placeholder="Palavra de Segurança" 
+              value={form.palavra} 
+              onChange={F} 
+              />
+              <input 
+              type="date" 
+              className='data'
+              name='idade' 
+              value={form.idade} 
+              onChange={F} 
+              />
             </div>
           </div>
+        <div className='conteiner-link-botao-cas'>
+          <div className='fundo-botao'>
+            <p className='texto'>Pronto! Agora que tem uma conta <br /> faça o <Link className='Link' to={'/Login'}>Login</Link>!</p>
+            <button className='botao' onClick={FF}>Cadastrar</button>
+            <Modal isOpen={showModal} setModalOpen={() => setShowModal(!showModal)} codigoErro={codigoErro} />
+          </div>
         </div>
-      </section>
-      <section className='conteiner-link-botao-cas'>
-        <div className='fundo-botao'>
-          <p className='texto'>Pronto! Agora que tem uma conta <br /> faça o <Link className='Link' to={'/Login'}>Login</Link>!</p>
-          <button className='botao' onClick={FF}>Cadastrar</button>
-          <Modal isOpen={showModal} setModalOpen={() => setShowModal(!showModal)} codigoErro={codigoErro} />
         </div>
       </section>
     </main>

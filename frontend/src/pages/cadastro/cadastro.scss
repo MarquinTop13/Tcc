@@ -48,17 +48,16 @@ body {
         box-sizing: border-box;
         align-items: flex-start;
         display: flex;
-        padding: 20px;
 
         .fundo-secundario-cadastro {
             padding: 2rem;
             width: 100%;
             max-width: 500px;
-            margin-left: 2rem;
             background-color: var(--cadastro-bg);
             border-radius: 12px;
             border: 2px solid var(--input-border);
             box-shadow: -2px 3px 2px #00000094;
+            margin-bottom: 1rem;
 
             .cadastro-fundo {
                 color: var(--title-color);
@@ -123,46 +122,59 @@ body {
             display: flex;
             width: 100%;
             position: relative;
-
-            .input-senha {
-                border-radius: 8px 0 0 8px;
-                width: 100%;
-                border-right: none;
+            transition: all 0.3s ease;
+          
+            &:hover {
+              .input-senha,
+              .botao-visivel {
+                transform: translateY(-3px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+              }
             }
-
+          
+            .input-senha {
+              border-radius: 8px 0 0 8px;
+              width: 100%;
+              border-right: none;
+              padding: 0 16px;
+              font-size: 1.1rem;
+          
+              &::placeholder {
+                color: var(--input-placeholder);
+              }
+          
+              &:focus {
+                outline: none;
+                border-color: var(--button-bg);
+                box-shadow: 0 0 0 2px rgba(51, 51, 102, 0.2);
+              }
+            }
+          
             .botao-visivel {
-                border: 2px solid var(--input-border);
-                border-radius: 0 8px 8px 0;
-                width: 60px;
-                min-width: 60px;
-                height: 3.5rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.3s ease;
-                color: var(--input-text);
-
-                &:hover {
-                    background-color: var(--button-hover);
-                    color: var(--button-text);
-                }
-
-                &::after {
-                    content: '👁️';
-                    font-size: 1.2rem;
-                }
-
-                &.mostrando::after {
-                    content: '🙈';
-                }
+              border-radius: 0 8px 8px 0;
+              width: 60px;
+              min-width: 60px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+          
+              &::after {
+                content: '👁️';
+                font-size: 1.2rem;
+              }
+          
+              &.mostrando::after {
+                content: '🙈';
+              }
             }
         }
+          
 
         .separados {
             display: flex;
             gap: 1rem;
             width: 100%;
-
+            
             .separado {
                 width: 100%;
             }
@@ -173,7 +185,6 @@ body {
         }
 
         input:-webkit-autofill {
-            -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
             -webkit-text-fill-color: var(--input-text) !important;
             caret-color: var(--button-text) !important;
             transition: background-color 5000s ease-in-out 0s;
@@ -182,28 +193,34 @@ body {
 
     .conteiner-link-botao-cas {
         color: var(--button-text);
-        margin-left: 1rem;
+        justify-content: flex-start;
+        align-items: flex-start;
+        text-align: left;
         max-width: 500px;
+        display: flex;
         width: 100%;
-
+        position: relative;
+        left: -4rem;
+        
         .fundo-botao {
             display: flex;
+            flex-direction: row;
             align-items: center;
             justify-content: flex-start;
-            gap: 2rem;
-
+            margin: 1rem 0 0.5rem 0;
+            gap: 1.5rem;
+    
             .texto {
-                margin-top: 0.1rem;
-                margin-left: 0.6rem;
+                text-align: left;
                 font-size: 1.1rem;
                 color: var(--link-color);
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
-
+    
                 .Link {
                     color: var(--link-color);
                     text-decoration: none;
                     transition: all 0.3s ease;
-
+    
                     &:hover {
                         color: var(--link-hover);
                         text-decoration: underline;
@@ -211,33 +228,33 @@ body {
                     }
                 }
             }
-
+    
             .botao {
                 background-color: var(--button-bg);
-                margin-top: 0.1rem;
                 font-size: 1.3rem;
                 color: var(--button-text);
                 border: 2px solid var(--button-border);
                 border-radius: 12px;
                 width: 180px;
                 height: 55px;
-                position: relative;
                 transition: all 0.3s ease;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-
+    
                 &:hover {
                     background-color: var(--button-hover);
                     transform: translateY(-2px);
                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
                 }
-
+    
                 &:active {
                     transform: translateY(0);
                 }
             }
         }
     }
+    
+    
 }
 
 // Responsividade
@@ -247,6 +264,7 @@ body {
             justify-content: center;
             align-items: center;
             padding: 10px;
+            flex-direction: column;
 
             .fundo-secundario-cadastro {
                 margin-left: 0;
@@ -298,6 +316,7 @@ body {
             margin-left: 0;
             width: 95%;
             max-width: 400px;
+            left: 3rem;
 
             .fundo-botao {
                 flex-direction: column;
@@ -420,7 +439,6 @@ body {
     }
 }
 
-// Melhoria para acessibilidade
 @media (prefers-reduced-motion: reduce) {
     .MainCadastro {
         .fundo,

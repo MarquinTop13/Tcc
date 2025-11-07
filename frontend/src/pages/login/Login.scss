@@ -180,38 +180,51 @@ body {
             display: flex;
             width: 100%;
             position: relative;
-
-            .input-senha {
-                border-radius: 8px 0 0 8px;
-                width: 100%;
-                border-right: none;
+            transition: all 0.3s ease;
+          
+            .input-senha,
+            .botao-visivel {
+              transition: all 0.3s ease;
             }
 
+            &:hover {
+              .input-senha,
+              .botao-visivel {
+                transform: translateY(-2px);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+              }
+            }
+          
+            .input-senha {
+              border-radius: 8px 0 0 8px;
+              width: 100%;
+              border-right: none;
+            }
+          
             .botao-visivel {
-                border: 2px solid var(--input-border);
-                background-color: var(--input-bg);
-                border-radius: 0 8px 8px 0;
-                width: 60px;
-                min-width: 60px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.3s ease;
-                color: var(--input-text);
-
-                &:hover {
-                    background-color: var(--button-hover);
-                    color: var(--button-text);
-                }
-
-                &::after {
-                    content: '👁️';
-                    font-size: 1.2rem;
-                }
-
-                &.mostrando::after {
-                    content: '🙈';
-                }
+              border: 2px solid var(--input-border);
+              background-color: var(--input-bg);
+              border-radius: 0 8px 8px 0;
+              width: 60px;
+              min-width: 60px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: var(--input-text);
+          
+              &:hover {
+                background-color: var(--button-hover);
+                color: var(--button-text);
+              }
+          
+              &::after {
+                content: '👁️';
+                font-size: 1.2rem;
+              }
+          
+              &.mostrando::after {
+                content: '🙈';
+              }
             }
         }
     }

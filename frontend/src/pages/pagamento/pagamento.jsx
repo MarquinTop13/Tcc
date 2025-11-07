@@ -179,157 +179,160 @@ export default function Pagamento() {
                             </div>
                         )}
 
-                        {/* Métodos de Pagamento */}
-                        <div className="payment-methods">
-                            <h3>Método de Pagamento</h3>
+                        {/* Só mostra os métodos de pagamento se ainda não foi pago */}
+                        {paymentStatus !== 'paid' && (
+                            <div className="payment-methods">
+                                <h3>Método de Pagamento</h3>
 
-                            <div className="method-options">
-                                <label className="method-option">
-                                    <input
-                                        type="radio"
-                                        value="pix"
-                                        checked={paymentMethod === 'pix'}
-                                        onChange={(e) => setPaymentMethod(e.target.value)}
-                                    />
-                                    <span>PIX</span>
-                                </label>
+                                <div className="method-options">
+                                    <label className="method-option">
+                                        <input
+                                            type="radio"
+                                            value="pix"
+                                            checked={paymentMethod === 'pix'}
+                                            onChange={(e) => setPaymentMethod(e.target.value)}
+                                        />
+                                        <span>PIX</span>
+                                    </label>
 
-                                <label className="method-option">
-                                    <input
-                                        type="radio"
-                                        value="credit"
-                                        checked={paymentMethod === 'credit'}
-                                        onChange={(e) => setPaymentMethod(e.target.value)}
-                                    />
-                                    <span>Cartão de Crédito</span>
-                                </label>
-                            </div>
+                                    <label className="method-option">
+                                        <input
+                                            type="radio"
+                                            value="credit"
+                                            checked={paymentMethod === 'credit'}
+                                            onChange={(e) => setPaymentMethod(e.target.value)}
+                                        />
+                                        <span>Cartão de Crédito</span>
+                                    </label>
+                                </div>
 
-                            {/* PIX */}
-                            {paymentMethod === 'pix' && paymentStatus !== 'paid' && (
-                                <div className="pix-section">
-                                    <div className="pix-code">
-                                        <p><strong>Chave PIX:</strong></p>
-                                        <div className="code-display">
-                                            {pixCode}
+                                {/* PIX */}
+                                {paymentMethod === 'pix' && (
+                                    <div className="pix-section">
+                                        <div className="pix-code">
+                                            <p><strong>Chave PIX:</strong></p>
+                                            <div className="code-display">{pixCode}</div>
+                                            <button
+                                                type="button"
+                                                className="copy-button"
+                                                onClick={() => {
+                                                    navigator.clipboard.writeText(pixCode);
+                                                    alert('Chave PIX copiada!');
+                                                }}
+                                            >
+                                                Copiar Chave PIX
+                                            </button>
                                         </div>
+
+                                        <div className="pix-instructions">
+                                            <h4>Como pagar:</h4>
+                                            <ol>
+                                                <li>Copie a chave PIX acima</li>
+                                                <li>Abra seu app de banco</li>
+                                                <li>Cole a chave no campo PIX</li>
+                                                <li>Confirme o valor de R$ {orderTotal.toFixed(2)}</li>
+                                                <li>Finalize o pagamento</li>
+                                            </ol>
+                                        </div>
+
                                         <button
-                                            type="button"
-                                            className="copy-button"
-                                            onClick={() => {
-                                                navigator.clipboard.writeText(pixCode);
-                                                alert('Chave PIX copiada!');
-                                            }}
+                                            className="submit-button"
+                                            onClick={handleSubmit}
+                                            disabled={paymentStatus === 'processing'}
                                         >
-                                            Copiar Chave PIX
+                                            {paymentStatus === 'processing' ? 'Verificando...' : 'Já fiz o PIX'}
                                         </button>
                                     </div>
+                                )}
 
-                                    <div className="pix-instructions">
-                                        <h4>Como pagar:</h4>
-                                        <ol>
-                                            <li>Copie a chave PIX acima</li>
-                                            <li>Abra seu app de banco</li>
-                                            <li>Cole a chave no campo PIX</li>
-                                            <li>Confirme o valor de R$ {orderTotal.toFixed(2)}</li>
-                                            <li>Finalize o pagamento</li>
-                                        </ol>
-                                    </div>
+                                {/* Cartão */}
+                                {paymentMethod === 'credit' && (
+                                    <form onSubmit={handleSubmit} className="card-form">
+                                        <div className="form-row">
+                                            <input
+                                                type="text"
+                                                inputMode="numeric"
+                                                pattern="[0-9]*"
+                                                name="number"
+                                                placeholder="Número do Cartão"
+                                                value={formatCardNumber(cardData.number)}
+                                                onChange={(e) => {
+                                                    const rawValue = e.target.value.replace(/\D/g, '');
+                                                    if (rawValue.length <= 16) {
+                                                        handleCardInput({
+                                                            target: { name: 'number', value: rawValue }
+                                                        });
+                                                    }
+                                                }}
+                                                maxLength="19"
+                                                required
+                                            />
+                                        </div>
 
-                                    <button
-                                        className="submit-button"
-                                        onClick={handleSubmit}
-                                        disabled={paymentStatus === 'processing'}
-                                    >
-                                        {paymentStatus === 'processing' ? 'Verificando...' : 'Já fiz o PIX'}
-                                    </button>
-                                </div>
-                            )}
+                                        <div className="form-row">
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                placeholder="Nome no Cartão"
+                                                value={cardData.name}
+                                                onChange={handleCardInput}
+                                                required
+                                            />
+                                        </div>
 
-                            {/* Cartão */}
-                            {paymentMethod === 'credit' && paymentStatus !== 'paid' && (
-                                <form onSubmit={handleSubmit} className="card-form">
-                                    <div className="form-row">
-                                        <input
-                                            type="text"
-                                            name="number"
-                                            placeholder="Número do Cartão"
-                                            value={formatCardNumber(cardData.number)}
-                                            onChange={(e) => {
-                                                const rawValue = e.target.value.replace(/\s/g, '');
-                                                if (rawValue.length <= 16) {
-                                                    handleCardInput({
-                                                        target: { name: 'number', value: rawValue }
-                                                    });
-                                                }
-                                            }}
-                                            maxLength="19"
-                                            required
-                                        />
-                                    </div>
+                                        <div className="form-row double">
+                                            <input
+                                                type="text"
+                                                name="expiry"
+                                                placeholder="MM/AA"
+                                                value={formatExpiry(cardData.expiry)}
+                                                onChange={(e) => {
+                                                    const rawValue = e.target.value.replace(/\D/g, '');
+                                                    if (rawValue.length <= 4) {
+                                                        handleCardInput({
+                                                            target: { name: 'expiry', value: rawValue }
+                                                        });
+                                                    }
+                                                }}
+                                                maxLength="5"
+                                                required
+                                            />
+                                            <input
+                                                type="text"
+                                                name="cvv"
+                                                placeholder="CVV"
+                                                value={cardData.cvv}
+                                                onChange={(e) => {
+                                                    const value = e.target.value.replace(/\D/g, '');
+                                                    if (value.length <= 3) {
+                                                        handleCardInput({
+                                                            target: { name: 'cvv', value }
+                                                        });
+                                                    }
+                                                }}
+                                                maxLength="3"
+                                                required
+                                            />
+                                        </div>
 
-                                    <div className="form-row">
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            placeholder="Nome no Cartão"
-                                            value={cardData.name}
-                                            onChange={handleCardInput}
-                                            required
-                                        />
-                                    </div>
+                                        <div className="form-row">
+                                            <select>
+                                                <option>1x de R$ {orderTotal.toFixed(2)}</option>
+                                                <option>2x de R$ {(orderTotal / 2).toFixed(2)}</option>
+                                                <option>3x de R$ {(orderTotal / 3).toFixed(2)}</option>
+                                            </select>
+                                        </div>
 
-                                    <div className="form-row double">
-                                        <input
-                                            type="text"
-                                            name="expiry"
-                                            placeholder="MM/AA"
-                                            value={formatExpiry(cardData.expiry)}
-                                            onChange={(e) => {
-                                                const rawValue = e.target.value.replace(/\D/g, '');
-                                                if (rawValue.length <= 4) {
-                                                    handleCardInput({
-                                                        target: { name: 'expiry', value: rawValue }
-                                                    });
-                                                }
-                                            }}
-                                            maxLength="5"
-                                            required
-                                        />
-                                        <input
-                                            type="text"
-                                            name="cvv"
-                                            placeholder="CVV"
-                                            value={cardData.cvv}
-                                            onChange={(e) => {
-                                                const value = e.target.value.replace(/\D/g, '');
-                                                if (value.length <= 3) {
-                                                    handleCardInput({
-                                                        target: { name: 'cvv', value }
-                                                    });
-                                                }
-                                            }}
-                                            maxLength="3"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div className="form-row">
-                                        <select>
-                                            <option>1x de R$ {orderTotal.toFixed(2)}</option>
-                                            <option>2x de R$ {(orderTotal / 2).toFixed(2)}</option>
-                                            <option>3x de R$ {(orderTotal / 3).toFixed(2)}</option>
-                                        </select>
-                                    </div>
-
-                                    <button type="submit" className="submit-button">
-                                        Pagar com Cartão
-                                    </button>
-                                </form>
-                            )}
-                        </div>
+                                        <button type="submit" className="submit-button">
+                                            Pagar com Cartão
+                                        </button>
+                                    </form>
+                                )}
+                            </div>
+                        )}
                     </div>
                 )}
+
             </div>
         </main>
     )
