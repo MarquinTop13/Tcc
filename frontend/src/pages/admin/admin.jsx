@@ -102,6 +102,19 @@ export default function Admin() {
       default: return '#757575'
     }
   }
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.key === "Enter") {
+        enviarResposta();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  },);
   return (
     <main className={`MainAdmin ${darkTheme ? "dark" : "light"}`}>
       <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />

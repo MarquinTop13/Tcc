@@ -126,6 +126,19 @@ export default function PasswordGenerator(){
                     }
                 }
             }
+            useEffect(() => {
+                function handleKeyDown(event) {
+                  if (event.key === "Enter") {
+                    GerarSenhas();
+                  }
+                }
+            
+                window.addEventListener("keydown", handleKeyDown);
+            
+                return () => {
+                  window.removeEventListener("keydown", handleKeyDown);
+                };
+              },);
     return(
         <main className={`mainPassword ${darkTheme ? "dark": "light"}`}>
             <Cabecalho2 darkTheme={darkTheme}  onChangeTheme={ChangeTheme}/>

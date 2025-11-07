@@ -148,6 +148,19 @@ export default function Perfil({ onClose, triggerRef }) {
     localStorage.removeItem("Email");
     navigate("/Login");
   }
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.key === "Enter") {
+        Desconectar();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  },);
 
   return (
     <div className="overlay-perfil" onClick={handleClickFora}>

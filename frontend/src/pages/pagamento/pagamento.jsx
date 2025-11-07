@@ -125,7 +125,6 @@ export default function Pagamento() {
     const handleLoginRedirect = () => {
         navigate('/login'); // Ajuste para a rota de login do seu projeto
     };
-
     return (
         <main className={`mainPagamento ${darkTheme ? 'dark' : 'light'}`}>
             <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />

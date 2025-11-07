@@ -54,6 +54,19 @@ export default function Support() {
             alert(error.response?.data?.error || error.message || "Erro ao enviar mensagem");
         }
     }
+    useEffect(() => {
+        function handleKeyDown(event) {
+          if (event.key === "Enter") {
+            sentMsg();
+          }
+        }
+    
+        window.addEventListener("keydown", handleKeyDown);
+    
+        return () => {
+          window.removeEventListener("keydown", handleKeyDown);
+        };
+      },);
 
     return (
         <main className={`MainSupport ${darkTheme ? "dark" : "light"}`}>

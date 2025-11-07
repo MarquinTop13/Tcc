@@ -153,6 +153,19 @@ export default function VerifyLinks() {
       setLoading(false);
     }
   }
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.key === "Enter") {
+        VerificarLogin();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  },);
 
   return (
     <main className={`MainVerifyLinks ${darkTheme ? "dark" : "light"}`}>
