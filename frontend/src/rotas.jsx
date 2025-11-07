@@ -2,12 +2,13 @@ import PasswordGenerator from "./pages/passwordGenerate/password"
 import {BrowserRouter, Routes, Route} from "react-router"
 import VerifyLinks from "./pages/verifylinks/verifylinks"
 import UserSupport from "./pages/UserSupport/userSupport"
-import Pagamento from "./pages/pagamento/pagamento.jsx"
+import Pagamento from "./pages/pagamento/pagamento"
 import Verify from "./pages/verifyarchiver/verify"
-import Cas from "./pages/cadastro/cadastro.jsx"
 import Perfil from "./components/perfil/Perfil"
 import Support from "./pages/support/support"
 import VR from "./pages/infovirus/virusinfo"
+import Updates from "./pages/updates/update"
+import Cas from "./pages/cadastro/cadastro"
 import Home from "./pages/home/home.jsx"
 import Admin from "./pages/admin/admin"
 import Login from "./pages/login/Login"
@@ -28,6 +29,7 @@ export default function Rotas(){
                 <Route path="/Viruspage" element={<VR />}/>
                 <Route path="/Pagamento" element={<Pagamento />} />
                 <Route path="/UserSupport" element={<UserSupport />} />
+                <Route path="/Updates" element={<Updates />} />
             </Routes>
         </BrowserRouter>
     )

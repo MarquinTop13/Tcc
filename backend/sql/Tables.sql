@@ -46,3 +46,17 @@ create table tb_support_resposta (
     foreign key (idSupport) references tb_support(id),
     foreign key (idAdmin) references cadastro(id_cadastro)
 );
+
+create table Updates (
+    id int primary key auto_increment,
+    DiadoUpdate date not null,
+    informacoes varchar(255)
+);
+
+
+Isso aqui e para meu pc de casa, cuidado ao executar!;
+drop table tb_support_resposta;
+drop table tb_support;
+drop table tb_login;
+drop table cadastro;
+drop table Updates;

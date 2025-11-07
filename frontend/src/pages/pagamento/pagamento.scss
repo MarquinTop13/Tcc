@@ -5,7 +5,6 @@
     background-attachment: fixed;
     height: 100vh;
     width: 100%;
-    cursor: url('/images/cursor/Cursor.png') 8 8, auto;
 
     --text-color: #002b97cc;
     --card-bg: #ced4dabb;
@@ -28,8 +27,7 @@
     --status-paid-border: #bee5eb;
     --pix-code-bg: #f8f9fa;
     --pix-instructions-bg: #e7f3ff;
-    --cursor-default: url('/images/cursor/Cursor.png') 16 16, auto;
-    --cursor-pointer: url('/images/cursor/Pointer.png') 16 16, pointer;
+
 
     &.dark {
         --text-color: #00CA1E;
@@ -60,7 +58,6 @@
         margin: 0 auto;
         padding: 20px;
         font-family: Arial, sans-serif;
-        cursor: var(--cursor-default);
 
         h1 {
             color: var(--text-color);
@@ -140,7 +137,6 @@
         border-radius: 6px;
         font-size: 16px;
         font-weight: bold;
-        cursor: var(--cursor-pointer);
         transition: all 350ms ease;
 
         &:hover {
@@ -215,14 +211,12 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        cursor: var(--cursor-pointer);
         color: var(--title-color);
         font-weight: bold;
 
         input {
             margin: 0;
             transform: scale(1.2);
-            cursor: var(--cursor-pointer);
         }
     }
 
@@ -262,7 +256,6 @@
         border: 3px solid var(--button-border);
         padding: 10px 20px;
         border-radius: 6px;
-        cursor: var(--cursor-pointer);
         font-weight: bold;
         transition: all 350ms ease;
 
@@ -312,7 +305,6 @@
             font-size: 16px;
             color: var(--input-text);
             transition: all 270ms ease;
-            cursor: var(--cursor-default);
 
             &:focus {
                 outline: none;
@@ -326,9 +318,7 @@
             }
         }
 
-        select {
-            cursor: var(--cursor-pointer);
-        }
+
     }
 
     .form-row.double {
@@ -346,7 +336,6 @@
         border-radius: 6px;
         font-size: 18px;
         font-weight: bold;
-        cursor: var(--cursor-pointer);
         margin-top: 15px;
         transition: all 350ms ease;
 

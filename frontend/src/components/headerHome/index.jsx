@@ -2,12 +2,15 @@ import "./index.scss";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router";
 import Logo from "/images/icons/logod.png";
+import AccountWhite from "/images/White/account.png"
 import Account from "/images/Black/iconContaBlack.png"
 import brightness from "/images/Black/brightness.png";
 import brightnessWhite from "/images/White/brightnessWhite.png";
 import menuWhite from "/images/White/menuWhite.png";
 import Perfil from "../../components/perfil/Perfil"; 
 import menuBlack from "/images/Black/menuBlack.png";
+import closeBlack from "/images/Black/close.png";
+import closeWhite from "/images/White/close.png";
 
 export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
     // Conta:
@@ -47,6 +50,11 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
         }
     }
 
+    // Função para alternar o menu hamburguer
+    function toggleMenu() {
+        setMenuAberto(!menuAberto);
+    }
+
     useEffect(() => {
         const handleResize = () => {
             setResolution(window.innerWidth < 768);
@@ -83,13 +91,19 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
             {/* MOBILE - Menu Hamburguer */}
             {resolution && (
                 <section className="opcoes cell">
-                    {/* Menu Hamburguer */}
+                    {/* Menu Hamburguer - Agora alterna entre hamburguer e X */}
                     <div 
                         className="menu-hamburguer"
-                        onClick={() => setMenuAberto(!menuAberto)}
+                        onClick={toggleMenu}
                         style={{ marginRight: '15px' }}
                     >
-                        <img src={darkTheme ? menuWhite : menuBlack} alt="Menu" />
+                        <img 
+                            src={menuAberto 
+                                ? (darkTheme ? closeWhite : closeBlack) // X quando aberto
+                                : (darkTheme ? menuWhite : menuBlack)   // Hamburguer quando fechado
+                            } 
+                            alt={menuAberto ? "Fechar" : "Menu"} 
+                        />
                     </div>
 
                     {/* Modo Escuro/Claro */}
@@ -135,7 +149,7 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                     </div>
 
                     <div className="column3">
-                        <h3>Atualizações</h3>
+                        <Link className="link" to={"/Updates"}>Atualizações</Link>
                     </div>
 
                     <div className="column4">
@@ -154,7 +168,7 @@ export default function Cabecalho({ darkTheme, onChangeTheme, AdminVerify }) {
                         ref={accountRef}
                         onClick={MostarInfoConta} 
                         className="accountLogo" 
-                        src={Account} 
+                        src={`${darkTheme ? AccountWhite : Account}`} 
                         alt="Conta"
                     />
 

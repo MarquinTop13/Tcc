@@ -1,0 +1,135 @@
+body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.MainUpdate {
+    --Cardbg: #CED4DA;
+    --Card2bg: #EDEDED;
+    --borderCard: 3px solid #000000bb;
+    --borderDiv: 1px solid #000000;
+    --Text: #1E1E1E;
+    --SubTitle: #333333;
+
+    &.dark {
+        --Cardbg: #14213dc4;
+        --Card2bg: #1c3757bd;
+        --Text: #DCDCDD;
+        --SubTitle: #D1D5DB;
+    }
+
+    min-height: 100vh;
+    position: relative;
+
+    .cardUpdate {
+        max-width: 1214px;
+        width: 90%;
+        margin: 0 auto;
+        position: relative;
+        height: auto; 
+    }
+
+    .cardUpdate1 {
+        background-color: var(--Cardbg);
+        border: var(--borderCard);
+        max-width: 1214px;
+        width: 100%;
+        position: relative;
+        height: 520px;
+        padding: 30px;
+        margin: 20px auto;
+
+        .titleUpdate {
+            color: var(--Text);
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .informations {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow: auto;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -55%);
+            background-color: var(--Card2bg);
+            border: var(--borderDiv);
+            max-width: 1026px;
+            width: 100%;
+            max-height: 435px;
+            height: 80%;
+            padding: 20px;
+
+            .subTitleUpdate {
+                color: var(--Text);
+                font-size: 1.9rem;
+                margin-bottom: 10px;
+                gap: 90px;
+            }
+
+            .date1 {
+                .date {
+                    color: var(--Text);
+                    font-size: 22px;
+                }
+
+                .text {
+                    margin-left: 15px;
+                    color: var(--SubTitle);
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .Mgs {
+            position: absolute;
+            right: 50px; 
+            top: 70px;
+            height: 148px;
+            width: 105px;
+
+        }
+    }
+}
+
+// Media Queries para responsividade
+@media screen and (max-width: 768px) {
+    .MainUpdate {
+        padding-top: 70px; // Ajuste menor para mobile
+
+        .cardUpdate1 {
+            height: auto; // Altura automática no mobile
+            min-height: 400px;
+            padding: 20px;
+
+            .titleUpdate {
+                font-size: 2rem; // Título menor no mobile
+            }
+
+            .informations {
+                position: static; // Remove posicionamento absoluto
+                transform: none; // Remove transform
+                left: auto;
+                top: auto;
+                max-height: 300px; // Altura menor no mobile
+            }
+
+            .Mgs {
+                position: relative; // Muda para relativo no mobile
+                left: auto;
+                top: auto;
+                margin: 20px auto 0; // Centraliza
+                display: block;
+            }
+        }
+    }
+}

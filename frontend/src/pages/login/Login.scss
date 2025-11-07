@@ -5,13 +5,11 @@ body {
     background-attachment: fixed;
     height: 100vh;
     width: 100%;
-    cursor: url('/images/cursor/Cursor.png') 8 8, auto;
 }
 
 .MainLogin {
     min-height: 100dvh;
     min-height: 100vh;
-    cursor: url('/images/cursor/Cursor.png') 16 16, auto;
 
     --login-bg: #767676a4;
     --input-bg: #c8ced4;
@@ -26,8 +24,7 @@ body {
     --subtitle-color: #333333;
     --link-color: #1F2937;
     --link-hover: #262650;
-    --cursor-default: url('/images/cursor/Cursor.png') 16 16, auto;
-    --cursor-pointer: url('/images/cursor/Pointer.png') 16 16, pointer;
+
 
     &.dark {
         --login-bg: #1a202c;
@@ -107,7 +104,6 @@ body {
                 color: var(--link-color);
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
                 transition: all 0.3s ease;
-                cursor: var(--cursor-pointer);
 
                 &:hover {
                     color: var(--link-hover);
@@ -125,7 +121,6 @@ body {
                 border-radius: 12px;
                 width: 150px;
                 height: 50px;
-                cursor: var(--cursor-pointer);
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
@@ -160,7 +155,6 @@ body {
             font-size: 1.1rem;
             font-family: inherit;
             transition: all 0.3s ease;
-            cursor: var(--cursor-default);
 
             &::placeholder {
                 color: var(--input-placeholder);
@@ -197,7 +191,6 @@ body {
                 border: 2px solid var(--input-border);
                 background-color: var(--input-bg);
                 border-radius: 0 8px 8px 0;
-                cursor: var(--cursor-pointer);
                 width: 60px;
                 min-width: 60px;
                 display: flex;

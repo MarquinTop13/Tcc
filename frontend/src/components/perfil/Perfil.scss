@@ -51,6 +51,7 @@
       }
     
       .img-perfil {
+        margin-left: 45px;
         width: 130px;
         height: 130px;
         border-radius: 50%;
@@ -59,6 +60,8 @@
       }
     
       .botao-add-foto {
+        position: relative;
+        left: -45px;
         background-color: var(--fundo-botao-A);
         border: 2px solid var(--black);
         justify-content: center;
