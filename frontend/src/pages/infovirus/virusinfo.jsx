@@ -38,21 +38,6 @@ function VR() {
   return (
       <main className={`MainVirus`}>
         <Cabecalho2 />
-        <section className={`informacoes`}>
-          <div className={`text`}>
-            <h1>O que é um Vírus</h1>
-            <p>
-              Um vírus é um software malicioso que se espalha entre sistemas, anexando-se a arquivos ou
-              programas para causar danos, roubar dados ou prejudicar o desempenho. Sua propagação ocorre por meios como internet e dispositivos externos, sendo essencial o uso de antivírus e boas práticas de segurança.
-            </p>
-          </div>
-          <div className={`text2`}>
-            <h1>Como se prevenir de vírus?</h1>
-            <p>Para se prevenir de vírus, é fundamental manter um antivírus atualizado e ativo no computador. Evite clicar em links desconhecidos ou abrir anexos de e-mails suspeitos. Baixe programas e arquivos apenas de sites e fontes confiáveis.
-            Mantenha o sistema operacional e todos os softwares sempre atualizados. Use senhas fortes e diferentes para cada conta ou serviço online. Também é importante evitar o uso de pendrives ou dispositivos de origem duvidosa.</p>
-          </div>
-        </section>
-        
         {/* Seção dos cards */}
         <section className={`secao-cards`}>
           <div className={`container-cards`}>

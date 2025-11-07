@@ -102,6 +102,9 @@ export default function Home() {
             <section className="text">
                 <h1>Proteja seu dispositivo com um clique!</h1>
                 <h3>Verifique arquivos e links que causem danos.</h3>
+                <h4>
+                    Em um mundo cada vez mais conectado, proteger-se na internet deixou de ser uma opção e tornou-se uma necessidade. A exposição de dados pessoais, senhas e informações bancárias pode gerar sérios prejuízos e comprometer sua segurança. Nossas ferramentas de proteção foram desenvolvidas para garantir sua tranquilidade, oferecendo barreiras eficazes contra ataques virtuais e sites maliciosos. Ao utilizá-las, você navega com confiança e mantém seu mundo digital seguro. Escolher se proteger é escolher responsabilidade, segurança e paz de espírito.
+                </h4>
             </section>
 
             <section className="cards">
@@ -155,6 +158,28 @@ export default function Home() {
                         </div>
                     </div>
                 ))}
+            </section>
+
+            <section className='infos'>
+                <div className='Virus'>
+                    <div className='o-que-e'>
+                        <h1>O que é um vírus digital?</h1>
+                        <p>
+                        Os vírus digitais são programas criados com a intenção de modificar, danificar ou controlar sistemas sem o consentimento do usuário. Eles se infiltram em arquivos, e-mails, pendrives e sites aparentemente inofensivos, esperando o momento certo para agir. Uma vez executados, podem se multiplicar e se espalhar para outros dispositivos conectados. Muitos vírus tentam roubar informações pessoais, senhas e dados bancários, enquanto outros apenas deixam o sistema lento ou inutilizável. Assim como doenças biológicas, eles se aproveitam de “descuidos digitais” — como clicar em links suspeitos ou baixar programas piratas. Existem diversos tipos: trojans, worms, ransomwares, spywares e muito mais. A cada ano, novas variantes aparecem, se tornando mais inteligentes e difíceis de detectar. Por isso, entender como funcionam é o primeiro passo para se proteger. Um simples clique errado pode abrir a porta para grandes prejuízos.</p>
+                    </div>
+                    <div className='infos-previnir'>
+                        <h1>Como se prevenir de vírus digitais?</h1>
+                        <p>
+                        A prevenção contra vírus digitais começa com bons hábitos e atenção. Nunca clique em links de origem duvidosa ou em mensagens com promessas milagrosas, como prêmios e sorteios. Sempre baixe programas apenas de sites oficiais e verificados. Mantenha seu sistema operacional e antivírus atualizados, pois isso impede que falhas conhecidas sejam exploradas. Evite abrir anexos de e-mails de desconhecidos e não use pendrives sem saber sua procedência. Utilize senhas fortes, misturando letras, números e símbolos, e evite repeti-las em vários sites. Desconfie de redes Wi-Fi públicas e use autenticação de dois fatores quando possível. Além disso, faça backup regular dos seus arquivos importantes. O segredo é simples: precaução e consciência digital. Ser cuidadoso hoje pode te poupar de dores de cabeça amanhã.
+                        </p>
+                    </div>
+                </div>
+                <div className='Links'>
+                    <h1>Perigos dos Links desconhecidos!</h1>
+                    <p>
+                    Clicar em qualquer link que aparece na internet pode parecer inofensivo, mas é uma das armadilhas mais perigosas do mundo digital. Muitos desses links escondem vírus que roubam suas senhas, fotos e até seu dinheiro. Um simples clique pode dar acesso total do seu celular ou computador a criminosos. Eles podem usar suas contas, enganar seus amigos e destruir sua privacidade. Pense bem: vale a pena arriscar tudo por curiosidade? Sempre verifique a origem antes de clicar e desconfie de links enviados por estranhos ou com promessas milagrosas. Use antivírus e mantenha seus sistemas atualizados. A internet pode ser segura — se você for esperto. Um clique errado pode mudar tudo. Escolha a segurança, não o perigo. Compartilhe essa ideia com quem você ama, pois muitas vítimas só percebem o perigo depois que é tarde demais. A proteção começa com informação e responsabilidade. Sua atenção é o primeiro escudo contra o crime digital.
+                    </p>
+                </div>
             </section>
         </main>
     )
