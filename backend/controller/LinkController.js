@@ -75,7 +75,6 @@ async function verificarComGoogle(url, apiKey) {
     };
 
   } catch (error) {
-    console.log('Google indisponível:', error.message);
     return {
       seguro: true,
       ameacas: [],
@@ -352,15 +351,9 @@ endpoint.get('/VerificarLimiteLink/:email', async (req, res) => {
     
     try {
         const usuario = await LinkRepository.verificarLimiteLink(email);
-        
-        console.log('👤 Usuário encontrado:', usuario);
-        
         if (!usuario) {
-            console.log('❌ Usuário não encontrado para email:', email);
             return res.status(404).send({ error: "Usuário não encontrado" });
         }
-
-        console.log('✅ Limite retornado:', { maxLink: usuario.maxLink });
         
         res.status(200).send({
             maxLink: usuario.maxLink
@@ -388,7 +381,6 @@ endpoint.get('/buscar-usuario/:nome', async (req, res) => {
             maxLink: usuario.maxLink
         });
     } catch (error) {
-        console.error('Erro ao buscar usuário:', error);
         res.status(500).send({ error: "Erro interno do servidor" });
     }
 });

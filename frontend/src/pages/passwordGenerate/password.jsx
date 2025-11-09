@@ -111,8 +111,9 @@ export default function PasswordGenerator(){
 
                 if(!nome || !email){
                     alert("Usuário não logado, por favor Logue!");
-                }
-                if(confirm(`Deseja salvar a senha ${password1} em seu usuario?`)){
+                    return;
+                } else{
+                    if(confirm(`Deseja salvar a senha ${password1} em seu usuario?`)){
                     try{
                         const InsertSenha = await apiLink.post('/InserirSenhaForte', {
                             senha: password1, 
@@ -125,6 +126,8 @@ export default function PasswordGenerator(){
                         alert(error)
                     }
                 }
+                }
+                
             }
             useEffect(() => {
                 function handleKeyDown(event) {

@@ -137,7 +137,6 @@ export default function Verify() {
         texto = texto.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
         texto = texto.replace(/\s+/g, ' ').trim();
 
-        console.log('📦 Tamanho do texto após limpeza:', texto.length, 'caracteres');
 
         const comandos = [
           { palavras: ['del', 'remove', 'delete', 'erase', 'rd', 'rmdir'], descricao: 'Remove pastas/arquivos' },
@@ -185,13 +184,11 @@ export default function Verify() {
           });
         }
 
-        console.log('🔍 Resposta completa da API:', resposta.data);
 
         const respNormalizada = String(resposta.data.Resposta || resposta.data)
           .trim()
           .toLowerCase();
 
-        console.log('📝 Resposta normalizada:', respNormalizada);
 
         if (respNormalizada === "inofensivo") {
           resultado.textContent = '✅ Nenhuma ameaça detectada.';

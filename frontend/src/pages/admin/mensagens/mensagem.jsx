@@ -1,11 +1,11 @@
 import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
-import Cabecalho2 from "../../components/HeaderPages"
+import CabecalhoAdmin2 from "../../../components/headerAdmin2"
 import { useState, useEffect } from "react"
-import apiLink from "../../axios"
-import "./admin.scss"
+import apiLink from "../../../axios"
+import "./mensagem.scss"
 
-export default function Admin() {
+export default function MsgSupport() {
   // Modo escuro
   const [darkTheme, setDarkTheme] = useState(() => {
     const themeSaved = localStorage.getItem("TemaEscuro")
@@ -39,7 +39,6 @@ export default function Admin() {
     try {
       setCarregando(true)
       const response = await apiLink.get('/support')
-      console.log("Mensagens vindas do backend:", response.data) // 👈
       setMensagens(response.data)
     } catch (error) {
       console.error("Erro ao buscar mensagens:", error)
@@ -117,7 +116,7 @@ export default function Admin() {
   },);
   return (
     <main className={`MainAdmin ${darkTheme ? "dark" : "light"}`}>
-      <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
+      <CabecalhoAdmin2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
 
       <div className="MensagensMain">
         <div className="card">

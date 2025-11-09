@@ -1,7 +1,10 @@
 import PasswordGenerator from "./pages/passwordGenerate/password"
+import UpdateAdmin from "./pages/admin/updates/updateAdmin"
+import UserSupport from "./pages/UserSupport/userSupport"
+import MsgSupport from "./pages/admin/mensagens/mensagem"
 import {BrowserRouter, Routes, Route} from "react-router"
 import VerifyLinks from "./pages/verifylinks/verifylinks"
-import UserSupport from "./pages/UserSupport/userSupport"
+import HomeAdmin from "./pages/admin/home/homeAdmin"
 import Pagamento from "./pages/pagamento/pagamento"
 import Verify from "./pages/verifyarchiver/verify"
 import Perfil from "./components/perfil/Perfil"
@@ -10,15 +13,17 @@ import VR from "./pages/infovirus/virusinfo"
 import Updates from "./pages/updates/update"
 import Cas from "./pages/cadastro/cadastro"
 import Home from "./pages/home/home.jsx"
-import Admin from "./pages/admin/admin"
 import Login from "./pages/login/Login"
+
 
 export default function Rotas(){
     return(
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/Admin" element={<Admin />} />
+                <Route path="/SupportAdmin" element={<MsgSupport />} />
+                <Route path="/Admin" element={<HomeAdmin />} />
+                <Route path="/UpdateAdmin" element={<UpdateAdmin />} />
                 <Route path="/VerifyArchiver" element={<Verify />} />
                 <Route path="/VerifyLinks" element={<VerifyLinks />} />
                 <Route path="/PasswordGenerator" element={<PasswordGenerator />} />

@@ -53,10 +53,6 @@ async function verificarLimiteArquivo(req, res, next) {
 endpoint.post('/VerificarArquivoComLimite', verificarLimiteArquivo, async (req, res) => {
     try {
         const { arquivo, email, nome } = req.body;
-
-        console.log('📧 Verificando arquivo para:', email);
-        console.log('📦 Tamanho do arquivo:', arquivo?.length || 0, 'caracteres');
-
         if (!arquivo) {
             return res.status(400).send({ error: "Conteúdo do arquivo é obrigatório" });
         }
@@ -65,9 +61,6 @@ endpoint.post('/VerificarArquivoComLimite', verificarLimiteArquivo, async (req, 
         let textoLimpo = arquivo.replace(/[\x00-\x1F\x7F-\x9F]/g, '');
         textoLimpo = textoLimpo.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
         textoLimpo = textoLimpo.replace(/\s+/g, ' ').trim();
-
-        console.log('🧹 Texto após limpeza:', textoLimpo.length, 'caracteres');
-        console.log('📄 Primeiros 500 caracteres:', textoLimpo.substring(0, 500));
 
         // Verifica tamanho
         if (textoLimpo.length > 500000) {
@@ -84,15 +77,11 @@ endpoint.post('/VerificarArquivoComLimite', verificarLimiteArquivo, async (req, 
                 error: "Erro ao atualizar limite",
                 tipo: "ERRO_LIMITE"
             });
-        }
-
-        console.log('🔍 Enviando para análise do Gemini...');
-        
+        }        
         // ADICIONE TRY-CATCH ESPECÍFICO PARA O GEMINI
         let RespostaGemini;
         try {
             RespostaGemini = await ArquivoRepository.enviarMensagem(textoLimpo);
-            console.log('✅ Resposta recebida do Gemini:', RespostaGemini);
         } catch (geminiError) {
             console.error('❌ Erro específico do Gemini:', geminiError);
             return res.status(503).send({ 
@@ -122,10 +111,6 @@ endpoint.post('/VerificarArquivoComLimite', verificarLimiteArquivo, async (req, 
 endpoint.post('/VerificarArquivo', async (req, res) => {
     try {
         const { arquivo } = req.body;
-
-        console.log('📧 Verificando arquivo (sem limite)');
-        console.log('📦 Tamanho do arquivo:', arquivo?.length || 0, 'caracteres');
-
         if (!arquivo) {
             return res.status(400).send({ error: "Conteúdo do arquivo é obrigatório" });
         }
@@ -135,7 +120,6 @@ endpoint.post('/VerificarArquivo', async (req, res) => {
         textoLimpo = textoLimpo.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
         textoLimpo = textoLimpo.replace(/\s+/g, ' ').trim();
 
-        console.log('🧹 Texto após limpeza:', textoLimpo.length, 'caracteres');
 
         // Verifica se o arquivo é muito grande (opcional)
         if (textoLimpo.length > 500000) {
@@ -145,9 +129,7 @@ endpoint.post('/VerificarArquivo', async (req, res) => {
             });
         }
 
-        console.log('🔍 Enviando para análise do Gemini...');
         const RespostaGemini = await ArquivoRepository.enviarMensagem(textoLimpo);
-        console.log('📝 Resposta recebida do Gemini:', RespostaGemini);
 
         res.send({ Resposta: RespostaGemini });
 
@@ -161,7 +143,6 @@ endpoint.post('/VerificarArquivo', async (req, res) => {
 endpoint.get('/VerificarLimite/:email', async (req, res) => {
     const { email } = req.params;
     
-    console.log('📧 Recebida requisição para verificar limite de arquivos do email:', email);
     
     try {
         const usuario = await ArquivoRepository.verificarLimiteArquivo(email);
