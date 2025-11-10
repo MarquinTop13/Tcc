@@ -31,7 +31,7 @@ export default function HomeAdmin() {
     }, [darkTheme])
 
     useEffect(() => {
-        if(user === "MgsTop13" || user === "Gustavo"){
+        if(user === "MgsTop13" || user === "Gustavo Max"){
             return
         } else{
             alert('Você não tem acesso, adios!');
@@ -72,7 +72,7 @@ export default function HomeAdmin() {
                         icon: "", 
                         title: "Vírus",
                         text: "Atualize os vírus da página de vírus",
-                        link: "/VirusAdmin", 
+                        link: "/Addvirus", 
                         button: "Gerenciar Vírus"
                     }
                 ].map(card => (

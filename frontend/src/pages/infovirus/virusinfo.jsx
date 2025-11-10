@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import Cabecalho2 from "../../components/HeaderPages";
+import { useState } from 'react';
 import './virusinfo.scss';
 
 export default function VR() {

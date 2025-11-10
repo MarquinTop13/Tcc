@@ -1,4 +1,5 @@
 import PasswordGenerator from "./pages/passwordGenerate/password"
+import AddVirus from "./pages/admin/infos/addInfosVirus.jsx"
 import UpdateAdmin from "./pages/admin/updates/updateAdmin"
 import UserSupport from "./pages/UserSupport/userSupport"
 import MsgSupport from "./pages/admin/mensagens/mensagem"
@@ -35,6 +36,7 @@ export default function Rotas(){
                 <Route path="/Pagamento" element={<Pagamento />} />
                 <Route path="/UserSupport" element={<UserSupport />} />
                 <Route path="/Updates" element={<Updates />} />
+                <Route path="/Addvirus" element={<AddVirus />} />
             </Routes>
         </BrowserRouter>
     )
