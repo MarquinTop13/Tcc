@@ -49,9 +49,8 @@ body {
             align-items: stretch;
             display: flex;
             flex-direction: row;
-            border-radius: 12px;
             padding: 2% 2%;
-            height: 100vh;
+            height: 100%;
             width: 100%;
             gap: 1.5rem;
         
@@ -104,6 +103,7 @@ body {
                 border-radius: 15px;
                 padding: 0 2rem;
                 display: flex;
+                height: 100%;
                 width: 40%;
                 
                 &:hover {
@@ -122,9 +122,10 @@ body {
         
                 p {
                     color: var(--paragraph-color);
-                    line-height: 1.6;
-                    font-size: 1rem;
                     text-align: justify;
+                    line-height: 1.6;
+                    margin-bottom: 10vh;
+                    font-size: 1rem;
                 }
             }
         }
