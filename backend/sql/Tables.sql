@@ -53,10 +53,18 @@ create table Updates (
     informacoes varchar(255)
 );
 
+create table InfosVirus (
+    id int primary key auto_increment,
+    nome_virus varchar(255),
+    descricao_virus varchar(255),
+    prevensao varchar(255)
+);
+
 
 Isso aqui e para meu pc de casa, cuidado ao executar!;
 drop table tb_support_resposta;
 drop table tb_support;
+drop table InfosVirus;
 drop table tb_login;
 drop table cadastro;
 drop table Updates;
