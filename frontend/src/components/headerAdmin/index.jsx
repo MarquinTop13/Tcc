@@ -118,6 +118,7 @@ export default function CabecalhoAdmin({ darkTheme, onChangeTheme }) {
                         <div className="menu-opcoes" ref={menuMobileRef}>
                             <Link className="link" to='/SupportAdmin' onClick={() => setMenuAberto(false)}>Suporte</Link>
                             <Link className="link" to={"/Updates"}>Atualizações</Link>
+                            <Link className="link" to={"/"}>Home</Link>
                         </div>
                     )}
                 </section>
@@ -130,6 +131,7 @@ export default function CabecalhoAdmin({ darkTheme, onChangeTheme }) {
                     <div className="column3">
                         <Link className="link" to='/SupportAdmin' onClick={() => setMenuAberto(false)}>Suporte</Link>
                         <Link className="link" to={"/Updates"}>Atualizações</Link>
+                        <Link className="link" to={"/"}>Home</Link>
                     </div>
 
                     <div onClick={() => { onChangeTheme(); MoverImg(); }} className="column1">

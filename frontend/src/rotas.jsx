@@ -23,7 +23,7 @@ export default function Rotas(){
                 <Route path="/" element={<Home />} />
                 <Route path="/SupportAdmin" element={<MsgSupport />} />
                 <Route path="/Admin" element={<HomeAdmin />} />
-                <Route path="/UpdateAdmin" element={<UpdateAdmin />} />
+                <Route path="/UpdatesAdmin" element={<UpdateAdmin />} />
                 <Route path="/VerifyArchiver" element={<Verify />} />
                 <Route path="/VerifyLinks" element={<VerifyLinks />} />
                 <Route path="/PasswordGenerator" element={<PasswordGenerator />} />

@@ -8,13 +8,11 @@ import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import { useState, useEffect } from 'react'
 
 export default function VerifyLinks() {
-  // Modo escuro
   const [darkTheme, setDarkTheme] = useState(() => {
     const themeSaved = localStorage.getItem("TemaEscuro");
     return themeSaved ? themeSaved === 'true' : false;
   });
 
-  // Estados para controle de limite
   const [limite, setLimite] = useState(null);
   const [mostrarModalPagamento, setMostrarModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,10 +27,8 @@ export default function VerifyLinks() {
   const [carregando, setCarregando] = useState(false);
   const [detalhes, setDetalhes] = useState(null);
 
-  // VERIFICA SE É ADMIN
   const isAdmin = user === "MgsTop13" || user === "Gustavo2";
 
-  // Carregar limite do usuário
   useEffect(() => {
     carregarLimite();
   }, []);
@@ -43,13 +39,11 @@ export default function VerifyLinks() {
 
     if (!email || !user) return;
     
-    // SE FOR ADMIN, NÃO PRECISA CARREGAR LIMITE
     if (isAdmin) {
-      setLimite({ maxLink: 9999 }); // Número alto para indicar ilimitado
+      setLimite({ maxLink: 9999 });
       return;
     }
     
-    // SE NÃO FOR ADMIN, CARREGA LIMITE NORMAL
     try {
       const response = await apiLink.get(`/api/VerificarLimiteLink/${email}`);
       setLimite(response.data);
@@ -75,7 +69,6 @@ export default function VerifyLinks() {
       return;
     }
 
-    // SE NÃO FOR ADMIN, VERIFICA LIMITE
     if (!isAdmin && limite && limite.maxLink <= 0) {
       setMostrarModal(true);
       return;
@@ -92,21 +85,17 @@ export default function VerifyLinks() {
     try {
       let response;
       
-      // SE FOR ADMIN, USA ENDPOINT SEM LIMITE
       if (isAdmin) {
         response = await apiLink.post('/api/check-url', {
           url: link
         });
-      } 
-      // SE NÃO FOR ADMIN, USA ENDPOINT COM LIMITE
-      else {
+      } else {
         response = await apiLink.post('/api/check-url-com-limite', {
           url: link,
           email: email,
           nome: user
         });
         
-        // Atualiza o limite na interface (apenas para não-admin)
         const dados = response.data;
         setLimite({
           maxLink: dados.limiteRestante
@@ -116,12 +105,11 @@ export default function VerifyLinks() {
       const dados = response.data;
 
       if (dados.segura) {
-        setResultado('✅ SEGURO - Este site parece confiável');
+        setResultado('SEGURO - Este site parece confiável');
       } else {
-        setResultado('🚨 PERIGOSO - Evite este site!');
+        setResultado('PERIGOSO - Evite este site!');
       }
 
-      // Mostra os detalhes da análise
       setDetalhes(dados.detalhes);
 
     } catch (error) {
@@ -130,9 +118,9 @@ export default function VerifyLinks() {
       if (error.response?.status === 402) {
         if (error.response.data.tipo === "LIMITE_ATINGIDO") {
           setMostrarModal(true);
-          setResultado('❌ Limite de verificações atingido.');
+          setResultado('Limite de verificações atingido.');
         } else {
-          setResultado('❌ Erro ao processar verificação.');
+          setResultado('Erro ao processar verificação.');
         }
       } else {
         try {
@@ -140,17 +128,15 @@ export default function VerifyLinks() {
           const fallbackData = fallbackResponse.data;
 
           if (fallbackData.segura) {
-            setResultado('✅ SEGURO - Este site parece confiável');
+            setResultado('SEGURO - Este site parece confiável');
           } else {
-            setResultado('🚨 PERIGOSO - Evite este site!');
+            setResultado('PERIGOSO - Evite este site!');
           }
           setDetalhes(fallbackData.detalhes);
 
         } catch (fallbackError) {
           setResultado(fallbackError.response?.data?.error + '\nO link precisa de https://');
-          }
-    
-        
+        }
       }
     } finally {
       setCarregando(false);
@@ -175,37 +161,25 @@ export default function VerifyLinks() {
     <main className={`MainVerifyLinks ${darkTheme ? "dark" : "light"} ${!isAdmin && limite?.maxLink === 0 ? 'limite-zero' : ''}`}>
       <Cabecalho2 className="Cabecalho2" darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
 
-      {/* Modal de Limite Atingido - SÓ APARECE PARA NÃO-ADMIN */}
       {!isAdmin && mostrarModalPagamento && (
         <div className="modal-overlay">
           <div className="modal-pagamento">
             <h3>Limite Esgotado!</h3>
-            <p>🚫 Você utilizou todas as suas verificações gratuitas</p>
+            <p>Você utilizou todas as suas verificações gratuitas</p>
             <p>Infelizmente você atingiu o limite máximo de verificações de links. Para continuar protegendo sua segurança online, faça o upgrade para a versão premium.</p>
-            <p>💎 <strong>Premium inclui:</strong> Verificações ilimitadas + Análise avançada + Suporte prioritário</p>
+            <p>Premium inclui: Verificações ilimitadas + Análise avançada + Suporte prioritário</p>
 
             <div className="modal-botoes">
               <button
                 disabled={loading}
                 className="btn-pagar"
               >
-                {loading ? (
-                  <>
-                    <span style={{ marginRight: '8px' }}>⏳</span>
-                    Processando...
-                  </>
-                ) : (
-                  <>
-                    <span style={{ marginRight: '8px' }}>💎</span>
-                    Upgrade Premium - R$ 2,99
-                  </>
-                )}
+                {loading ? 'Processando...' : 'Upgrade Premium - R$ 2,99'}
               </button>
               <button
                 onClick={() => setMostrarModal(false)}
                 className="btn-cancelar"
               >
-                <span style={{ marginRight: '8px' }}>↩️</span>
                 Voltar
               </button>
             </div>
@@ -215,22 +189,21 @@ export default function VerifyLinks() {
 
       <section className="page-Links">
         <div className="card-Links">
-          {/* Informações de Limite - COMPORTAMENTO DIFERENTE PARA ADMIN */}
           {limite && (
             <div className={`info-limite ${!isAdmin && limite.maxLink === 0 ? 'zero' : ''}`}>
               <h4>
                 {isAdmin ? (
-                  <>💎 <span style={{color: '#20c997'}}>ADMIN - Verificações Ilimitadas</span></>
+                  <>ADMIN - Verificações Ilimitadas</>
                 ) : limite.maxLink === 0 ? (
-                  '🚫 Limite Esgotado!'
+                  'Limite Esgotado!'
                 ) : (
-                  `🔓 Verificações Restantes: ${limite.maxLink}/5`
+                  `Verificações Restantes: ${limite.maxLink}/5`
                 )}
               </h4>
               
               {!isAdmin && limite.maxLink <= 2 && limite.maxLink > 0 && (
                 <p className="aviso-limite">
-                  ⚠️ Você está ficando sem verificações gratuitas!
+                  Você está ficando sem verificações gratuitas!
                 </p>
               )}
               
@@ -260,10 +233,10 @@ export default function VerifyLinks() {
           <div className="part2-Links">
             <section className="info">
               <h3>Resultado:</h3>
-              <pre className={`resultado ${resultado.includes('🚨') ? 'perigoso' : resultado.includes('✅') ? 'seguro' : ''}`}>
-                {carregando ? '🔎 Analisando...' :
+              <pre className={`resultado ${resultado.includes('PERIGOSO') ? 'perigoso' : resultado.includes('SEGURO') ? 'seguro' : ''}`}>
+                {carregando ? 'Analisando...' :
                   !isAdmin && limite?.maxLink === 0 ? 'Compre mais cotas para verificar links' :
-                    resultado || '🔍 Aguardando verificação...'}
+                    resultado || 'Aguardando verificação...'}
               </pre>
             </section>
 
@@ -275,7 +248,7 @@ export default function VerifyLinks() {
                   <div className="analise-item">
                     <strong>Google:</strong>
                     <span className={detalhes.google.segura ? 'texto-seguro' : 'texto-perigoso'}>
-                      {detalhes.google.segura ? '✅ Seguro' : '🚨 Perigoso'}
+                      {detalhes.google.segura ? 'Seguro' : 'Perigoso'}
                     </span>
                   </div>
                 )}
@@ -285,7 +258,7 @@ export default function VerifyLinks() {
                     <strong>Análise:</strong>
                     <span>Pontuação: {detalhes.minhaAnalise.pontosRisco}</span>
                     {detalhes.minhaAnalise.alertas && detalhes.minhaAnalise.alertas.map((alerta, index) => (
-                      <div key={index} className="alerta">⚠️ {alerta}</div>
+                      <div key={index} className="alerta">{alerta}</div>
                     ))}
                   </div>
                 )}
@@ -298,9 +271,9 @@ export default function VerifyLinks() {
             onClick={VerificarLogin}
             disabled={carregando || (!isAdmin && limite?.maxLink === 0)}
           >
-            {carregando ? '🔎 Verificando...' :
+            {carregando ? 'Verificando...' :
               !isAdmin && limite?.maxLink === 0 ? 'Upgrade Necessário' :
-                '🔍 Verificar Link'}
+                'Verificar Link'}
           </button>
         </div>
       </section>
