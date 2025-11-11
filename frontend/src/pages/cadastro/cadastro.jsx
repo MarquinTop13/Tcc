@@ -129,7 +129,7 @@ function Cas() {
             <input type="email" name='email' placeholder="Email" value={form.email} onChange={F} />
             <div className="senhas">
               <input
-              className='input-senha'
+                className='input-senha'
                 type={mostrar ? "text" : "password"}
                 name='senha'
                 placeholder="Senha"

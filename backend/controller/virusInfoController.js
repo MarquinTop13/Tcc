@@ -1,4 +1,4 @@
-import { AddInfos } from "../repository/virusInfoRepository.js";
+import { AddInfos, listarVirus, ApagarVirus } from "../repository/virusInfoRepository.js";
 import { Router } from "express";
 
 const endpoints = Router();
@@ -22,5 +22,20 @@ endpoints.post("/api/virus", async (req, resp) => {
         resp.status(500).json({ error: "Erro ao adicionar vírus", details: error });
       }
 });
+
+endpoints.delete("/api/virus/:id", async (req, resp) => {
+  const { id } = req.params;
+  try {
+    const affected = await ApagarVirus(id);
+    if (affected === 0)
+      return resp.status(404).json({ error: "Vírus não encontrado" });
+
+    resp.json({ message: "Vírus removido com sucesso" });
+  } catch (err) {
+    console.error("Erro apagarVirus:", err);
+    resp.status(500).json({ error: "Erro ao apagar vírus" });
+  }
+});
+
 
 export default endpoints;
