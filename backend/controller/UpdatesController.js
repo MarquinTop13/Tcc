@@ -3,14 +3,11 @@ import {Router} from "express";
 const endpoint = Router();
 
 endpoint.post('/InserirUpdate', async (req, res) => {
-    const { date, text } = req.body;
-    
-    if (!date || !text) {
-        return res.status(400).send({ error: "Data e texto são obrigatórios" });
-    }
+    const { date, titulo, desc } = req.body;
+
     
     try {
-        const result = await UpdateRepository.InserirUpdate(date, text);
+        const result = await UpdateRepository.InserirUpdate(date, titulo, desc);
         res.status(201).send({ 
             message: "Update inserido com sucesso",
             id: result.insertId 

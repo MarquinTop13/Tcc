@@ -1,0 +1,249 @@
+.MainAdminUpdate {
+    --card-hover-shadow: -1px 10px 10px #000000ea;
+    --card-shadow: -2px 3px 2px #00000077;
+    --paragraph-color: #333333;
+    --button-border: #000000;
+    --card-border: #000000c7;
+    --text-color: #002b97cc;
+    --button-hover: #262650;
+    --title-color: #000000;
+    --border-info: #000000b7;
+    --infos-bg: #cedad83b;
+    --card-bg: #ced4dabb;
+    --button-bg: #333366;
+    --input-bg: #868E96;
+    --input-border: #2C2C2E;
+    --input-text: #181717b7;
+    --input-placeholder: #666666;
+    --button-text: #FFFFFF;
+    --subtitle-color: #333333;
+    --link-color: #1F2937;
+    --link-hover: #262650;
+    
+    &.dark {
+        --card-hover-shadow: -1px 10px 10px #000000ea;
+        --card-shadow: -2px 3px 2px #00000094;
+        --paragraph-color: #D1D5DB;
+        --button-border: #000000;
+        --button-hover: #262650;
+        --card-border: #1E1E1E;
+        --title-color: #FFFFFF;
+        --text-color: #00CA1E;
+        --card-bg: #28374e98;
+        --button-bg: #0040FF;
+        --input-bg: #2d3748;
+        --input-border: #4a5568;
+        --input-text: #ffffff;
+        --input-placeholder: #a0aec0;
+        --button-text: #FFFFFF;
+        --subtitle-color: #D1D5DB;
+        --link-color: #60A5FA;
+        --link-hover: #93C5FD;
+    }
+
+    padding: 2rem;
+    min-height: 100vh;
+
+    .header-pages {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 0.5rem 1rem;
+    }
+
+    .cardUpdate1 {
+        margin-top: 10% !important;
+        background-color: var(--card-bg);
+        box-shadow: var(--card-shadow);
+        border: 2px solid var(--card-border);
+        border-radius: 15px;
+        padding: 2rem;
+        max-width: 600px;
+        margin: 0 auto;
+        transition: all 0.3s ease;
+
+        &:hover {
+            box-shadow: var(--card-hover-shadow);
+            transform: translateY(-5px);
+        }
+
+        .titleUpdate {
+            color: var(--title-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            border-bottom: 2px solid var(--button-bg);
+            padding-bottom: 0.5rem;
+        }
+
+        .informations {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+
+            .subTitleUpdate {
+                color: var(--subtitle-color);
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+                font-weight: 600;
+            }
+
+            .inputText,
+            .inputDate {
+                border: 2px solid var(--input-border);
+                background-color: var(--input-bg);
+                color: var(--input-text);
+                padding: 12px 16px;
+                border-radius: 8px;
+                font-size: 1rem;
+                transition: all 0.3s ease;
+                width: 100%;
+
+                &::placeholder {
+                    color: var(--input-placeholder);
+                    opacity: 0.8;
+                }
+
+                &:focus {
+                    outline: none;
+                    border-color: var(--button-bg);
+                    box-shadow: 0 0 0 3px rgba(0, 64, 255, 0.1);
+                }
+            }
+
+            .inputDate {
+                cursor: pointer;
+            }
+
+            .buttton {
+                background-color: var(--button-bg);
+                color: var(--button-text);
+                border: 2px solid var(--button-border);
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 1rem;
+                width: 100%;
+
+                &:hover {
+                    background-color: var(--button-hover);
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+
+                &:disabled {
+                    opacity: 0.6;
+                    cursor: not-allowed;
+                    transform: none;
+                }
+            }
+        }
+    }
+
+    // Estilo para a lista de updates existentes (se necessário no futuro)
+    .updates-list {
+        margin-top: 3rem;
+
+        .update-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+
+            &:hover {
+                box-shadow: var(--card-shadow);
+            }
+
+            .update-title {
+                color: var(--title-color);
+                font-size: 1.2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .update-description {
+                color: var(--paragraph-color);
+                margin-bottom: 0.5rem;
+            }
+
+            .update-date {
+                color: var(--text-color);
+                font-size: 0.9rem;
+            }
+        }
+    }
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+    .MainAdminUpdate {
+        padding: 1rem;
+
+        .cardUpdate1 {
+            margin-top: 35% !important;
+            padding: 1.5rem;
+            margin: 0 auto;
+
+            .titleUpdate {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .informations {
+                gap: 1rem;
+
+                .subTitleUpdate {
+                    font-size: 1rem;
+                }
+
+                .inputText,
+                .inputDate {
+                    padding: 10px 14px;
+                    font-size: 0.95rem;
+                }
+
+                .buttton {
+                    padding: 10px 20px;
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .MainAdminUpdate {
+        padding: 0.5rem;
+
+        .cardUpdate1 {
+            padding: 1rem;
+            border-radius: 12px;
+
+            .titleUpdate {
+                font-size: 1.4rem;
+            }
+
+            .informations {
+                .inputText,
+                .inputDate {
+                    padding: 8px 12px;
+                }
+
+                .buttton {
+                    padding: 10px 16px;
+                    font-size: 0.95rem;
+                }
+            }
+        }
+    }
+}

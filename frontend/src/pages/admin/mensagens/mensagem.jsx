@@ -2,10 +2,24 @@ import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import CabecalhoAdmin2 from "../../../components/headerAdmin2"
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router"
 import apiLink from "../../../axios"
 import "./mensagem.scss"
 
 export default function MsgSupport() {
+
+  //Verificação ADM
+  const navigate = useNavigate() 
+  const user = localStorage.getItem('User')
+  useEffect(() => {
+    if (user === "MgsTop13" || user === "Gustavo Max") {
+      return
+    } else {
+      alert('Você não tem acesso, adios!');
+      navigate('/')
+    }
+  }, [user, navigate])
+
   // Modo escuro
   const [darkTheme, setDarkTheme] = useState(() => {
     const themeSaved = localStorage.getItem("TemaEscuro")
@@ -68,7 +82,7 @@ export default function MsgSupport() {
 
     try {
       const idAdmin = localStorage.getItem("id_cadastro") || 1 // Você precisa ajustar isso conforme sua autenticação
-      
+
       await apiLink.post('/support/responder', {
         idSupport: mensagemSelecionada.id,
         idAdmin: idAdmin,
@@ -76,13 +90,13 @@ export default function MsgSupport() {
       })
 
       setResposta("")
-      
+
       // Atualizar a lista de mensagens
       buscarMensagens()
-      
+
       // Atualizar a mensagem selecionada
       selecionarMensagem(mensagemSelecionada.id)
-      
+
     } catch (error) {
       console.error("Erro ao enviar resposta:", error)
       alert("Erro ao enviar resposta")
@@ -136,20 +150,20 @@ export default function MsgSupport() {
                     onClick={() => selecionarMensagem(mensagem.id)}
                   >
                     <div className="avatar-usuario">
-                    <img
-                      src={
-                        mensagem.fotoPerfil
-                          ? `${apiLink.defaults.baseURL}${mensagem.fotoPerfil}`
-                          : "/images/icons/imagemPerfil.png"
-                      }
-                      alt={mensagem.nome || "Usuário"}
-                      className="avatar-img"
-                    />
+                      <img
+                        src={
+                          mensagem.fotoPerfil
+                            ? `${apiLink.defaults.baseURL}${mensagem.fotoPerfil}`
+                            : "/images/icons/imagemPerfil.png"
+                        }
+                        alt={mensagem.nome || "Usuário"}
+                        className="avatar-img"
+                      />
                     </div>
 
                     <div className="info-usuario">
                       <span className="nome-usuario">{mensagem.nome || 'Usuário'}</span>
-                      <span 
+                      <span
                         className="status-mensagem"
                         style={{ color: getStatusColor(mensagem.status) }}
                       >
@@ -169,12 +183,12 @@ export default function MsgSupport() {
                 <>
                   <div className="mensagens-area">
                     <h2>{mensagemSelecionada.nome || 'Usuário'}</h2>
-                    
+
                     <div className="info-contato">
                       <p><strong>ID:</strong> {mensagemSelecionada.idUser}</p>
                       <p><strong>Opção:</strong> {mensagemSelecionada.opcaoSelecionada}</p>
                       <p><strong>Data:</strong> {formatarData(mensagemSelecionada.created_at)}</p>
-                      <p><strong>Status:</strong> 
+                      <p><strong>Status:</strong>
                         <span style={{ color: getStatusColor(mensagemSelecionada.status) }}>
                           {mensagemSelecionada.status || 'pendente'}
                         </span>

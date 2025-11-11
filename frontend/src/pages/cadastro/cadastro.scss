@@ -42,7 +42,7 @@ body {
     }
 
     .fundo {
-        min-height: calc(100vh - 80px);
+        min-height: calc(80vh - 80px);
         justify-content: flex-start;
         color: var(--button-text);
         box-sizing: border-box;
@@ -51,6 +51,7 @@ body {
 
         .fundo-secundario-cadastro {
             padding: 2rem;
+            margin-top: 3%;
             width: 100%;
             max-width: 500px;
             background-color: var(--cadastro-bg);
@@ -58,6 +59,7 @@ body {
             border: 2px solid var(--input-border);
             box-shadow: -2px 3px 2px #00000094;
             margin-bottom: 1rem;
+            height: 680px;
 
             .cadastro-fundo {
                 color: var(--title-color);

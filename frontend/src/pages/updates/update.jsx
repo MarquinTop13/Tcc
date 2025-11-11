@@ -116,7 +116,8 @@ export default function Updates() {
                                 <h3 className="date">
                                     {formatarData(update.dataFormatada || update.DiadoUpdate)}
                                 </h3>
-                                <h4 className="text">{update.informacoes}</h4>
+                                <h4 className="text">{update.titulo}</h4>
+                                <h5 className="text2">{update.descricao}</h5>
                             </div>
                         ))}
                     </div>

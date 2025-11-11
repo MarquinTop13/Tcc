@@ -8,7 +8,7 @@ import "./homeAdmin.scss"
 
 export default function HomeAdmin() {
     const user = localStorage.getItem('User')
-    const navigate = useNavigate() // ✅ Correto - declarar a variável
+    const navigate = useNavigate() 
     
     const [darkTheme, setDarkTheme] = useState(() => {
         const themeSaved = localStorage.getItem("TemaEscuro");

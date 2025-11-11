@@ -1,13 +1,13 @@
 // repository/UpdatesRepository.js
 import { conexao } from "./conections.js";
 
-export async function InserirUpdate(date, text) {
+export async function InserirUpdate(date, text, descricao) {
     const command = `
-        INSERT INTO Updates (DiadoUpdate, informacoes)
-        VALUES(?, ?)
+        INSERT INTO Updates (DiadoUpdate, titulo, descricao)
+        VALUES(?, ?, ?)
     `;
 
-    const [info] = await conexao.query(command, [date, text]);
+    const [info] = await conexao.query(command, [date, text, descricao]);
     return info;
 }
 
@@ -27,7 +27,8 @@ export async function ListarUpdates() {
             id,
             DATE_FORMAT(DiadoUpdate, '%d/%m/%Y') as dataFormatada,
             DiadoUpdate,
-            informacoes
+            titulo,
+            descricao
         FROM Updates
         ORDER BY DiadoUpdate DESC
     `;

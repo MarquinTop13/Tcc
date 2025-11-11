@@ -93,6 +93,12 @@ body {
                     color: var(--SubTitle);
                     font-size: 18px;
                 }
+
+                .text2{
+                    margin-left: 15px;
+                    color: var(--SubTitle);
+                    font-size: 15px;
+                }
             }
 
             .loading, .error, .empty {
@@ -108,8 +114,8 @@ body {
 
         .Mgs {
             position: absolute;
-            right: 50px; 
-            top: 70px;
+            left: 90%; 
+            top: 15%;
             height: 148px;
             width: 105px;
         }
@@ -120,6 +126,7 @@ body {
 @media screen and (max-width: 768px) {
     .MainUpdate {
         .cardUpdate1 {
+            margin-top: 50px;
             height: auto;
             min-height: 400px;
             padding: 20px;
@@ -133,13 +140,13 @@ body {
                 transform: none;
                 left: auto;
                 top: auto;
-                max-height: 300px;
+                max-height: 400px;
             }
 
             .Mgs {
                 position: relative;
-                left: 190px;
-                top: -280px;
+                left: 46.5%;
+                top: -250px !important;
                 margin: 20px auto 0;
                 display: block;
             }

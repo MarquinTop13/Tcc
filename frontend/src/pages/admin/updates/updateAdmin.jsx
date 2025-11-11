@@ -1,11 +1,24 @@
 import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import CabecalhoAdmin2 from "../../../components/headerAdmin2"
-import { useState, useEffect } from "react"
+import { useNavigate } from "react-router"
+import { useState, useEffect, use } from "react"
 import "./updateAdmin.scss"
 import apiLink from "../../../axios.js"
 
 export default function UpdateAdmin() {
+  //Verificação ADM
+  const navigate = useNavigate() 
+  const user = localStorage.getItem('User')
+  useEffect(() => {
+    if (user === "MgsTop13" || user === "Gustavo Max") {
+      return
+    } else {
+      alert('Você não tem acesso, adios!');
+      navigate('/')
+    }
+  }, [user, navigate])
+    
     // Modo escuro
     const [darkTheme, setDarkTheme] = useState(() => {
         const themeSaved = localStorage.getItem("TemaEscuro")
@@ -13,7 +26,9 @@ export default function UpdateAdmin() {
     })
 
     // Estado para os updates
-    const [updates, setUpdates] = useState([])
+    const [nmUpdate, setNmUpdate] = useState('');
+    const [descUpdate, setDescUpdate] = useState('');
+    const [dateUpdate, setDateUpdate] = useState();
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
 
@@ -22,24 +37,23 @@ export default function UpdateAdmin() {
     }
 
     // Carregar updates do backend
-    async function carregarUpdates() {
+    async function InserirUpdate() {
         try {
-            setLoading(true)
-            const response = await apiLink.get('/ListarUpdates')
-            setUpdates(response.data.updates || [])
+            const response = await apiLink.post('/InserirUpdate', {
+                "date": dateUpdate,
+                "titulo": nmUpdate,
+                "desc": descUpdate
+            })
+            alert('Update com sucesso!')
             setError("")
         } catch (error) {
-            console.error('Erro ao carregar updates:', error)
+            alert(error)
+            console.error('Erro ao carregar inserir updates:', error)
             setError("Erro ao carregar as atualizações")
-            setUpdates([])
         } finally {
             setLoading(false)
         }
     }
-
-    useEffect(() => {
-        carregarUpdates()
-    }, [])
 
     useEffect(() => {
         document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
@@ -49,52 +63,25 @@ export default function UpdateAdmin() {
         localStorage.setItem("TemaEscuro", darkTheme.toString())
     }, [darkTheme])
 
-    // Função para formatar data (fallback)
-    function formatarData(data) {
-        if (!data) return "Data não informada"
-        
-        // Se já veio formatada do backend
-        if (typeof data === 'string' && data.includes('/')) {
-            return data
-        }
-        
-        // Tenta formatar a data
-        try {
-            const dataObj = new Date(data)
-            return dataObj.toLocaleDateString('pt-BR')
-        } catch {
-            return data
-        }
-    }
+
 
     return (
         <main className={`MainAdminUpdate ${darkTheme ? "dark" : "light"}`}>
             <CabecalhoAdmin2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
             
-            <section className="cardUpdate">
                 <div className="cardUpdate1">
                     <h1 className="titleUpdate">Inserir Atualização</h1>
 
                     <div className="informations">
                         <h2 className="subTitleUpdate">Titulo</h2>
-                        <input type="text" placeholder="Modo Preto" />
-                        <h2>Descrição</h2>
-                        <input type="text"placeholder="Adicionado modo preto" />
-                        <h2>Data/Prévia</h2>
-                        <input type="date" />
-
-
-                        {!loading && !error && updates.map((update) => (
-                            <div className="date1" key={update.id}>
-                                <h3 className="date">
-                                    {formatarData(update.dataFormatada || update.DiadoUpdate)}
-                                </h3>
-                                <h4 className="text">{update.informacoes}</h4>
-                            </div>
-                        ))}
+                        <input className="inputText" value={nmUpdate} onChange={(e) => setNmUpdate(e.target.value)} type="text" placeholder="Modo Preto" />
+                        <h2 className="subTitleUpdate">Descrição</h2>
+                        <input className="inputText" value={descUpdate} onChange={(e) => setDescUpdate(e.target.value)} type="text"placeholder="Adicionado modo preto" />
+                        <h2 className="subTitleUpdate">Data/Prévia</h2>
+                        <input className="inputDate" value={dateUpdate} onChange={(e) => setDateUpdate(e.target.value)} type="date" />
+                        <button className="buttton" onClick={InserirUpdate}>Enviar Atualização</button>
                     </div>
                 </div>
-            </section>
         </main>
     )
 }
