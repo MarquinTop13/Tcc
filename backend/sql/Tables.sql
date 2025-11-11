@@ -50,7 +50,8 @@ create table tb_support_resposta (
 create table Updates (
     id int primary key auto_increment,
     DiadoUpdate date not null,
-    informacoes varchar(255)
+    titulo varchar(255) not null,
+    descricao varchar(255) not null
 );
 
 create table InfosVirus (
@@ -60,11 +61,13 @@ create table InfosVirus (
     prevensao varchar(255)
 );
 
+select * from cadastro;
+select * from Updates;
 
-Isso aqui e para meu pc de casa, cuidado ao executar!;
+
+
 drop table tb_support_resposta;
 drop table tb_support;
-drop table InfosVirus;
 drop table tb_login;
 drop table cadastro;
 drop table Updates;
