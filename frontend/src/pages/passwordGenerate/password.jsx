@@ -123,7 +123,9 @@ export default function PasswordGenerator(){
                         alert("Senha Salva, cheque sua senha nas configurações da conta!");
                     }
                     catch(error){
-                        alert(error)
+                        if(error){
+                            alert('Falha no servidor')
+                        }
                     }
                 }
                 }

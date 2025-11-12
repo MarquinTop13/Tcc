@@ -30,6 +30,7 @@
 
   .header-pages {
       position: absolute;
+      top: 0;
       width: 100%;
       z-index: 1000;
       padding: 0.5rem 1rem;
@@ -47,11 +48,12 @@
 
   .cards-grid,
   .cards-grid-bottom {
+    margin-left: 5%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     width: 100%;
-    max-width: 1300px;
+    max-width: 1200px;
     margin-bottom: 2rem;
   }
 
@@ -174,7 +176,9 @@
 
   @media (max-width: 768px) {
     h1 {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
+      text-align: left;
+      margin-left: 20px;
     }
 
     .cards-grid,
@@ -186,6 +190,7 @@
       height: 280px;
       border-radius: 16px;
       width: 90%;
+      margin-left: 0%;
 
       &.expanded {
         height: 380px;

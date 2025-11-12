@@ -3,6 +3,7 @@ import '../../scss/fonts.scss'
 import './home.scss'
 import apiLink from '../../axios'
 import Cabecalho from "../../components/headerHome"
+import Footer from '../../components/footer'
 import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import LinkWhiteMode from "/images/White/links_white1.png"
@@ -181,6 +182,7 @@ export default function Home() {
                     </p>
                 </div>
             </section>
+            <Footer darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
         </main>
     )
 } 

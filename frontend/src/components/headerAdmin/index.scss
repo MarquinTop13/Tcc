@@ -24,7 +24,7 @@
   }
 
   .logo {
-    width: 4.5%;
+    width: 4.5% !important;
     margin: 0.6rem;
   }
 
@@ -145,7 +145,7 @@
 @media (max-width: 768px) {
   .header-Admin {
     .logo {
-      width: 18.5%;
+      width: 8.5% !important;
       margin: 0.6rem;
     }
   }

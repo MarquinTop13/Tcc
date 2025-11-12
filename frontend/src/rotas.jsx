@@ -15,13 +15,14 @@ import Updates from "./pages/updates/update"
 import Cas from "./pages/cadastro/cadastro"
 import Home from "./pages/home/home.jsx"
 import Login from "./pages/login/Login"
-
+import Sobre from "./pages/sobre/sobre"
 
 export default function Rotas(){
     return(
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/Sobre" element={<Sobre />} />
                 <Route path="/SupportAdmin" element={<MsgSupport />} />
                 <Route path="/Admin" element={<HomeAdmin />} />
                 <Route path="/UpdatesAdmin" element={<UpdateAdmin />} />

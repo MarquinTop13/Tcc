@@ -1,4 +1,5 @@
 import VirusInfoController from "./controller/virusInfoController.js"
+import PagamentoController from "./controller/PagamentoController.js"
 import cadastroController from './controller/cadastroController.js';
 import ArquivoController from './controller/ArquivoController.js';
 import supportController from './controller/supportController.js';
@@ -9,6 +10,7 @@ import SenhaController from './controller/senhaController.js';
 import LinkRotas from './controller/LinkController.js';
 
 export function AddRotas(api) {
+  api.use(PagamentoController);
   api.use(VirusInfoController);
   api.use(cadastroController);
   api.use('/api', LinkRotas);

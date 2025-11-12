@@ -250,9 +250,7 @@ body {
                         transform: none;
                     }
                 }
-                // ... (mantenha todo o CSS anterior até a parte do modal)
 
-/* Modal de Limite Atingido - Design Melhorado */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -279,7 +277,6 @@ body {
     position: relative;
     animation: slideUp 0.4s ease;
     
-    // Efeito de brilho
     &::before {
       content: '';
       position: absolute;
@@ -499,13 +496,11 @@ body {
   }
 }
 
-// ... (mantenha o resto do CSS responsivo)
             }
         }
     }
 }
 
-// Responsividade para tablet
 @media (max-width: 768px) {
     body {
         .MainVerifyLinks {
@@ -587,7 +582,6 @@ body {
     }
 }
 
-// Responsividade para mobile
 @media (max-width: 480px) {
     body {
         .MainVerifyLinks {
@@ -670,7 +664,6 @@ body {
     }
 }
 
-// Para telas muito pequenas (iPhone SE etc)
 @media (max-width: 320px) {
     body {
         .MainVerifyLinks {

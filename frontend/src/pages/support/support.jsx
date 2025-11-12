@@ -51,7 +51,9 @@ export default function Support() {
             
         } catch(error){
             console.log("ERRO COMPLETO:", error);
-            alert(error.response?.data?.error || error.message || "Erro ao enviar mensagem");
+            if(error.message === "Network Error"){
+                alert( "Falha no servidor, envie mensagem ao gmail ou no instagram!");
+            }
         }
     }
     useEffect(() => {
@@ -82,7 +84,6 @@ export default function Support() {
                         <select name="valores" value={opcaoEscolhida} onChange={(e) => setOpcaoEscolhida(e.target.value)}>
                             <option value=""></option>
                             <option value="Error">Error</option>
-                            <option value="Bug">Bug</option>
                             <option value="Dúvida">Dúvida</option>
                             <option value="Sugestão">Sugestão</option>
                             <option value="Outro">Outro</option>

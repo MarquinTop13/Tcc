@@ -53,12 +53,12 @@ export default function Updates() {
     // Função para formatar data (fallback)
     function formatarData(data) {
         if (!data) return "Data não informada"
-        
+
         // Se já veio formatada do backend
         if (typeof data === 'string' && data.includes('/')) {
             return data
         }
-        
+
         // Tenta formatar a data
         try {
             const dataObj = new Date(data)
@@ -71,7 +71,7 @@ export default function Updates() {
     return (
         <main className={`MainUpdate ${darkTheme ? "dark" : "light"}`}>
             <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
-            
+
             <section className="cardUpdate">
                 <div className="cardUpdate1">
                     <h1 className="titleUpdate">Novidades e atualizações</h1>
@@ -87,8 +87,8 @@ export default function Updates() {
 
                         {error && (
                             <div className="error">
-                                <h4 className="text" style={{color: 'red'}}>{error}</h4>
-                                <button 
+                                <h4 className="text" style={{ color: 'red' }}>{error}</h4>
+                                <button
                                     onClick={carregarUpdates}
                                     style={{
                                         padding: '10px 20px',
@@ -121,7 +121,11 @@ export default function Updates() {
                             </div>
                         ))}
                     </div>
-                    <img src={Mgs} className="Mgs" alt="MGS Pensativo"/>
+
+                    <div className="Mgs">
+                        <img src={Mgs} className="Mgs2" alt="MGS Pensativo" />
+                    </div>
+
                 </div>
             </section>
         </main>

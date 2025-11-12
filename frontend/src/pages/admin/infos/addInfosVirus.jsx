@@ -3,7 +3,7 @@ import BackgroundBlack from "/images/Black/BackgroundBlack.png";
 import BackgroundWhite from "/images/White/BackgroundWhite.png";
 import apiLink from "../../../axios.js";
 import { useState, useEffect } from "react";
-import "./addinfosVirus.scss";
+import "./addInfosVirus.scss";
 
 export default function AddVirus() {
   const [nome, setNome] = useState("");

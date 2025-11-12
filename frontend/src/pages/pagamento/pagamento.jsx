@@ -1,13 +1,14 @@
 import BackgroundBlack from "/images/Black/BackgroundBlack.png";
 import BackgroundWhite from "/images/White/BackgroundWhite.png";
 import Cabecalho2 from '../../components/HeaderPages'
+import apiLink from "../../axios.js"
 import './pagamento.scss'
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 export default function Pagamento() {
-    const navigate = useNavigate();
-    
+    const navigate = useNavigate(); // ✅ AGORA DENTRO DO COMPONENTE
+
     //Modo preto:
     const [darkTheme, setDarkTheme] = useState(() => {
         const themeSaved = localStorage.getItem("TemaEscuro");
@@ -33,8 +34,9 @@ export default function Pagamento() {
 
     const checkLoginStatus = () => {
         const user = localStorage.getItem("User");
+        const EmailUser = localStorage.getItem("Email");
         const token = localStorage.getItem("token");
-        
+
         if (user && user !== "" && token && token !== "") {
             setIsLoggedIn(true);
             setUserName(user);
@@ -60,6 +62,19 @@ export default function Pagamento() {
     useEffect(() => {
         if (!isLoggedIn) return;
 
+        async function ProcessarPagamento() {
+            try{
+                const EmailUser = localStorage.getItem("Email");
+                const respostaAPI = await apiLink.put('/InserirPagamento', {
+                    email: EmailUser
+                })
+                alert("Pagamento processado com sucesso!");
+                console.log(respostaAPI);
+            } catch(error){
+                alert("Erro ao processar pagamento: " + error.message)
+            }
+        }
+
         if (paymentMethod === 'pix' && paymentStatus === 'processing') {
             const timer = setTimeout(() => {
                 // 80% de chance de sucesso para simulação
@@ -68,6 +83,7 @@ export default function Pagamento() {
 
                 if (success) {
                     alert('Pagamento PIX confirmado!');
+                    ProcessarPagamento();
                 } else {
                     alert('Pagamento não identificado. Tente novamente.');
                 }
@@ -109,6 +125,7 @@ export default function Pagamento() {
             setPaymentStatus('paid');
             alert('Pagamento com cartão realizado com sucesso!');
         } else if (paymentMethod === 'pix') {
+            alert('Coloque seu nome e email na mensagem pix para evitar problemas!')
             setPaymentStatus('processing');
             alert('Aguardando confirmação do PIX...');
         }
@@ -123,8 +140,9 @@ export default function Pagamento() {
     };
 
     const handleLoginRedirect = () => {
-        navigate('/login'); // Ajuste para a rota de login do seu projeto
+        navigate('/login');
     };
+
     return (
         <main className={`mainPagamento ${darkTheme ? 'dark' : 'light'}`}>
             <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
@@ -138,7 +156,7 @@ export default function Pagamento() {
                         <div className="login-message">
                             <h3>🔒 Acesso Restrito</h3>
                             <p>Você precisa estar logado para acessar esta página.</p>
-                            <button 
+                            <button
                                 className="login-button"
                                 onClick={handleLoginRedirect}
                             >
@@ -230,6 +248,7 @@ export default function Pagamento() {
                                                 <li>Abra seu app de banco</li>
                                                 <li>Cole a chave no campo PIX</li>
                                                 <li>Confirme o valor de R$ {orderTotal.toFixed(2)}</li>
+                                                <li>Coloque seu nome e email na mensagem pix</li>
                                                 <li>Finalize o pagamento</li>
                                             </ol>
                                         </div>

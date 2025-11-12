@@ -2,11 +2,12 @@ import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import Cabecalho2 from "../../components/HeaderPages"
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router"
 import apiLink from "../../axios"
 import "./userSupport.scss"
 
 export default function UserSupport() {
-  // Modo escuro
+  const navigate = useNavigate();
   const [darkTheme, setDarkTheme] = useState(() => {
     const themeSaved = localStorage.getItem("TemaEscuro")
     return themeSaved ? themeSaved === "true" : false
@@ -24,12 +25,10 @@ export default function UserSupport() {
     localStorage.setItem("TemaEscuro", darkTheme.toString())
   }, [darkTheme])
 
-  // Dados
   const [mensagens, setMensagens] = useState([])
   const [carregando, setCarregando] = useState(true)
   const [mensagemSelecionada, setMensagemSelecionada] = useState(null)
 
-  // Buscar mensagens do usuário
   useEffect(() => {
     buscarMinhasMensagens()
   }, [])
@@ -37,7 +36,7 @@ export default function UserSupport() {
   async function buscarMinhasMensagens() {
     try {
       setCarregando(true)
-      const idUsuario = localStorage.getItem("id_cadastro") // Você precisa armazenar o ID do usuário no login
+      const idUsuario = localStorage.getItem("id_cadastro")
       
       if (!idUsuario) {
         console.error("ID do usuário não encontrado")
@@ -47,8 +46,11 @@ export default function UserSupport() {
       const response = await apiLink.get(`/support/usuario/${idUsuario}`)
       setMensagens(response.data)
     } catch (error) {
-      console.error("Erro ao buscar mensagens:", error)
-      alert("Erro ao carregar suas mensagens")
+      if(error.message === "Network Error"){
+        alert("Falha interna no servidor!")
+        navigate('/')
+
+      }
     } finally {
       setCarregando(false)
     }
@@ -135,7 +137,6 @@ export default function UserSupport() {
           )}
         </div>
 
-        {/* Modal para visualização detalhada */}
         {mensagemSelecionada && (
           <div className="modal-overlay" onClick={() => setMensagemSelecionada(null)}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
