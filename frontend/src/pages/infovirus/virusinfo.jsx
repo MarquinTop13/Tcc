@@ -8,6 +8,7 @@ import "./virusinfo.scss";
 
 export default function VR() {
   const [expandedCard, setExpandedCard] = useState(null);
+  const [expandedDbCard, setExpandedDbCard] = useState(null);
   const [virusList, setVirusList] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,13 +16,14 @@ export default function VR() {
     const themeSaved = localStorage.getItem("TemaEscuro");
     return themeSaved ? themeSaved === 'true' : false;
   })
+
   function ChangeTheme() {
     setDarkTheme(prevTheme => !prevTheme)
   }
+
   useEffect(() => {
     document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
   }, [darkTheme]);
-
 
   useEffect(() => {
     localStorage.setItem('TemaEscuro', darkTheme.toString())
@@ -113,6 +115,12 @@ export default function VR() {
 
   const handleCardClick = (index) => {
     setExpandedCard(expandedCard === index ? null : index);
+    setExpandedDbCard(null); // Fecha card do banco se estiver aberto
+  };
+
+  const handleDbCardClick = (index) => {
+    setExpandedDbCard(expandedDbCard === index ? null : index);
+    setExpandedCard(null); // Fecha card local se estiver aberto
   };
 
   useEffect(() => {
@@ -171,6 +179,8 @@ export default function VR() {
                 nome={virus.nome_virus}
                 descricao={virus.descricao_virus}
                 prevensao={virus.prevensao}
+                isExpanded={expandedDbCard === index}
+                onClick={() => handleDbCardClick(index)}
               />
             ))
           ) : (
