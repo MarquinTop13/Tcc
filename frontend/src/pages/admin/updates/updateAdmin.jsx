@@ -74,11 +74,27 @@ export default function UpdateAdmin() {
 
                     <div className="informations">
                         <h2 className="subTitleUpdate">Titulo</h2>
-                        <input className="inputText" value={nmUpdate} onChange={(e) => setNmUpdate(e.target.value)} type="text" placeholder="Modo Preto" />
+                        <input 
+                            className="inputText" 
+                            value={nmUpdate} 
+                            onChange={(e) => setNmUpdate(e.target.value)} 
+                            type="text" 
+                            placeholder="Modo Preto" 
+                        />
                         <h2 className="subTitleUpdate">Descrição</h2>
-                        <input className="inputText" value={descUpdate} onChange={(e) => setDescUpdate(e.target.value)} type="text"placeholder="Adicionado modo preto" />
+                        <textarea 
+                            className="Text" 
+                            value={descUpdate} 
+                            onChange={(e) => setDescUpdate(e.target.value)} 
+                            placeholder="Adicionado modo preto" 
+                        />
                         <h2 className="subTitleUpdate">Data/Prévia</h2>
-                        <input className="inputDate" value={dateUpdate} onChange={(e) => setDateUpdate(e.target.value)} type="date" />
+                        <input 
+                            className="inputDate" 
+                            value={dateUpdate} 
+                            onChange={(e) => setDateUpdate(e.target.value)} 
+                            type="date" 
+                        />
                         <button className="buttton" onClick={InserirUpdate}>Enviar Atualização</button>
                     </div>
                 </div>

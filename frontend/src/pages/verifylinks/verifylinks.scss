@@ -505,34 +505,33 @@ body {
     body {
         .MainVerifyLinks {
             .page-Links {
-                padding: 15px;
-                height: auto;
-                min-height: 100vh;
-                align-items: flex-start;
-                padding-top: 80px;
+              align-items: flex-start;
+              min-height: 100vh;
+              padding: 15px;
+              height: auto;
                 
                 .card-Links {
                     padding: 20px 15px;
                     min-height: auto;
-                    height: auto;
                     max-width: 500px;
+                    height: auto;
                     
                     .part1-Links {
                         h2 {
-                            font-size: 1.6rem;
-                            margin-bottom: 15px;
+                          margin-bottom: 15px;
+                          font-size: 1.6rem;
                         }
                         
                         input {
-                            max-width: 100%;
-                            font-size: 0.95rem;
-                            padding: 10px 12px;
+                          font-size: 0.95rem;
+                          padding: 10px 12px;
+                          max-width: 100%;
                         }
                     }
                     
                     .part2-Links {
-                        gap: 15px;
-                        margin: 15px 0;
+                      margin: 15px 0;
+                      gap: 15px;
                         
                         .info {
                             h3 {

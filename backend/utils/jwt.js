@@ -6,7 +6,7 @@ export default function generateToken(userInfo) {
   if (!userInfo.role)
     userInfo.role = 'user';
 
-  return jwt.sign(userInfo, KEY, { expiresIn: '4h' });
+  return jwt.sign(userInfo, KEY, { expiresIn: '48h' });
 }
 
 export function verifyToken(token) {
