@@ -1,8 +1,9 @@
-import Cabecalho2 from "../../../components/HeaderPages/index.jsx";
+import CabecalhoAdmin2 from "../../../components/headerAdmin2";
 import BackgroundBlack from "/images/Black/BackgroundBlack.png";
 import BackgroundWhite from "/images/White/BackgroundWhite.png";
 import apiLink from "../../../axios.js";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import "./addInfosVirus.scss";
 
 export default function AddVirus() {
@@ -12,14 +13,18 @@ export default function AddVirus() {
   const [virusList, setVirusList] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(false);
+  const user = localStorage.getItem("User");
+  const navigate = useNavigate();
 
   const [darkTheme, setDarkTheme] = useState(() => {
     const themeSaved = localStorage.getItem("TemaEscuro");
     return themeSaved ? themeSaved === "true" : false;
   });
+
   function ChangeTheme() {
     setDarkTheme((prevTheme) => !prevTheme);
   }
+
   useEffect(() => {
     document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`;
   }, [darkTheme]);
@@ -27,6 +32,15 @@ export default function AddVirus() {
   useEffect(() => {
     localStorage.setItem("TemaEscuro", darkTheme.toString());
   }, [darkTheme]);
+
+  useEffect(() => {
+    if (user === "MgsTop13" || user === "Gustavo Max") {
+      return;
+    } else {
+      alert("Você não tem acesso!");
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   async function fetchVirus() {
     setLoading(true);
@@ -79,7 +93,7 @@ export default function AddVirus() {
     } catch (error) {
       console.error("Erro ao deletar vírus:", error);
       alert("Erro ao apagar o vírus — restaurando lista.");
-      setVirusList(previous); 
+      setVirusList(previous);
     }
   };
 
@@ -89,19 +103,18 @@ export default function AddVirus() {
         handleDelete();
       }
     }
-  
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedId]);
-  
 
   return (
     <main className={`MainCadastro ${darkTheme ? "dark" : "light"}`}>
-      <Cabecalho2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
+      <CabecalhoAdmin2 darkTheme={darkTheme} onChangeTheme={ChangeTheme} />
+
       <div className="criar-container">
         <div className="card-criar">
           <h2>Criar Card</h2>
-
           <form className="input-btn" onSubmit={handleSubmit}>
             <input
               type="text"
@@ -136,8 +149,12 @@ export default function AddVirus() {
               virusList.map((virus) => (
                 <div
                   key={virus.id}
-                  className={`virus-item ${selectedId === virus.id ? "selected" : ""}`}
-                  onClick={() => setSelectedId(selectedId === virus.id ? null : virus.id)}
+                  className={`virus-item ${
+                    selectedId === virus.id ? "selected" : ""
+                  }`}
+                  onClick={() =>
+                    setSelectedId(selectedId === virus.id ? null : virus.id)
+                  }
                 >
                   <strong>{virus.nome_virus}</strong>
                   <p>{virus.descricao_virus}</p>
@@ -146,7 +163,11 @@ export default function AddVirus() {
             )}
           </div>
 
-          <button className="delete-btn" onClick={handleDelete} disabled={!selectedId}>
+          <button
+            className="delete-btn"
+            onClick={handleDelete}
+            disabled={!selectedId}
+          >
             Apagar Selecionado
           </button>
         </div>

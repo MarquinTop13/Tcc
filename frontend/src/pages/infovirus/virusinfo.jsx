@@ -2,6 +2,7 @@ import BackgroundBlack from "/images/Black/BackgroundBlack.png";
 import BackgroundWhite from "/images/White/BackgroundWhite.png";
 import CardPublicacao from "../../components/card/card.jsx";
 import Cabecalho2 from "../../components/HeaderPages";
+import Modal from "../../components/err/index.jsx";
 import { useState, useEffect } from "react";
 import apiLink from "../../axios";
 import "./virusinfo.scss";
@@ -11,23 +12,27 @@ export default function VR() {
   const [expandedDbCard, setExpandedDbCard] = useState(null);
   const [virusList, setVirusList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [codigoErro, setCodigoErro] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const [darkTheme, setDarkTheme] = useState(() => {
     const themeSaved = localStorage.getItem("TemaEscuro");
-    return themeSaved ? themeSaved === 'true' : false;
-  })
+    return themeSaved ? themeSaved === "true" : false;
+  });
 
   function ChangeTheme() {
-    setDarkTheme(prevTheme => !prevTheme)
+    setDarkTheme((prevTheme) => !prevTheme);
   }
 
   useEffect(() => {
-    document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
+    document.body.style.backgroundImage = `url(${
+      darkTheme ? BackgroundBlack : BackgroundWhite
+    })`;
   }, [darkTheme]);
 
   useEffect(() => {
-    localStorage.setItem('TemaEscuro', darkTheme.toString())
-  }, [darkTheme])
+    localStorage.setItem("TemaEscuro", darkTheme.toString());
+  }, [darkTheme]);
 
   const virusData = [
     {
@@ -107,20 +112,20 @@ export default function VR() {
       description:
         "Vírus que monitora secretamente suas atividades, coletando informações pessoais.",
       prevention:
-        "Evite clicar em links ou anúncios suspeitos e baixe programas apenas de fontes seguras.Mantenha o antivírus e o navegador sempre atualizados.Use extensões de segurança para bloquear rastreadores online.",
+        "Evite clicar em links ou anexos suspeitos e baixe programas apenas de fontes seguras. Mantenha o antivírus e o navegador sempre atualizados.",
       expandedInfo:
-        "Para evitar o spyware, desconfie de sites com downloads estranhos ou pop-ups excessivos.Instale e mantenha um antivírus e antispyware sempre atualizados.Baixe aplicativos apenas de lojas oficiais e verifique permissões.Mantenha o sistema e o navegador atualizados regularmente.Nunca compartilhe dados pessoais em sites duvidosos.",
+        "Para evitar o spyware, desconfie de sites com downloads estranhos ou pop-ups excessivos. Instale e mantenha um antivírus e antispyware sempre atualizados. Baixe aplicativos apenas de lojas oficiais e verifique permissões.",
     },
   ];
 
   const handleCardClick = (index) => {
     setExpandedCard(expandedCard === index ? null : index);
-    setExpandedDbCard(null); // Fecha card do banco se estiver aberto
+    setExpandedDbCard(null);
   };
 
   const handleDbCardClick = (index) => {
     setExpandedDbCard(expandedDbCard === index ? null : index);
-    setExpandedCard(null); // Fecha card local se estiver aberto
+    setExpandedCard(null);
   };
 
   useEffect(() => {
@@ -129,7 +134,13 @@ export default function VR() {
         const res = await apiLink.get("/api/listarInf");
         setVirusList(res.data);
       } catch (error) {
-        console.error("Erro ao buscar vírus:", error);
+        if (error.code === 'ERR_NETWORK' || error.message?.includes('CONNECTION_REFUSED')) {
+          setCodigoErro('network');
+        } else {
+          const status = error.response?.status;
+          setCodigoErro(status || 'default');
+        }
+        setShowModal(true);
       } finally {
         setLoading(false);
       }
@@ -188,6 +199,12 @@ export default function VR() {
           )}
         </div>
       </section>
+
+      <Modal
+        isOpen={showModal}
+        setModalOpen={() => setShowModal(!showModal)}
+        codigoErro={codigoErro}
+      />
     </main>
   );
 }

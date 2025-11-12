@@ -1,43 +1,39 @@
 import BackgroundBlack from "/images/Black/BackgroundBlack.png";
 import BackgroundWhite from "/images/White/BackgroundWhite.png";
-import Cabecalho2 from '../../components/HeaderPages'
-import apiLink from "../../axios.js"
-import './pagamento.scss'
+import Cabecalho2 from '../../components/HeaderPages';
+import Modal from "../../components/err/index.jsx";
+import apiLink from "../../axios.js";
+import './pagamento.scss';
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 export default function Pagamento() {
-    const navigate = useNavigate(); // ✅ AGORA DENTRO DO COMPONENTE
+    const navigate = useNavigate();
 
-    //Modo preto:
     const [darkTheme, setDarkTheme] = useState(() => {
         const themeSaved = localStorage.getItem("TemaEscuro");
         return themeSaved ? themeSaved === 'true' : false;
-    })
-
-    // Verificar se usuário está logado
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userName, setUserName] = useState('');
+    });
 
     function ChangeTheme() {
-        setDarkTheme(prevTheme => !prevTheme)
+        setDarkTheme(prevTheme => !prevTheme);
     }
 
     useEffect(() => {
-        document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
+        document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`;
     }, [darkTheme]);
 
-    // Verificar login ao carregar a página
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userName, setUserName] = useState('');
+
     useEffect(() => {
         checkLoginStatus();
     }, []);
 
     const checkLoginStatus = () => {
         const user = localStorage.getItem("User");
-        const EmailUser = localStorage.getItem("Email");
         const token = localStorage.getItem("token");
-
-        if (user && user !== "" && token && token !== "") {
+        if (user && token) {
             setIsLoggedIn(true);
             setUserName(user);
         } else {
@@ -47,45 +43,39 @@ export default function Pagamento() {
     };
 
     const [paymentMethod, setPaymentMethod] = useState('pix');
-    const [cardData, setCardData] = useState({
-        number: '',
-        name: '',
-        expiry: '',
-        cvv: ''
-    });
-    const [paymentStatus, setPaymentStatus] = useState('pending'); // pending, processing, paid
+    const [cardData, setCardData] = useState({ number: '', name: '', expiry: '', cvv: '' });
+    const [paymentStatus, setPaymentStatus] = useState('pending');
     const [pixCode] = useState(generatePixCode());
-
     const orderTotal = 2.99;
 
-    // Simula verificação do pagamento PIX
+    const [showModal, setShowModal] = useState(false);
+    const [codigoErro, setCodigoErro] = useState(null);
+
     useEffect(() => {
         if (!isLoggedIn) return;
 
         async function ProcessarPagamento() {
-            try{
+            try {
                 const EmailUser = localStorage.getItem("Email");
-                const respostaAPI = await apiLink.put('/InserirPagamento', {
-                    email: EmailUser
-                })
-                alert("Pagamento processado com sucesso!");
-                console.log(respostaAPI);
-            } catch(error){
-                alert("Erro ao processar pagamento: " + error.message)
+                const respostaAPI = await apiLink.put('/InserirPagamento', { email: EmailUser });
+            } catch (error) {
+                if (error.code === 'ERR_NETWORK' || error.message?.includes('CONNECTION_REFUSED')) {
+                    setCodigoErro('network');
+                } else {
+                    const status = error.response?.status;
+                    setCodigoErro(status || 'default');
+                }
+                setShowModal(true);
             }
         }
 
         if (paymentMethod === 'pix' && paymentStatus === 'processing') {
             const timer = setTimeout(() => {
-                // 80% de chance de sucesso para simulação
                 const success = Math.random() > 0.2;
                 setPaymentStatus(success ? 'paid' : 'pending');
 
                 if (success) {
-                    alert('Pagamento PIX confirmado!');
                     ProcessarPagamento();
-                } else {
-                    alert('Pagamento não identificado. Tente novamente.');
                 }
             }, 3000);
 
@@ -110,34 +100,24 @@ export default function Pagamento() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Verificar login antes de processar pagamento
         if (!isLoggedIn) {
             alert('Você precisa estar logado para realizar o pagamento!');
             return;
         }
 
         if (paymentMethod === 'credit') {
-            // Validação básica do cartão
             if (!cardData.number || !cardData.name || !cardData.expiry || !cardData.cvv) {
                 alert('Preencha todos os dados do cartão');
                 return;
             }
             setPaymentStatus('paid');
-            alert('Pagamento com cartão realizado com sucesso!');
         } else if (paymentMethod === 'pix') {
-            alert('Coloque seu nome e email na mensagem pix para evitar problemas!')
             setPaymentStatus('processing');
-            alert('Aguardando confirmação do PIX...');
         }
     };
 
-    const formatCardNumber = (value) => {
-        return value.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim();
-    };
-
-    const formatExpiry = (value) => {
-        return value.replace(/\D/g, '').replace(/(\d{2})(\d)/, '$1/$2');
-    };
+    const formatCardNumber = (value) => value.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim();
+    const formatExpiry = (value) => value.replace(/\D/g, '').replace(/(\d{2})(\d)/, '$1/$2');
 
     const handleLoginRedirect = () => {
         navigate('/login');
@@ -150,31 +130,24 @@ export default function Pagamento() {
             <div className="payment-page">
                 <h1>Finalizar Pagamento</h1>
 
-                {/* Mensagem se não estiver logado */}
                 {!isLoggedIn && (
                     <div className="login-required">
                         <div className="login-message">
                             <h3>🔒 Acesso Restrito</h3>
                             <p>Você precisa estar logado para acessar esta página.</p>
-                            <button
-                                className="login-button"
-                                onClick={handleLoginRedirect}
-                            >
+                            <button className="login-button" onClick={handleLoginRedirect}>
                                 Fazer Login
                             </button>
                         </div>
                     </div>
                 )}
 
-                {/* Conteúdo do pagamento (só mostra se estiver logado) */}
                 {isLoggedIn && (
                     <div className="payment-container">
-                        {/* Informação do usuário logado */}
                         <div className="user-info">
                             <p>👋 Olá, <strong>{userName}</strong></p>
                         </div>
 
-                        {/* Resumo */}
                         <div className="order-summary">
                             <h3>Resumo do Pedido</h3>
                             <div className="total">
@@ -183,7 +156,6 @@ export default function Pagamento() {
                             </div>
                         </div>
 
-                        {/* Status do Pagamento */}
                         {paymentStatus === 'processing' && (
                             <div className="payment-status processing">
                                 ⏳ Aguardando confirmação do pagamento...
@@ -196,7 +168,6 @@ export default function Pagamento() {
                             </div>
                         )}
 
-                        {/* Só mostra os métodos de pagamento se ainda não foi pago */}
                         {paymentStatus !== 'paid' && (
                             <div className="payment-methods">
                                 <h3>Método de Pagamento</h3>
@@ -223,7 +194,6 @@ export default function Pagamento() {
                                     </label>
                                 </div>
 
-                                {/* PIX */}
                                 {paymentMethod === 'pix' && (
                                     <div className="pix-section">
                                         <div className="pix-code">
@@ -263,14 +233,12 @@ export default function Pagamento() {
                                     </div>
                                 )}
 
-                                {/* Cartão */}
                                 {paymentMethod === 'credit' && (
                                     <form onSubmit={handleSubmit} className="card-form">
                                         <div className="form-row">
                                             <input
                                                 type="text"
                                                 inputMode="numeric"
-                                                pattern="[0-9]*"
                                                 name="number"
                                                 placeholder="Número do Cartão"
                                                 value={formatCardNumber(cardData.number)}
@@ -350,8 +318,13 @@ export default function Pagamento() {
                         )}
                     </div>
                 )}
-
             </div>
+
+            <Modal
+                isOpen={showModal}
+                setModalOpen={() => setShowModal(!showModal)}
+                codigoErro={codigoErro}
+            />
         </main>
-    )
+    );
 }

@@ -1,3 +1,4 @@
+import RecuperadorDeSenhas from "./pages/recuperadorDeSenha/recuperador"
 import PasswordGenerator from "./pages/passwordGenerate/password"
 import AddVirus from "./pages/admin/infos/addInfosVirus.jsx"
 import UpdateAdmin from "./pages/admin/updates/updateAdmin"
@@ -23,6 +24,7 @@ export default function Rotas(){
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/Sobre" element={<Sobre />} />
+                <Route path="/RecuperadorDeSenhas" element={<RecuperadorDeSenhas />} />
                 <Route path="/SupportAdmin" element={<MsgSupport />} />
                 <Route path="/Admin" element={<HomeAdmin />} />
                 <Route path="/UpdatesAdmin" element={<UpdateAdmin />} />

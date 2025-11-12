@@ -3,6 +3,7 @@ import '../../scss/fonts.scss'
 import './verifylinks.scss'
 import apiLink from '../../axios'
 import Cabecalho2 from '../../components/HeaderPages'
+import Modal from "../../components/err/index.jsx";
 import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import { useState, useEffect } from 'react'
@@ -16,6 +17,8 @@ export default function VerifyLinks() {
   const [limite, setLimite] = useState(null);
   const [mostrarModalPagamento, setMostrarModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [codigoErro, setCodigoErro] = useState(null);
 
   function ChangeTheme() {
     setDarkTheme(prevTheme => !prevTheme);
@@ -48,7 +51,13 @@ export default function VerifyLinks() {
       const response = await apiLink.get(`/api/VerificarLimiteLink/${email}`);
       setLimite(response.data);
     } catch (error) {
-      console.error('Erro ao carregar limite:', error);
+      if (error.code === 'ERR_NETWORK' || error.message?.includes('CONNECTION_REFUSED')) {
+        setCodigoErro('network');
+      } else {
+        const status = error.response?.status;
+        setCodigoErro(status || 'default');
+      }
+      setShowModal(true);
     }
   }
 
@@ -113,8 +122,6 @@ export default function VerifyLinks() {
       setDetalhes(dados.detalhes);
 
     } catch (error) {
-      console.error('Erro:', error);
-
       if (error.response?.status === 402) {
         if (error.response.data.tipo === "LIMITE_ATINGIDO") {
           setMostrarModal(true);
@@ -123,20 +130,14 @@ export default function VerifyLinks() {
           setResultado('Erro ao processar verificação.');
         }
       } else {
-        try {
-          const fallbackResponse = await apiLink.post('/api/check-url', { url: link });
-          const fallbackData = fallbackResponse.data;
-
-          if (fallbackData.segura) {
-            setResultado('SEGURO - Este site parece confiável');
-          } else {
-            setResultado('PERIGOSO - Evite este site!');
-          }
-          setDetalhes(fallbackData.detalhes);
-
-        } catch (fallbackError) {
-          setResultado(fallbackError.response?.data?.error + '\nO link precisa de https://');
+        if (error.code === 'ERR_NETWORK' || error.message?.includes('CONNECTION_REFUSED')) {
+          setCodigoErro('network');
+        } else {
+          const status = error.response?.status;
+          setCodigoErro(status || 'default');
         }
+        setShowModal(true);
+        setResultado('Erro ao verificar link. Tente novamente.');
       }
     } finally {
       setCarregando(false);
@@ -277,6 +278,12 @@ export default function VerifyLinks() {
           </button>
         </div>
       </section>
+
+      <Modal
+        isOpen={showModal}
+        setModalOpen={() => setShowModal(!showModal)}
+        codigoErro={codigoErro}
+      />
     </main>
   );
 }

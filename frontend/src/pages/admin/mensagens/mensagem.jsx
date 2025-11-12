@@ -15,7 +15,7 @@ export default function MsgSupport() {
     if (user === "MgsTop13" || user === "Gustavo Max") {
       return
     } else {
-      alert('Você não tem acesso, adios!');
+      alert('Você não tem acesso!');
       navigate('/')
     }
   }, [user, navigate])

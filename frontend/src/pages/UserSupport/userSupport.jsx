@@ -1,6 +1,7 @@
 import BackgroundBlack from "/images/Black/BackgroundBlack.png"
 import BackgroundWhite from "/images/White/BackgroundWhite.png"
 import Cabecalho2 from "../../components/HeaderPages"
+import Modal from "../../components/err/index.jsx"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router"
 import apiLink from "../../axios"
@@ -8,72 +9,79 @@ import "./userSupport.scss"
 
 export default function UserSupport() {
   const navigate = useNavigate();
+
   const [darkTheme, setDarkTheme] = useState(() => {
-    const themeSaved = localStorage.getItem("TemaEscuro")
-    return themeSaved ? themeSaved === "true" : false
-  })
+    const themeSaved = localStorage.getItem("TemaEscuro");
+    return themeSaved ? themeSaved === "true" : false;
+  });
 
   function ChangeTheme() {
-    setDarkTheme(prevTheme => !prevTheme)
+    setDarkTheme(prevTheme => !prevTheme);
   }
 
   useEffect(() => {
-    document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`
-  }, [darkTheme])
+    document.body.style.backgroundImage = `url(${darkTheme ? BackgroundBlack : BackgroundWhite})`;
+  }, [darkTheme]);
 
   useEffect(() => {
-    localStorage.setItem("TemaEscuro", darkTheme.toString())
-  }, [darkTheme])
+    localStorage.setItem("TemaEscuro", darkTheme.toString());
+  }, [darkTheme]);
 
-  const [mensagens, setMensagens] = useState([])
-  const [carregando, setCarregando] = useState(true)
-  const [mensagemSelecionada, setMensagemSelecionada] = useState(null)
+  const [mensagens, setMensagens] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+  const [mensagemSelecionada, setMensagemSelecionada] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [codigoErro, setCodigoErro] = useState(null);
 
   useEffect(() => {
-    buscarMinhasMensagens()
-  }, [])
+    buscarMinhasMensagens();
+  }, []);
 
   async function buscarMinhasMensagens() {
     try {
-      setCarregando(true)
-      const idUsuario = localStorage.getItem("id_cadastro")
-      
+      setCarregando(true);
+
+      const idUsuario = localStorage.getItem("id_cadastro");
       if (!idUsuario) {
-        console.error("ID do usuário não encontrado")
-        return
+        alert("Usuário não identificado. Faça login novamente.");
+        return;
       }
 
-      const response = await apiLink.get(`/support/usuario/${idUsuario}`)
-      setMensagens(response.data)
+      const response = await apiLink.get(`/support/usuario/${idUsuario}`);
+      setMensagens(response.data || []);
+
     } catch (error) {
-      if(error.message === "Network Error"){
-        alert("Falha interna no servidor!")
-        navigate('/')
-
+      if (error.code === 'ERR_NETWORK' || error.message?.includes('CONNECTION_REFUSED')) {
+        setCodigoErro('network');
+      } else {
+        const status = error.response?.status;
+        setCodigoErro(status || 'default');
       }
+      setShowModal(true);
+      setMensagens([]);
     } finally {
-      setCarregando(false)
+      setCarregando(false);
     }
   }
 
   function formatarData(data) {
-    if (!data) return ''
-    return new Date(data).toLocaleString('pt-BR')
+    if (!data) return '';
+    return new Date(data).toLocaleString('pt-BR');
   }
 
   function getStatusColor(status) {
     switch (status) {
-      case 'respondido': return '#4CAF50'
-      case 'pendente': return '#FF9800'
-      default: return '#757575'
+      case 'respondido': return '#4CAF50';
+      case 'pendente': return '#FF9800';
+      default: return '#757575';
     }
   }
 
   function getStatusTexto(status) {
     switch (status) {
-      case 'respondido': return 'Respondido'
-      case 'pendente': return 'Pendente'
-      default: return status
+      case 'respondido': return 'Respondido';
+      case 'pendente': return 'Pendente';
+      default: return status;
     }
   }
 
@@ -178,7 +186,7 @@ export default function UserSupport() {
                   </div>
                 </div>
 
-                {mensagemSelecionada.resposta && (
+                {mensagemSelecionada.resposta ? (
                   <div className="resposta-section">
                     <h4>Resposta do suporte:</h4>
                     <div className="resposta-info">
@@ -191,9 +199,7 @@ export default function UserSupport() {
                       {mensagemSelecionada.resposta}
                     </div>
                   </div>
-                )}
-
-                {!mensagemSelecionada.resposta && (
+                ) : (
                   <div className="sem-resposta">
                     <p>Sua mensagem ainda não foi respondida pela administração.</p>
                     <p>Por favor, aguarde enquanto nossa equipe analisa sua solicitação.</p>
@@ -213,6 +219,12 @@ export default function UserSupport() {
           </div>
         )}
       </div>
+
+      <Modal
+        isOpen={showModal}
+        setModalOpen={() => setShowModal(!showModal)}
+        codigoErro={codigoErro}
+      />
     </main>
-  )
+  );
 }

@@ -108,6 +108,7 @@ function Login() {
 
         <section className='conteiner-link-botao'>
           <Link to="/Cadastro" className="link-login">Criar Conta!</Link>
+          <Link className="link-login" to={"/RecuperadorDeSenhas"}>Esqueceu sua senha?</Link>
           <button className='botao' onClick={Enviarlogin}>Entrar</button>
         </section>
         <Modal isOpen={showModal} setModalOpen={() => setShowModal(!showModal)} codigoErro={codigoErro}></Modal>
